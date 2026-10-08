@@ -92,6 +92,29 @@
       margin-top: 10px;
     }
 
+    .cargando {
+      padding: 25px;
+      color: #d4af37;
+      font-weight: bold;
+    }
+
+    .error-menu {
+      background: #241818;
+      border: 1px solid #8b3a3a;
+      border-radius: 12px;
+      padding: 15px;
+      margin: 15px 0;
+      color: #ffbaba;
+    }
+
+    .categoria {
+      color: #d4af37;
+      font-size: 22px;
+      margin: 28px 0 12px;
+      border-bottom: 1px solid #444;
+      padding-bottom: 8px;
+    }
+
     .producto {
       background: #111;
       border: 1px solid #333;
@@ -104,12 +127,20 @@
     .producto h3 {
       color: #d4af37;
       margin: 0 0 5px;
+      font-size: 19px;
+    }
+
+    .descripcion {
+      color: #aaa;
+      font-size: 14px;
+      margin: 5px 0 10px;
     }
 
     .precio {
       color: #fff;
       font-weight: bold;
       margin-bottom: 10px;
+      font-size: 18px;
     }
 
     .controles {
@@ -123,6 +154,7 @@
       background: #d4af37;
       color: #000;
       min-width: 45px;
+      font-size: 20px;
     }
 
     .cantidad {
@@ -179,6 +211,12 @@
       border-radius: 10px;
       background: #222;
     }
+
+    .actualizando {
+      font-size: 12px;
+      color: #777;
+      margin-top: 10px;
+    }
   </style>
 </head>
 
@@ -191,9 +229,16 @@
   <img src="/logo.png" class="logo" alt="Elotemanía">
 
   <h1>🌽 ELOTEMANÍA</h1>
-  <div class="slogan">Entre compas sabe mejor</div>
+
+  <div class="slogan">
+    Entre compas sabe mejor
+  </div>
+
+
+  <!-- INSTALAR -->
 
   <section class="instalar">
+
     <h2>📲 Instala Elotemanía</h2>
 
     <p id="mensaje">
@@ -205,280 +250,789 @@
     </button>
 
     <div id="ios">
+
       🍎 <b>iPhone / iPad</b>
+
       <br><br>
+
       Toca <b>Compartir ⬆️</b> y después
       <b>“Añadir a pantalla de inicio”</b>.
+
     </div>
+
   </section>
 
-  <h2 style="color:#d4af37;">🌽 Nuestro menú</h2>
 
-  <div id="productos"></div>
+  <!-- MENU -->
+
+  <h2 style="color:#d4af37;">
+    🌽 Nuestro menú
+  </h2>
+
+  <div id="productos">
+
+    <div class="cargando">
+      🌽 Cargando menú...
+    </div>
+
+  </div>
+
+
+  <!-- CARRITO -->
 
   <section id="carrito">
 
     <h2>🛒 Tu pedido</h2>
 
     <div id="lista-carrito">
-      <p>Aún no has agregado productos.</p>
+
+      <p>
+        Aún no has agregado productos.
+      </p>
+
     </div>
 
     <div class="total">
-      Total: $<span id="total">0</span>
+
+      Total:
+      $<span id="total">0</span>
+
     </div>
 
-    <input id="nombre" type="text" placeholder="Tu nombre">
+    <input
+      id="nombre"
+      type="text"
+      placeholder="Tu nombre"
+    >
 
-    <input id="telefono" type="tel" placeholder="Tu teléfono">
+    <input
+      id="telefono"
+      type="tel"
+      placeholder="Tu teléfono"
+    >
 
     <button id="btn-whatsapp">
+
       📲 Enviar pedido por WhatsApp
+
     </button>
 
   </section>
 
+  <div class="actualizando">
+    Menú actualizado automáticamente desde Elotemanía.
+  </div>
+
 </main>
+
 
 <script>
 
+/* =====================================================
+   CONFIGURACIÓN
+===================================================== */
+
 const WHATSAPP = "526143839513";
 
-const productos = [
-  ["Elote en vaso chico", 35],
-  ["Elote en vaso mediano", 40],
-  ["Elote en vaso grande", 45],
-  ["Elote en vaso jumbo", 55],
-  ["Elote en vaso 1/2 litro", 75],
-  ["Elote en vaso litro", 150],
-  ["Elote entero sencillo", 45],
-  ["Elote entero revolcado", 80],
-  ["Elote entero especial", 90],
-  ["Nachos sencillo", 70],
-  ["Dorinachos especial", 80],
-  ["Maruchan preparada 1/2 litro", 75],
-  ["Maruchan preparada litro", 100],
-  ["Elote chorreado chico", 125],
-  ["Elote chorreado entero", 125],
-  ["Elote chorreado grande", 160],
-  ["Soda 600 ml", 30]
-];
+const API = "/api/supabase";
+
+
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+let productos = [];
 
 const carrito = {};
 
-const contenedor = document.getElementById("productos");
 
-productos.forEach((producto, indice) => {
+/* =====================================================
+   CONEXIÓN CON SUPABASE
+===================================================== */
 
-  const nombre = producto[0];
-  const precio = producto[1];
+async function cargarProductos() {
 
-  carrito[indice] = 0;
+  const contenedor =
+    document.getElementById("productos");
 
-  const div = document.createElement("div");
+  try {
 
-  div.className = "producto";
+    const parametros = new URLSearchParams();
 
-  div.innerHTML = `
-    <h3>${nombre}</h3>
-    <div class="precio">$${precio}</div>
+    parametros.set(
+      "table",
+      "productos"
+    );
 
-    <div class="controles">
+    /*
+      IMPORTANTE:
 
-      <button onclick="cambiarCantidad(${indice}, -1)">−</button>
+      Solo pedimos información pública:
 
-      <span class="cantidad" id="cantidad-${indice}">0</span>
+      id
+      nombre
+      precio
+      categoria
+      activo
 
-      <button onclick="cambiarCantidad(${indice}, 1)">+</button>
+      NO pedimos costo.
+      NO pedimos utilidad.
+    */
 
-    </div>
-  `;
+    parametros.set(
+      "select",
+      "id,nombre,precio,categoria,activo"
+    );
 
-  contenedor.appendChild(div);
+    parametros.set(
+      "activo",
+      "eq.true"
+    );
 
-});
+    parametros.set(
+      "order",
+      "id.asc"
+    );
 
-function cambiarCantidad(indice, cambio) {
 
-  carrito[indice] += cambio;
+    const respuesta =
+      await fetch(
+        API + "?" + parametros.toString()
+      );
 
-  if (carrito[indice] < 0) {
-    carrito[indice] = 0;
+
+    if (!respuesta.ok) {
+
+      throw new Error(
+        "No se pudo cargar el menú."
+      );
+
+    }
+
+
+    const datos =
+      await respuesta.json();
+
+
+    if (!Array.isArray(datos)) {
+
+      throw new Error(
+        "La respuesta del menú no es válida."
+      );
+
+    }
+
+
+    productos =
+      datos.map(producto => ({
+
+        id:
+          producto.id,
+
+        nombre:
+          producto.nombre,
+
+        precio:
+          Number(producto.precio) || 0,
+
+        categoria:
+          producto.categoria ||
+          "Nuestro menú"
+
+      }));
+
+
+    /*
+      Si no hay productos
+    */
+
+    if (productos.length === 0) {
+
+      contenedor.innerHTML = `
+        <div class="error-menu">
+          🌽 Actualmente no hay productos disponibles.
+        </div>
+      `;
+
+      return;
+
+    }
+
+
+    /*
+      Crear carrito
+    */
+
+    productos.forEach(producto => {
+
+      carrito[producto.id] = 0;
+
+    });
+
+
+    mostrarProductos();
+
   }
 
-  document.getElementById("cantidad-" + indice).textContent =
-    carrito[indice];
+  catch (error) {
+
+    console.error(
+      "Error cargando menú:",
+      error
+    );
+
+
+    contenedor.innerHTML = `
+      <div class="error-menu">
+
+        ❌ No se pudo cargar el menú.
+
+        <br><br>
+
+        Intenta actualizar la página.
+
+      </div>
+    `;
+
+  }
+
+}
+
+
+/* =====================================================
+   MOSTRAR PRODUCTOS
+===================================================== */
+
+function mostrarProductos() {
+
+  const contenedor =
+    document.getElementById("productos");
+
+
+  contenedor.innerHTML = "";
+
+
+  /*
+    Agrupar productos por categoría
+  */
+
+  const categorias = {};
+
+
+  productos.forEach(producto => {
+
+    const categoria =
+      producto.categoria ||
+      "Nuestro menú";
+
+
+    if (!categorias[categoria]) {
+
+      categorias[categoria] = [];
+
+    }
+
+
+    categorias[categoria].push(
+      producto
+    );
+
+  });
+
+
+  /*
+    Crear cada categoría
+  */
+
+  Object.keys(categorias).forEach(
+    categoria => {
+
+      const titulo =
+        document.createElement("div");
+
+      titulo.className =
+        "categoria";
+
+      titulo.textContent =
+        "🌽 " + categoria;
+
+
+      contenedor.appendChild(
+        titulo
+      );
+
+
+      categorias[categoria].forEach(
+        producto => {
+
+          const div =
+            document.createElement("div");
+
+          div.className =
+            "producto";
+
+
+          div.innerHTML = `
+
+            <h3>
+              ${escaparHTML(producto.nombre)}
+            </h3>
+
+            <div class="precio">
+              $${producto.precio}
+            </div>
+
+            <div class="controles">
+
+              <button
+                type="button"
+                onclick="cambiarCantidad(${producto.id}, -1)"
+              >
+                −
+              </button>
+
+              <span
+                class="cantidad"
+                id="cantidad-${producto.id}"
+              >
+                0
+              </span>
+
+              <button
+                type="button"
+                onclick="cambiarCantidad(${producto.id}, 1)"
+              >
+                +
+              </button>
+
+            </div>
+
+          `;
+
+
+          contenedor.appendChild(
+            div
+          );
+
+        }
+      );
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   SEGURIDAD PARA TEXTO DEL PRODUCTO
+===================================================== */
+
+function escaparHTML(texto) {
+
+  return String(texto)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+
+}
+
+
+/* =====================================================
+   CAMBIAR CANTIDAD
+===================================================== */
+
+function cambiarCantidad(
+  id,
+  cambio
+) {
+
+  if (
+    carrito[id] === undefined
+  ) {
+
+    carrito[id] = 0;
+
+  }
+
+
+  carrito[id] += cambio;
+
+
+  if (
+    carrito[id] < 0
+  ) {
+
+    carrito[id] = 0;
+
+  }
+
+
+  const elemento =
+    document.getElementById(
+      "cantidad-" + id
+    );
+
+
+  if (elemento) {
+
+    elemento.textContent =
+      carrito[id];
+
+  }
+
 
   actualizarCarrito();
+
 }
+
+
+/* =====================================================
+   ACTUALIZAR CARRITO
+===================================================== */
 
 function actualizarCarrito() {
 
-  const lista = document.getElementById("lista-carrito");
+  const lista =
+    document.getElementById(
+      "lista-carrito"
+    );
+
 
   let total = 0;
+
   let texto = "";
 
-  productos.forEach((producto, indice) => {
 
-    const cantidad = carrito[indice];
+  productos.forEach(
+    producto => {
 
-    if (cantidad > 0) {
+      const cantidad =
+        carrito[producto.id] || 0;
 
-      const nombre = producto[0];
-      const precio = producto[1];
-      const subtotal = cantidad * precio;
 
-      total += subtotal;
+      if (cantidad > 0) {
 
-      texto += `
-        <p>
-          ${cantidad} × ${nombre}
-          — $${subtotal}
-        </p>
-      `;
+        const subtotal =
+          cantidad *
+          producto.precio;
+
+
+        total += subtotal;
+
+
+        texto += `
+
+          <p>
+
+            ${cantidad}
+            ×
+            ${escaparHTML(producto.nombre)}
+
+            — $${subtotal}
+
+          </p>
+
+        `;
+
+      }
+
     }
+  );
 
-  });
 
   if (texto === "") {
-    lista.innerHTML = "<p>Aún no has agregado productos.</p>";
-  } else {
-    lista.innerHTML = texto;
+
+    lista.innerHTML =
+      "<p>Aún no has agregado productos.</p>";
+
   }
 
-  document.getElementById("total").textContent = total;
+  else {
+
+    lista.innerHTML =
+      texto;
+
+  }
+
+
+  document.getElementById(
+    "total"
+  ).textContent =
+    total;
+
 }
 
-document.getElementById("btn-whatsapp").addEventListener("click", () => {
 
-  const nombre = document.getElementById("nombre").value.trim();
-  const telefono = document.getElementById("telefono").value.trim();
+/* =====================================================
+   WHATSAPP
+===================================================== */
 
-  if (!nombre) {
-    alert("Escribe tu nombre.");
-    return;
-  }
+document
+  .getElementById("btn-whatsapp")
+  .addEventListener(
+    "click",
+    () => {
 
-  if (!telefono) {
-    alert("Escribe tu teléfono.");
-    return;
-  }
+      const nombre =
+        document
+          .getElementById("nombre")
+          .value
+          .trim();
 
-  let mensaje = "🌽 *NUEVO PEDIDO — ELOTEMANÍA*%0A%0A";
 
-  mensaje += "*Cliente:* " + nombre + "%0A";
-  mensaje += "*Teléfono:* " + telefono + "%0A%0A";
+      const telefono =
+        document
+          .getElementById("telefono")
+          .value
+          .trim();
 
-  let total = 0;
-  let hayProductos = false;
 
-  productos.forEach((producto, indice) => {
+      if (!nombre) {
 
-    const cantidad = carrito[indice];
+        alert(
+          "Escribe tu nombre."
+        );
 
-    if (cantidad > 0) {
+        return;
 
-      hayProductos = true;
+      }
 
-      const nombreProducto = producto[0];
-      const precio = producto[1];
-      const subtotal = cantidad * precio;
 
-      total += subtotal;
+      if (!telefono) {
+
+        alert(
+          "Escribe tu teléfono."
+        );
+
+        return;
+
+      }
+
+
+      let mensaje =
+        "🌽 *NUEVO PEDIDO — ELOTEMANÍA*%0A%0A";
+
 
       mensaje +=
-        "🌽 " + cantidad + " × " +
-        nombreProducto +
-        " — $" + subtotal +
+        "*Cliente:* " +
+        encodeURIComponent(nombre) +
         "%0A";
+
+
+      mensaje +=
+        "*Teléfono:* " +
+        encodeURIComponent(telefono) +
+        "%0A%0A";
+
+
+      let total = 0;
+
+      let hayProductos = false;
+
+
+      productos.forEach(
+        producto => {
+
+          const cantidad =
+            carrito[producto.id] || 0;
+
+
+          if (cantidad > 0) {
+
+            hayProductos = true;
+
+
+            const subtotal =
+              cantidad *
+              producto.precio;
+
+
+            total += subtotal;
+
+
+            mensaje +=
+              "🌽 " +
+              cantidad +
+              " × " +
+              encodeURIComponent(
+                producto.nombre
+              ) +
+              " — $" +
+              subtotal +
+              "%0A";
+
+          }
+
+        }
+      );
+
+
+      if (!hayProductos) {
+
+        alert(
+          "Agrega al menos un producto."
+        );
+
+        return;
+
+      }
+
+
+      mensaje +=
+        "%0A*TOTAL: $" +
+        total +
+        "*%0A%0A";
+
+
+      mensaje +=
+        "¡Gracias por tu pedido! 🌽🔥";
+
+
+      const url =
+        "https://wa.me/" +
+        WHATSAPP +
+        "?text=" +
+        mensaje;
+
+
+      window.location.href =
+        url;
+
     }
-
-  });
-
-  if (!hayProductos) {
-    alert("Agrega al menos un producto.");
-    return;
-  }
-
-  mensaje += "%0A*TOTAL: $" + total + "*%0A%0A";
-  mensaje += "¡Gracias por tu pedido! 🌽🔥";
-
-  const url =
-    "https://wa.me/" + WHATSAPP +
-    "?text=" + mensaje;
-
-  window.location.href = url;
-
-});
+  );
 
 
-/* INSTALACIÓN ANDROID */
+/* =====================================================
+   INSTALACIÓN ANDROID
+===================================================== */
 
 let deferredPrompt = null;
 
+
 const botonInstalar =
-  document.getElementById("btn-instalar");
-
-window.addEventListener("beforeinstallprompt", (evento) => {
-
-  evento.preventDefault();
-
-  deferredPrompt = evento;
-
-  botonInstalar.style.display = "inline-block";
-
-});
+  document.getElementById(
+    "btn-instalar"
+  );
 
 
-botonInstalar.addEventListener("click", async () => {
+window.addEventListener(
+  "beforeinstallprompt",
+  evento => {
 
-  if (!deferredPrompt) {
-    return;
+    evento.preventDefault();
+
+    deferredPrompt =
+      evento;
+
+    botonInstalar.style.display =
+      "inline-block";
+
   }
-
-  deferredPrompt.prompt();
-
-  await deferredPrompt.userChoice;
-
-  deferredPrompt = null;
-
-  botonInstalar.style.display = "none";
-
-});
+);
 
 
-/* INSTRUCCIONES IPHONE */
+botonInstalar.addEventListener(
+  "click",
+  async () => {
+
+    if (!deferredPrompt) {
+
+      return;
+
+    }
+
+
+    deferredPrompt.prompt();
+
+
+    await deferredPrompt.userChoice;
+
+
+    deferredPrompt = null;
+
+
+    botonInstalar.style.display =
+      "none";
+
+  }
+);
+
+
+/* =====================================================
+   IPHONE
+===================================================== */
 
 const esIOS =
-  /iphone|ipad|ipod/i.test(navigator.userAgent);
+  /iphone|ipad|ipod/i.test(
+    navigator.userAgent
+  );
+
 
 const estaEnModoApp =
   window.navigator.standalone === true ||
-  window.matchMedia("(display-mode: standalone)").matches;
+  window.matchMedia(
+    "(display-mode: standalone)"
+  ).matches;
 
-if (esIOS && !estaEnModoApp) {
-  document.getElementById("ios").style.display = "block";
+
+if (
+  esIOS &&
+  !estaEnModoApp
+) {
+
+  document.getElementById(
+    "ios"
+  ).style.display =
+    "block";
+
+}
+
+
+/* =====================================================
+   SERVICE WORKER
+===================================================== */
+
+if (
+  "serviceWorker" in navigator
+) {
+
+  window.addEventListener(
+    "load",
+    () => {
+
+      navigator.serviceWorker
+        .register(
+          "/sw.js?v=6"
+        )
+        .then(() => {
+
+          console.log(
+            "Elotemanía: servicio instalado"
+          );
+
+        })
+        .catch(error => {
+
+          console.log(
+            "Service Worker:",
+            error
+          );
+
+        });
+
+    }
+  );
+
 }
 
 
-/* SERVICE WORKER */
+/* =====================================================
+   INICIAR MENÚ
+===================================================== */
 
-if ("serviceWorker" in navigator) {
-
-  window.addEventListener("load", () => {
-
-    navigator.serviceWorker.register("/sw.js?v=5")
-      .then(() => {
-        console.log("Elotemanía: servicio instalado");
-      })
-      .catch((error) => {
-        console.log("Service Worker:", error);
-      });
-
-  });
-
-}
+cargarProductos();
 
 </script>
 
