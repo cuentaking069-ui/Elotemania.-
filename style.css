@@ -1,0 +1,291 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #050505;
+  color: #ffffff;
+}
+
+.header {
+  text-align: center;
+  padding: 25px 15px 30px;
+  background: #000000;
+  border-bottom: 2px solid #d4af37;
+}
+
+.logo {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid #d4af37;
+  display: block;
+  margin: 0 auto 15px;
+}
+
+.header h1 {
+  margin: 0;
+  color: #d4af37;
+  font-size: 32px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.header p {
+  margin: 8px 0 0;
+  color: #ffffff;
+  font-size: 16px;
+}
+
+main {
+  width: 100%;
+  max-width: 700px;
+  margin: auto;
+  padding: 18px 14px 40px;
+}
+
+section {
+  margin-bottom: 25px;
+}
+
+.cliente,
+.pedido {
+  background: #111111;
+  border: 1px solid #292929;
+  border-radius: 18px;
+  padding: 20px;
+}
+
+h2 {
+  margin-top: 0;
+  color: #d4af37;
+  font-size: 22px;
+}
+
+.titulo {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin: 14px 0 7px;
+  color: #eeeeee;
+  font-weight: bold;
+}
+
+input {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid #444444;
+  background: #050505;
+  color: #ffffff;
+  font-size: 16px;
+  outline: none;
+}
+
+input:focus {
+  border-color: #d4af37;
+}
+
+input::placeholder {
+  color: #888888;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.producto {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #111111;
+  border: 1px solid #292929;
+  border-radius: 16px;
+  padding: 13px;
+}
+
+.producto-icono {
+  width: 52px;
+  height: 52px;
+  min-width: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000000;
+  border: 1px solid #d4af37;
+  border-radius: 14px;
+  font-size: 27px;
+}
+
+.producto-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.producto-info h3 {
+  margin: 0 0 5px;
+  font-size: 16px;
+  line-height: 1.25;
+  color: #ffffff;
+}
+
+.producto-info strong {
+  color: #d4af37;
+  font-size: 18px;
+}
+
+.btn-agregar {
+  width: 46px;
+  height: 46px;
+  min-width: 46px;
+  border: none;
+  border-radius: 50%;
+  background: #d4af37;
+  color: #000000;
+  font-size: 30px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-agregar:active {
+  transform: scale(0.94);
+}
+
+.carrito {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.vacio {
+  margin: 5px 0;
+  color: #888888;
+  text-align: center;
+}
+
+.carrito-item {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 0;
+  border-bottom: 1px solid #292929;
+}
+
+.carrito-item strong {
+  display: block;
+  color: #ffffff;
+}
+
+.carrito-item small {
+  display: block;
+  margin-top: 4px;
+  color: #888888;
+}
+
+.cantidad {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cantidad button {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid #d4af37;
+  background: transparent;
+  color: #d4af37;
+  font-size: 22px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.cantidad span {
+  min-width: 20px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 2px solid #d4af37;
+  font-size: 21px;
+}
+
+.total strong {
+  color: #d4af37;
+  font-size: 27px;
+}
+
+.btn-whatsapp {
+  width: 100%;
+  min-height: 55px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 14px;
+  background: #25d366;
+  color: #ffffff;
+  font-size: 17px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.btn-whatsapp:active {
+  transform: scale(0.98);
+}
+
+.nota {
+  margin: 12px 0 0;
+  color: #888888;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+footer {
+  text-align: center;
+  padding: 25px 15px 35px;
+  border-top: 1px solid #292929;
+  color: #888888;
+}
+
+footer strong {
+  color: #d4af37;
+}
+
+footer p {
+  margin-bottom: 0;
+}
+
+@media (min-width: 600px) {
+  main {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .producto {
+    padding: 15px;
+  }
+
+  .producto-info h3 {
+    font-size: 17px;
+  }
+    }
