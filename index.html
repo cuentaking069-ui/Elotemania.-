@@ -130,12 +130,6 @@
       font-size: 19px;
     }
 
-    .descripcion {
-      color: #aaa;
-      font-size: 14px;
-      margin: 5px 0 10px;
-    }
-
     .precio {
       color: #fff;
       font-weight: bold;
@@ -234,7 +228,6 @@
     Entre compas sabe mejor
   </div>
 
-
   <!-- INSTALAR -->
 
   <section class="instalar">
@@ -262,7 +255,6 @@
 
   </section>
 
-
   <!-- MENU -->
 
   <h2 style="color:#d4af37;">
@@ -276,7 +268,6 @@
     </div>
 
   </div>
-
 
   <!-- CARRITO -->
 
@@ -325,7 +316,6 @@
 
 </main>
 
-
 <script>
 
 /* =====================================================
@@ -334,7 +324,18 @@
 
 const WHATSAPP = "526143839513";
 
-const API = "/api/supabase";
+/*
+   IMPORTANTE:
+
+   Esta página está conectada al mismo API
+   que utiliza el sistema principal de Elotemanía.
+
+   Así puede leer los productos que agregues
+   desde el panel administrativo.
+*/
+
+const API =
+  "https://elotemania.vercel.app/api/supabase";
 
 
 /* =====================================================
@@ -355,9 +356,16 @@ async function cargarProductos() {
   const contenedor =
     document.getElementById("productos");
 
+  contenedor.innerHTML = `
+    <div class="cargando">
+      🌽 Cargando menú...
+    </div>
+  `;
+
   try {
 
-    const parametros = new URLSearchParams();
+    const parametros =
+      new URLSearchParams();
 
     parametros.set(
       "table",
@@ -365,18 +373,12 @@ async function cargarProductos() {
     );
 
     /*
-      IMPORTANTE:
+      Solamente pedimos datos públicos.
 
-      Solo pedimos información pública:
-
-      id
-      nombre
-      precio
-      categoria
-      activo
-
-      NO pedimos costo.
-      NO pedimos utilidad.
+      NO pedimos:
+      costo
+      utilidad
+      margen
     */
 
     parametros.set(
@@ -394,27 +396,51 @@ async function cargarProductos() {
       "id.asc"
     );
 
+    const url =
+      API +
+      "?" +
+      parametros.toString();
+
+    console.log(
+      "Cargando menú desde:",
+      url
+    );
 
     const respuesta =
-      await fetch(
-        API + "?" + parametros.toString()
-      );
-
+      await fetch(url, {
+        method: "GET",
+        headers: {
+          "Accept": "application/json"
+        },
+        cache: "no-store"
+      });
 
     if (!respuesta.ok) {
 
+      const texto =
+        await respuesta.text();
+
+      console.error(
+        "Respuesta del servidor:",
+        texto
+      );
+
       throw new Error(
-        "No se pudo cargar el menú."
+        "Servidor respondió con error " +
+        respuesta.status
       );
 
     }
 
-
     const datos =
       await respuesta.json();
 
-
     if (!Array.isArray(datos)) {
+
+      console.error(
+        "Respuesta recibida:",
+        datos
+      );
 
       throw new Error(
         "La respuesta del menú no es válida."
@@ -422,6 +448,10 @@ async function cargarProductos() {
 
     }
 
+    /*
+      Convertimos los productos
+      recibidos desde Supabase.
+    */
 
     productos =
       datos.map(producto => ({
@@ -430,7 +460,7 @@ async function cargarProductos() {
           producto.id,
 
         nombre:
-          producto.nombre,
+          producto.nombre || "Producto",
 
         precio:
           Number(producto.precio) || 0,
@@ -443,14 +473,21 @@ async function cargarProductos() {
 
 
     /*
-      Si no hay productos
+      Si no existen productos.
     */
 
     if (productos.length === 0) {
 
       contenedor.innerHTML = `
         <div class="error-menu">
-          🌽 Actualmente no hay productos disponibles.
+
+          🌽 Actualmente no hay productos
+          disponibles.
+
+          <br><br>
+
+          Regresa más tarde.
+
         </div>
       `;
 
@@ -460,7 +497,7 @@ async function cargarProductos() {
 
 
     /*
-      Crear carrito
+      Crear cantidades iniciales.
     */
 
     productos.forEach(producto => {
@@ -469,6 +506,10 @@ async function cargarProductos() {
 
     });
 
+
+    /*
+      Mostrar menú.
+    */
 
     mostrarProductos();
 
@@ -481,17 +522,32 @@ async function cargarProductos() {
       error
     );
 
-
     contenedor.innerHTML = `
+
       <div class="error-menu">
 
-        ❌ No se pudo cargar el menú.
+        ❌ <b>No se pudo cargar el menú.</b>
 
         <br><br>
 
-        Intenta actualizar la página.
+        Estamos intentando conectar
+        con Elotemanía.
+
+        <br><br>
+
+        <button
+          type="button"
+          onclick="cargarProductos()"
+          style="
+            background:#d4af37;
+            color:#000;
+          "
+        >
+          🔄 Intentar nuevamente
+        </button>
 
       </div>
+
     `;
 
   }
@@ -508,13 +564,7 @@ function mostrarProductos() {
   const contenedor =
     document.getElementById("productos");
 
-
   contenedor.innerHTML = "";
-
-
-  /*
-    Agrupar productos por categoría
-  */
 
   const categorias = {};
 
@@ -525,13 +575,11 @@ function mostrarProductos() {
       producto.categoria ||
       "Nuestro menú";
 
-
     if (!categorias[categoria]) {
 
       categorias[categoria] = [];
 
     }
-
 
     categorias[categoria].push(
       producto
@@ -539,10 +587,6 @@ function mostrarProductos() {
 
   });
 
-
-  /*
-    Crear cada categoría
-  */
 
   Object.keys(categorias).forEach(
     categoria => {
@@ -555,7 +599,6 @@ function mostrarProductos() {
 
       titulo.textContent =
         "🌽 " + categoria;
-
 
       contenedor.appendChild(
         titulo
@@ -579,7 +622,7 @@ function mostrarProductos() {
             </h3>
 
             <div class="precio">
-              $${producto.precio}
+              $${formatearPrecio(producto.precio)}
             </div>
 
             <div class="controles">
@@ -609,7 +652,6 @@ function mostrarProductos() {
 
           `;
 
-
           contenedor.appendChild(
             div
           );
@@ -624,7 +666,24 @@ function mostrarProductos() {
 
 
 /* =====================================================
-   SEGURIDAD PARA TEXTO DEL PRODUCTO
+   FORMATO DE PRECIO
+===================================================== */
+
+function formatearPrecio(precio) {
+
+  return Number(precio).toLocaleString(
+    "es-MX",
+    {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 2
+    }
+  );
+
+}
+
+
+/* =====================================================
+   SEGURIDAD PARA TEXTO
 ===================================================== */
 
 function escaparHTML(texto) {
@@ -656,9 +715,7 @@ function cambiarCantidad(
 
   }
 
-
   carrito[id] += cambio;
-
 
   if (
     carrito[id] < 0
@@ -668,12 +725,10 @@ function cambiarCantidad(
 
   }
 
-
   const elemento =
     document.getElementById(
       "cantidad-" + id
     );
-
 
   if (elemento) {
 
@@ -681,7 +736,6 @@ function cambiarCantidad(
       carrito[id];
 
   }
-
 
   actualizarCarrito();
 
@@ -699,7 +753,6 @@ function actualizarCarrito() {
       "lista-carrito"
     );
 
-
   let total = 0;
 
   let texto = "";
@@ -711,13 +764,11 @@ function actualizarCarrito() {
       const cantidad =
         carrito[producto.id] || 0;
 
-
       if (cantidad > 0) {
 
         const subtotal =
           cantidad *
           producto.precio;
-
 
         total += subtotal;
 
@@ -730,7 +781,7 @@ function actualizarCarrito() {
             ×
             ${escaparHTML(producto.nombre)}
 
-            — $${subtotal}
+            — $${formatearPrecio(subtotal)}
 
           </p>
 
@@ -760,7 +811,7 @@ function actualizarCarrito() {
   document.getElementById(
     "total"
   ).textContent =
-    total;
+    formatearPrecio(total);
 
 }
 
@@ -780,7 +831,6 @@ document
           .getElementById("nombre")
           .value
           .trim();
-
 
       const telefono =
         document
@@ -811,20 +861,23 @@ document
       }
 
 
-      let mensaje =
-        "🌽 *NUEVO PEDIDO — ELOTEMANÍA*%0A%0A";
+      let lineas = [];
 
+      lineas.push(
+        "🌽 *NUEVO PEDIDO — ELOTEMANÍA*"
+      );
 
-      mensaje +=
-        "*Cliente:* " +
-        encodeURIComponent(nombre) +
-        "%0A";
+      lineas.push("");
 
+      lineas.push(
+        "*Cliente:* " + nombre
+      );
 
-      mensaje +=
-        "*Teléfono:* " +
-        encodeURIComponent(telefono) +
-        "%0A%0A";
+      lineas.push(
+        "*Teléfono:* " + telefono
+      );
+
+      lineas.push("");
 
 
       let total = 0;
@@ -838,30 +891,25 @@ document
           const cantidad =
             carrito[producto.id] || 0;
 
-
           if (cantidad > 0) {
 
             hayProductos = true;
-
 
             const subtotal =
               cantidad *
               producto.precio;
 
-
             total += subtotal;
 
 
-            mensaje +=
+            lineas.push(
               "🌽 " +
               cantidad +
               " × " +
-              encodeURIComponent(
-                producto.nombre
-              ) +
+              producto.nombre +
               " — $" +
-              subtotal +
-              "%0A";
+              formatearPrecio(subtotal)
+            );
 
           }
 
@@ -880,14 +928,25 @@ document
       }
 
 
-      mensaje +=
-        "%0A*TOTAL: $" +
-        total +
-        "*%0A%0A";
+      lineas.push("");
+
+      lineas.push(
+        "*TOTAL: $" +
+        formatearPrecio(total) +
+        "*"
+      );
+
+      lineas.push("");
+
+      lineas.push(
+        "¡Gracias por tu pedido! 🌽🔥"
+      );
 
 
-      mensaje +=
-        "¡Gracias por tu pedido! 🌽🔥";
+      const mensaje =
+        encodeURIComponent(
+          lineas.join("\n")
+        );
 
 
       const url =
@@ -943,15 +1002,11 @@ botonInstalar.addEventListener(
 
     }
 
-
     deferredPrompt.prompt();
-
 
     await deferredPrompt.userChoice;
 
-
     deferredPrompt = null;
-
 
     botonInstalar.style.display =
       "none";
@@ -1004,7 +1059,7 @@ if (
 
       navigator.serviceWorker
         .register(
-          "/sw.js?v=6"
+          "/sw.js?v=7"
         )
         .then(() => {
 
