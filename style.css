@@ -11,23 +11,61 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   background: #050505;
   color: #ffffff;
+  position: relative;
+  min-height: 100vh;
 }
+
+/* LOGO COMO FONDO */
+
+.fondo-logo {
+  position: fixed;
+  inset: 0;
+  background-image: url("images/logo.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: min(95vw, 600px);
+  opacity: 0.08;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* CONTENIDO */
+
+.header,
+main,
+footer {
+  position: relative;
+  z-index: 1;
+}
+
+/* ENCABEZADO */
 
 .header {
   text-align: center;
   padding: 25px 15px 30px;
-  background: #000000;
+  background: rgba(0, 0, 0, 0.92);
   border-bottom: 2px solid #d4af37;
 }
 
-.logo {
-  width: 150px;
-  height: 150px;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 3px solid #d4af37;
-  display: block;
+/* LOGO PRINCIPAL */
+
+.logo-principal {
+  width: 190px;
+  height: 190px;
   margin: 0 auto 15px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 4px solid #d4af37;
+  background: #000000;
+  box-shadow:
+    0 0 25px rgba(212, 175, 55, 0.35);
+}
+
+.logo-principal img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .header h1 {
@@ -44,6 +82,8 @@ body {
   font-size: 16px;
 }
 
+/* CONTENIDO */
+
 main {
   width: 100%;
   max-width: 700px;
@@ -57,7 +97,7 @@ section {
 
 .cliente,
 .pedido {
-  background: #111111;
+  background: rgba(17, 17, 17, 0.96);
   border: 1px solid #292929;
   border-radius: 18px;
   padding: 20px;
@@ -73,6 +113,8 @@ h2 {
   text-align: center;
   margin-bottom: 15px;
 }
+
+/* DATOS */
 
 label {
   display: block;
@@ -101,6 +143,8 @@ input::placeholder {
   color: #888888;
 }
 
+/* MENU */
+
 .menu {
   display: flex;
   flex-direction: column;
@@ -111,7 +155,7 @@ input::placeholder {
   display: flex;
   align-items: center;
   gap: 12px;
-  background: #111111;
+  background: rgba(17, 17, 17, 0.96);
   border: 1px solid #292929;
   border-radius: 16px;
   padding: 13px;
@@ -163,6 +207,8 @@ input::placeholder {
 .btn-agregar:active {
   transform: scale(0.94);
 }
+
+/* CARRITO */
 
 .carrito {
   display: flex;
@@ -220,6 +266,8 @@ input::placeholder {
   font-weight: bold;
 }
 
+/* TOTAL */
+
 .total {
   display: flex;
   align-items: center;
@@ -234,6 +282,8 @@ input::placeholder {
   color: #d4af37;
   font-size: 27px;
 }
+
+/* WHATSAPP */
 
 .btn-whatsapp {
   width: 100%;
@@ -260,11 +310,14 @@ input::placeholder {
   line-height: 1.4;
 }
 
+/* PIE */
+
 footer {
   text-align: center;
   padding: 25px 15px 35px;
   border-top: 1px solid #292929;
   color: #888888;
+  background: rgba(0, 0, 0, 0.92);
 }
 
 footer strong {
@@ -275,7 +328,29 @@ footer p {
   margin-bottom: 0;
 }
 
+/* CELULAR */
+
+@media (max-width: 480px) {
+
+  .logo-principal {
+    width: 165px;
+    height: 165px;
+  }
+
+  .header h1 {
+    font-size: 27px;
+  }
+
+  .producto-info h3 {
+    font-size: 15px;
+  }
+
+}
+
+/* PANTALLAS GRANDES */
+
 @media (min-width: 600px) {
+
   main {
     padding-left: 20px;
     padding-right: 20px;
@@ -288,4 +363,5 @@ footer p {
   .producto-info h3 {
     font-size: 17px;
   }
-    }
+
+}
