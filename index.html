@@ -211,6 +211,18 @@
       color: #777;
       margin-top: 10px;
     }
+
+    .diagnostico {
+      display: none;
+      margin-top: 12px;
+      padding: 10px;
+      background: #171717;
+      border-radius: 8px;
+      color: #aaa;
+      font-size: 12px;
+      word-break: break-word;
+      text-align: left;
+    }
   </style>
 </head>
 
@@ -220,7 +232,11 @@
 
 <main>
 
-  <img src="/logo.png" class="logo" alt="Elotemanía">
+  <img
+    src="/logo.png"
+    class="logo"
+    alt="Elotemanía"
+  >
 
   <h1>🌽 ELOTEMANÍA</h1>
 
@@ -228,17 +244,22 @@
     Entre compas sabe mejor
   </div>
 
-  <!-- INSTALAR -->
+
+  <!-- INSTALACIÓN -->
 
   <section class="instalar">
 
     <h2>📲 Instala Elotemanía</h2>
 
-    <p id="mensaje">
+    <p>
       Ten nuestro menú siempre a la mano.
     </p>
 
-    <button id="btn-instalar" style="display:none;">
+    <button
+      id="btn-instalar"
+      style="display:none;"
+      type="button"
+    >
       📲 Instalar Elotemanía
     </button>
 
@@ -255,7 +276,8 @@
 
   </section>
 
-  <!-- MENU -->
+
+  <!-- MENÚ -->
 
   <h2 style="color:#d4af37;">
     🌽 Nuestro menú
@@ -268,6 +290,7 @@
     </div>
 
   </div>
+
 
   <!-- CARRITO -->
 
@@ -302,13 +325,15 @@
       placeholder="Tu teléfono"
     >
 
-    <button id="btn-whatsapp">
-
+    <button
+      id="btn-whatsapp"
+      type="button"
+    >
       📲 Enviar pedido por WhatsApp
-
     </button>
 
   </section>
+
 
   <div class="actualizando">
     Menú actualizado automáticamente desde Elotemanía.
@@ -316,26 +341,16 @@
 
 </main>
 
+
 <script>
 
 /* =====================================================
    CONFIGURACIÓN
 ===================================================== */
 
+const API = "/api/supabase";
+
 const WHATSAPP = "526143839513";
-
-/*
-   IMPORTANTE:
-
-   Esta página está conectada al mismo API
-   que utiliza el sistema principal de Elotemanía.
-
-   Así puede leer los productos que agregues
-   desde el panel administrativo.
-*/
-
-const API =
-  "https://elotemania.vercel.app/api/supabase";
 
 
 /* =====================================================
@@ -348,15 +363,66 @@ const carrito = {};
 
 
 /* =====================================================
-   CONEXIÓN CON SUPABASE
+   ELEMENTOS
+===================================================== */
+
+const contenedorProductos =
+  document.getElementById("productos");
+
+const listaCarrito =
+  document.getElementById("lista-carrito");
+
+const totalElemento =
+  document.getElementById("total");
+
+
+/* =====================================================
+   ESCAPAR HTML
+===================================================== */
+
+function escaparHTML(texto) {
+
+  return String(texto)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+
+}
+
+
+/* =====================================================
+   FORMATO DE PRECIO
+===================================================== */
+
+function formatearPrecio(precio) {
+
+  const numero =
+    Number(precio);
+
+  if (!Number.isFinite(numero)) {
+    return "0";
+  }
+
+  return numero.toLocaleString(
+    "es-MX",
+    {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 2
+    }
+  );
+
+}
+
+
+/* =====================================================
+   CARGAR PRODUCTOS
 ===================================================== */
 
 async function cargarProductos() {
 
-  const contenedor =
-    document.getElementById("productos");
-
-  contenedor.innerHTML = `
+  contenedorProductos.innerHTML = `
     <div class="cargando">
       🌽 Cargando menú...
     </div>
@@ -371,15 +437,6 @@ async function cargarProductos() {
       "table",
       "productos"
     );
-
-    /*
-      Solamente pedimos datos públicos.
-
-      NO pedimos:
-      costo
-      utilidad
-      margen
-    */
 
     parametros.set(
       "select",
@@ -396,97 +453,109 @@ async function cargarProductos() {
       "id.asc"
     );
 
+
     const url =
       API +
       "?" +
       parametros.toString();
 
+
     console.log(
-      "Cargando menú desde:",
+      "Elotemanía API:",
       url
     );
 
+
     const respuesta =
-      await fetch(url, {
-        method: "GET",
-        headers: {
-          "Accept": "application/json"
-        },
-        cache: "no-store"
-      });
+      await fetch(
+        url,
+        {
+          method: "GET",
+          headers: {
+            "Accept": "application/json"
+          },
+          cache: "no-store"
+        }
+      );
+
+
+    const texto =
+      await respuesta.text();
+
+
+    console.log(
+      "Respuesta API:",
+      texto
+    );
+
 
     if (!respuesta.ok) {
 
-      const texto =
-        await respuesta.text();
-
-      console.error(
-        "Respuesta del servidor:",
+      throw new Error(
+        "HTTP " +
+        respuesta.status +
+        ": " +
         texto
       );
 
+    }
+
+
+    let datos;
+
+    try {
+
+      datos =
+        JSON.parse(texto);
+
+    } catch {
+
       throw new Error(
-        "Servidor respondió con error " +
-        respuesta.status
+        "La API no devolvió JSON válido."
       );
 
     }
 
-    const datos =
-      await respuesta.json();
 
     if (!Array.isArray(datos)) {
 
-      console.error(
-        "Respuesta recibida:",
-        datos
-      );
-
       throw new Error(
-        "La respuesta del menú no es válida."
+        "La API devolvió un formato inesperado."
       );
 
     }
 
-    /*
-      Convertimos los productos
-      recibidos desde Supabase.
-    */
 
     productos =
       datos.map(producto => ({
 
         id:
-          producto.id,
+          Number(producto.id),
 
         nombre:
-          producto.nombre || "Producto",
+          producto.nombre ||
+          "Producto",
 
         precio:
           Number(producto.precio) || 0,
 
         categoria:
           producto.categoria ||
-          "Nuestro menú"
+          "Nuestro menú",
+
+        activo:
+          producto.activo === true
 
       }));
 
 
-    /*
-      Si no existen productos.
-    */
-
     if (productos.length === 0) {
 
-      contenedor.innerHTML = `
+      contenedorProductos.innerHTML = `
         <div class="error-menu">
 
-          🌽 Actualmente no hay productos
-          disponibles.
-
-          <br><br>
-
-          Regresa más tarde.
+          🌽 No hay productos activos
+          en este momento.
 
         </div>
       `;
@@ -497,32 +566,36 @@ async function cargarProductos() {
 
 
     /*
-      Crear cantidades iniciales.
+      Inicializar cantidades
     */
 
     productos.forEach(producto => {
 
-      carrito[producto.id] = 0;
+      if (
+        carrito[producto.id] === undefined
+      ) {
+
+        carrito[producto.id] = 0;
+
+      }
 
     });
 
 
-    /*
-      Mostrar menú.
-    */
-
     mostrarProductos();
 
-  }
+    actualizarCarrito();
 
-  catch (error) {
+
+  } catch (error) {
 
     console.error(
-      "Error cargando menú:",
+      "ERROR MENÚ ELOTEMANÍA:",
       error
     );
 
-    contenedor.innerHTML = `
+
+    contenedorProductos.innerHTML = `
 
       <div class="error-menu">
 
@@ -536,8 +609,8 @@ async function cargarProductos() {
         <br><br>
 
         <button
+          id="btn-reintentar"
           type="button"
-          onclick="cargarProductos()"
           style="
             background:#d4af37;
             color:#000;
@@ -546,9 +619,33 @@ async function cargarProductos() {
           🔄 Intentar nuevamente
         </button>
 
+        <div
+          id="diagnostico"
+          class="diagnostico"
+          style="display:block;"
+        >
+          ${escaparHTML(error.message)}
+        </div>
+
       </div>
 
     `;
+
+
+    const boton =
+      document.getElementById(
+        "btn-reintentar"
+      );
+
+
+    if (boton) {
+
+      boton.addEventListener(
+        "click",
+        cargarProductos
+      );
+
+    }
 
   }
 
@@ -561,10 +658,7 @@ async function cargarProductos() {
 
 function mostrarProductos() {
 
-  const contenedor =
-    document.getElementById("productos");
-
-  contenedor.innerHTML = "";
+  contenedorProductos.innerHTML = "";
 
   const categorias = {};
 
@@ -575,11 +669,15 @@ function mostrarProductos() {
       producto.categoria ||
       "Nuestro menú";
 
-    if (!categorias[categoria]) {
+
+    if (
+      !categorias[categoria]
+    ) {
 
       categorias[categoria] = [];
 
     }
+
 
     categorias[categoria].push(
       producto
@@ -588,8 +686,8 @@ function mostrarProductos() {
   });
 
 
-  Object.keys(categorias).forEach(
-    categoria => {
+  Object.keys(categorias)
+    .forEach(categoria => {
 
       const titulo =
         document.createElement("div");
@@ -600,13 +698,13 @@ function mostrarProductos() {
       titulo.textContent =
         "🌽 " + categoria;
 
-      contenedor.appendChild(
+      contenedorProductos.appendChild(
         titulo
       );
 
 
-      categorias[categoria].forEach(
-        producto => {
+      categorias[categoria]
+        .forEach(producto => {
 
           const div =
             document.createElement("div");
@@ -629,7 +727,9 @@ function mostrarProductos() {
 
               <button
                 type="button"
-                onclick="cambiarCantidad(${producto.id}, -1)"
+                data-id="${producto.id}"
+                data-cambio="-1"
+                class="btn-cantidad"
               >
                 −
               </button>
@@ -638,12 +738,14 @@ function mostrarProductos() {
                 class="cantidad"
                 id="cantidad-${producto.id}"
               >
-                0
+                ${carrito[producto.id] || 0}
               </span>
 
               <button
                 type="button"
-                onclick="cambiarCantidad(${producto.id}, 1)"
+                data-id="${producto.id}"
+                data-cambio="1"
+                class="btn-cantidad"
               >
                 +
               </button>
@@ -652,48 +754,43 @@ function mostrarProductos() {
 
           `;
 
-          contenedor.appendChild(
+
+          contenedorProductos.appendChild(
             div
+          );
+
+        });
+
+    });
+
+
+  document
+    .querySelectorAll(".btn-cantidad")
+    .forEach(boton => {
+
+      boton.addEventListener(
+        "click",
+        () => {
+
+          const id =
+            Number(
+              boton.dataset.id
+            );
+
+          const cambio =
+            Number(
+              boton.dataset.cambio
+            );
+
+          cambiarCantidad(
+            id,
+            cambio
           );
 
         }
       );
 
-    }
-  );
-
-}
-
-
-/* =====================================================
-   FORMATO DE PRECIO
-===================================================== */
-
-function formatearPrecio(precio) {
-
-  return Number(precio).toLocaleString(
-    "es-MX",
-    {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 2
-    }
-  );
-
-}
-
-
-/* =====================================================
-   SEGURIDAD PARA TEXTO
-===================================================== */
-
-function escaparHTML(texto) {
-
-  return String(texto)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+    });
 
 }
 
@@ -715,7 +812,9 @@ function cambiarCantidad(
 
   }
 
+
   carrito[id] += cambio;
+
 
   if (
     carrito[id] < 0
@@ -725,17 +824,20 @@ function cambiarCantidad(
 
   }
 
-  const elemento =
+
+  const cantidad =
     document.getElementById(
       "cantidad-" + id
     );
 
-  if (elemento) {
 
-    elemento.textContent =
+  if (cantidad) {
+
+    cantidad.textContent =
       carrito[id];
 
   }
+
 
   actualizarCarrito();
 
@@ -748,69 +850,62 @@ function cambiarCantidad(
 
 function actualizarCarrito() {
 
-  const lista =
-    document.getElementById(
-      "lista-carrito"
-    );
-
   let total = 0;
 
-  let texto = "";
+  let html = "";
 
 
-  productos.forEach(
-    producto => {
+  productos.forEach(producto => {
 
-      const cantidad =
-        carrito[producto.id] || 0;
-
-      if (cantidad > 0) {
-
-        const subtotal =
-          cantidad *
-          producto.precio;
-
-        total += subtotal;
+    const cantidad =
+      carrito[producto.id] || 0;
 
 
-        texto += `
+    if (
+      cantidad > 0
+    ) {
 
-          <p>
+      const subtotal =
+        cantidad *
+        producto.precio;
 
-            ${cantidad}
-            ×
-            ${escaparHTML(producto.nombre)}
 
-            — $${formatearPrecio(subtotal)}
+      total += subtotal;
 
-          </p>
 
-        `;
+      html += `
 
-      }
+        <p>
+
+          ${cantidad}
+          ×
+          ${escaparHTML(producto.nombre)}
+
+          — $${formatearPrecio(subtotal)}
+
+        </p>
+
+      `;
 
     }
-  );
+
+  });
 
 
-  if (texto === "") {
+  if (!html) {
 
-    lista.innerHTML =
+    listaCarrito.innerHTML =
       "<p>Aún no has agregado productos.</p>";
 
-  }
+  } else {
 
-  else {
-
-    lista.innerHTML =
-      texto;
+    listaCarrito.innerHTML =
+      html;
 
   }
 
 
-  document.getElementById(
-    "total"
-  ).textContent =
+  totalElemento.textContent =
     formatearPrecio(total);
 
 }
@@ -831,6 +926,7 @@ document
           .getElementById("nombre")
           .value
           .trim();
+
 
       const telefono =
         document
@@ -863,19 +959,25 @@ document
 
       let lineas = [];
 
+
       lineas.push(
         "🌽 *NUEVO PEDIDO — ELOTEMANÍA*"
       );
 
       lineas.push("");
 
-      lineas.push(
-        "*Cliente:* " + nombre
-      );
 
       lineas.push(
-        "*Teléfono:* " + telefono
+        "*Cliente:* " +
+        nombre
       );
+
+
+      lineas.push(
+        "*Teléfono:* " +
+        telefono
+      );
+
 
       lineas.push("");
 
@@ -885,36 +987,39 @@ document
       let hayProductos = false;
 
 
-      productos.forEach(
-        producto => {
+      productos.forEach(producto => {
 
-          const cantidad =
-            carrito[producto.id] || 0;
-
-          if (cantidad > 0) {
-
-            hayProductos = true;
-
-            const subtotal =
-              cantidad *
-              producto.precio;
-
-            total += subtotal;
+        const cantidad =
+          carrito[producto.id] || 0;
 
 
-            lineas.push(
-              "🌽 " +
-              cantidad +
-              " × " +
-              producto.nombre +
-              " — $" +
-              formatearPrecio(subtotal)
-            );
+        if (
+          cantidad > 0
+        ) {
 
-          }
+          hayProductos = true;
+
+
+          const subtotal =
+            cantidad *
+            producto.precio;
+
+
+          total += subtotal;
+
+
+          lineas.push(
+            "🌽 " +
+            cantidad +
+            " × " +
+            producto.nombre +
+            " — $" +
+            formatearPrecio(subtotal)
+          );
 
         }
-      );
+
+      });
 
 
       if (!hayProductos) {
@@ -930,13 +1035,16 @@ document
 
       lineas.push("");
 
+
       lineas.push(
         "*TOTAL: $" +
         formatearPrecio(total) +
         "*"
       );
 
+
       lineas.push("");
+
 
       lineas.push(
         "¡Gracias por tu pedido! 🌽🔥"
@@ -1002,6 +1110,7 @@ botonInstalar.addEventListener(
 
     }
 
+
     deferredPrompt.prompt();
 
     await deferredPrompt.userChoice;
@@ -1059,12 +1168,13 @@ if (
 
       navigator.serviceWorker
         .register(
-          "/sw.js?v=7"
+          "/sw.js?v=8"
         )
-        .then(() => {
+        .then(registro => {
 
           console.log(
-            "Elotemanía: servicio instalado"
+            "Elotemanía Service Worker activo",
+            registro
           );
 
         })
@@ -1084,7 +1194,7 @@ if (
 
 
 /* =====================================================
-   INICIAR MENÚ
+   INICIAR
 ===================================================== */
 
 cargarProductos();
