@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -13,13 +12,8 @@
   <link rel="stylesheet" href="style.css">
   <link rel="manifest" href="manifest.json">
 
-  <link rel="icon" href="images/logo.png">
-  <link rel="apple-touch-icon" href="images/logo.png">
-
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="Elotemanía">
+  <link rel="icon" href="logo.png">
+  <link rel="apple-touch-icon" href="logo.png">
 </head>
 
 <body>
@@ -29,116 +23,69 @@
   <header class="header">
 
     <div class="logo-principal">
-      <img
-        src="images/logo.png"
-        alt="Elote Manía"
-      >
+      <img src="logo.png" alt="Elotemanía">
     </div>
 
     <h1>🌽 ELOTEMANÍA</h1>
-
     <p>Entre compas sabe mejor</p>
 
   </header>
 
-
   <main>
 
-    <section class="cliente">
+    <section class="pedido">
 
-      <h2>📋 Datos del pedido</h2>
+      <h2>🌽 Haz tu pedido</h2>
 
-      <label for="nombre">
-        Nombre
-      </label>
+      <div id="menu"></div>
 
+    </section>
+
+    <section class="carrito">
+
+      <h2>🛒 Tu pedido</h2>
+
+      <div id="carrito"></div>
+
+      <div class="total">
+        <span>Total:</span>
+        <strong id="total">$0</strong>
+      </div>
+
+    </section>
+
+    <section class="datos">
+
+      <h2>📋 Tus datos</h2>
+
+      <label for="nombre">Nombre</label>
       <input
         type="text"
         id="nombre"
         placeholder="Escribe tu nombre"
-        autocomplete="name"
       >
 
-      <label for="telefono">
-        Número de teléfono
-      </label>
-
+      <label for="telefono">Teléfono</label>
       <input
         type="tel"
         id="telefono"
-        placeholder="Ej. 614 123 4567"
-        autocomplete="tel"
+        placeholder="Tu número de teléfono"
       >
-
-    </section>
-
-
-    <section>
-
-      <h2 class="titulo">
-        🌽 Nuestro menú
-      </h2>
-
-      <div
-        id="menu"
-        class="menu"
-      ></div>
-
-    </section>
-
-
-    <section class="pedido">
-
-      <h2>🛒 Tu pedido</h2>
-
-      <div
-        id="carrito"
-        class="carrito"
-      >
-        <p class="vacio">
-          Todavía no has agregado productos.
-        </p>
-      </div>
-
-      <div class="total">
-
-        <span>
-          Total
-        </span>
-
-        <strong id="total">
-          $0
-        </strong>
-
-      </div>
 
       <button
-        id="whatsapp"
         class="btn-whatsapp"
-        type="button"
+        onclick="enviarWhatsApp()"
       >
         📲 Enviar pedido por WhatsApp
       </button>
-
-      <p class="nota">
-        Tu pedido se abrirá directamente en WhatsApp.
-      </p>
 
     </section>
 
   </main>
 
-
   <footer>
-
-    <strong>
-      🌽 ELOTEMANÍA
-    </strong>
-
-    <p>
-      Entre compas sabe mejor ❤️
-    </p>
-
+    <p>🌽 Elotemanía</p>
+    <p>Entre compas sabe mejor ❤️‍🔥</p>
   </footer>
 
 
@@ -146,174 +93,160 @@
 
 const WHATSAPP = "526143839513";
 
-
 const productos = [
 
   {
     id: 1,
     nombre: "Elote en vaso chico",
-    precio: 35,
-    emoji: "🌽"
+    precio: 35
   },
 
   {
     id: 2,
     nombre: "Elote en vaso mediano",
-    precio: 40,
-    emoji: "🌽"
+    precio: 40
   },
 
   {
     id: 3,
     nombre: "Elote en vaso grande",
-    precio: 45,
-    emoji: "🌽"
+    precio: 45
   },
 
   {
     id: 4,
     nombre: "Elote en vaso jumbo",
-    precio: 55,
-    emoji: "🌽"
+    precio: 55
   },
 
   {
     id: 5,
     nombre: "Elote en vaso 1/2 litro",
-    precio: 75,
-    emoji: "🌽"
+    precio: 75
   },
 
   {
     id: 6,
     nombre: "Elote en vaso litro",
-    precio: 150,
-    emoji: "🌽"
+    precio: 150
   },
 
   {
     id: 7,
     nombre: "Elote entero sencillo",
-    precio: 45,
-    emoji: "🌽"
+    precio: 45
   },
 
   {
     id: 8,
     nombre: "Elote entero revolcado",
-    precio: 80,
-    emoji: "🌽"
+    precio: 80
   },
 
   {
     id: 9,
     nombre: "Elote entero especial",
-    precio: 90,
-    emoji: "🌽"
+    precio: 90
   },
 
   {
     id: 10,
     nombre: "Nachos sencillo",
-    precio: 70,
-    emoji: "🧀"
+    precio: 70
   },
 
   {
     id: 11,
     nombre: "Dorinachos especial",
-    precio: 80,
-    emoji: "🔥"
+    precio: 80
   },
 
   {
     id: 12,
     nombre: "Maruchan preparada 1/2 litro",
-    precio: 75,
-    emoji: "🍜"
+    precio: 75
   },
 
   {
     id: 13,
     nombre: "Maruchan preparada litro",
-    precio: 100,
-    emoji: "🍜"
+    precio: 100
   },
 
   {
     id: 14,
     nombre: "Elote chorreado chico",
-    precio: 125,
-    emoji: "🌽"
+    precio: 125
   },
 
   {
     id: 15,
     nombre: "Elote chorreado entero",
-    precio: 125,
-    emoji: "🌽"
+    precio: 125
   },
 
   {
     id: 16,
     nombre: "Elote chorreado grande",
-    precio: 160,
-    emoji: "🌽"
+    precio: 160
   },
 
   {
     id: 17,
     nombre: "Soda 600 ml",
-    precio: 30,
-    emoji: "🥤"
+    precio: 30
   }
 
 ];
 
 
-let carrito = [];
+let carrito = {};
 
 
-function mostrarMenu(){
+function dinero(numero) {
 
-  const menu =
-    document.getElementById("menu");
+  return "$" + numero.toLocaleString("es-MX");
+
+}
+
+
+function mostrarMenu() {
+
+  const menu = document.getElementById("menu");
 
   menu.innerHTML = "";
 
   productos.forEach(producto => {
 
-    const tarjeta =
-      document.createElement("div");
+    const cantidad = carrito[producto.id] || 0;
 
-    tarjeta.className =
-      "producto";
+    const tarjeta = document.createElement("div");
+
+    tarjeta.className = "producto";
 
     tarjeta.innerHTML = `
 
-      <div class="producto-icono">
-        ${producto.emoji}
-      </div>
-
       <div class="producto-info">
 
-        <h3>
-          ${producto.nombre}
-        </h3>
+        <h3>${producto.nombre}</h3>
 
-        <strong>
-          $${producto.precio}
-        </strong>
+        <strong>${dinero(producto.precio)}</strong>
 
       </div>
 
-      <button
-        class="btn-agregar"
-        type="button"
-        onclick="agregar(${producto.id})"
-      >
-        +
-      </button>
+      <div class="controles">
+
+        <button onclick="quitar(${producto.id})">
+          −
+        </button>
+
+        <span>${cantidad}</span>
+
+        <button onclick="agregar(${producto.id})">
+          +
+        </button>
+
+      </div>
 
     `;
 
@@ -324,224 +257,157 @@ function mostrarMenu(){
 }
 
 
-function agregar(id){
+function agregar(id) {
 
-  const producto =
-    productos.find(
-      p => p.id === id
-    );
+  carrito[id] = (carrito[id] || 0) + 1;
 
-  if(!producto){
-    return;
-  }
-
-  const existente =
-    carrito.find(
-      p => p.id === id
-    );
-
-  if(existente){
-
-    existente.cantidad++;
-
-  }else{
-
-    carrito.push({
-
-      id: producto.id,
-      nombre: producto.nombre,
-      precio: producto.precio,
-      cantidad: 1
-
-    });
-
-  }
-
-  mostrarCarrito();
+  actualizar();
 
 }
 
 
-function quitar(id){
+function quitar(id) {
 
-  const producto =
-    carrito.find(
-      p => p.id === id
-    );
+  if (!carrito[id]) return;
 
-  if(!producto){
-    return;
-  }
+  carrito[id]--;
 
-  producto.cantidad--;
+  if (carrito[id] <= 0) {
 
-  if(producto.cantidad <= 0){
-
-    carrito =
-      carrito.filter(
-        p => p.id !== id
-      );
+    delete carrito[id];
 
   }
 
-  mostrarCarrito();
+  actualizar();
 
 }
 
 
-function mostrarCarrito(){
-
-  const contenedor =
-    document.getElementById("carrito");
-
-  const totalElemento =
-    document.getElementById("total");
-
-  if(carrito.length === 0){
-
-    contenedor.innerHTML = `
-
-      <p class="vacio">
-        Todavía no has agregado productos.
-      </p>
-
-    `;
-
-    totalElemento.textContent =
-      "$0";
-
-    return;
-
-  }
-
-
-  contenedor.innerHTML = "";
+function calcularTotal() {
 
   let total = 0;
 
+  productos.forEach(producto => {
 
-  carrito.forEach(producto => {
+    const cantidad = carrito[producto.id] || 0;
 
-    const subtotal =
-      producto.precio *
-      producto.cantidad;
+    total += producto.precio * cantidad;
 
-    total += subtotal;
+  });
 
+  return total;
 
-    const item =
-      document.createElement("div");
-
-    item.className =
-      "carrito-item";
+}
 
 
-    item.innerHTML = `
+function mostrarCarrito() {
 
-      <div>
+  const contenedor = document.getElementById("carrito");
+
+  contenedor.innerHTML = "";
+
+  let hayProductos = false;
+
+  productos.forEach(producto => {
+
+    const cantidad = carrito[producto.id] || 0;
+
+    if (cantidad > 0) {
+
+      hayProductos = true;
+
+      const subtotal = producto.precio * cantidad;
+
+      const item = document.createElement("div");
+
+      item.className = "carrito-item";
+
+      item.innerHTML = `
+
+        <div>
+
+          <strong>${producto.nombre}</strong>
+
+          <small>
+            ${cantidad} × ${dinero(producto.precio)}
+          </small>
+
+        </div>
 
         <strong>
-          ${producto.nombre}
+          ${dinero(subtotal)}
         </strong>
 
-        <small>
-          $${producto.precio} c/u
-        </small>
+      `;
 
-      </div>
+      contenedor.appendChild(item);
 
-
-      <div class="cantidad">
-
-        <button
-          type="button"
-          onclick="quitar(${producto.id})"
-        >
-          −
-        </button>
-
-        <span>
-          ${producto.cantidad}
-        </span>
-
-        <button
-          type="button"
-          onclick="agregar(${producto.id})"
-        >
-          +
-        </button>
-
-      </div>
-
-
-      <strong>
-        $${subtotal}
-      </strong>
-
-    `;
-
-
-    contenedor.appendChild(item);
+    }
 
   });
 
 
-  totalElemento.textContent =
-    "$" + total;
+  if (!hayProductos) {
+
+    contenedor.innerHTML = `
+      <p class="vacio">
+        Todavía no has agregado productos.
+      </p>
+    `;
+
+  }
 
 }
 
 
-function enviarWhatsApp(){
+function actualizar() {
+
+  mostrarMenu();
+
+  mostrarCarrito();
+
+  document.getElementById("total").textContent =
+    dinero(calcularTotal());
+
+}
+
+
+function enviarWhatsApp() {
 
   const nombre =
-    document
-      .getElementById("nombre")
-      .value
-      .trim();
-
+    document.getElementById("nombre").value.trim();
 
   const telefono =
-    document
-      .getElementById("telefono")
-      .value
-      .trim();
+    document.getElementById("telefono").value.trim();
+
+  const total = calcularTotal();
 
 
-  if(!nombre){
+  if (!nombre) {
 
-    alert(
-      "Por favor escribe tu nombre."
-    );
+    alert("Escribe tu nombre.");
 
     return;
 
   }
 
 
-  if(!telefono){
+  if (!telefono) {
 
-    alert(
-      "Por favor escribe tu número de teléfono."
-    );
+    alert("Escribe tu número de teléfono.");
 
     return;
 
   }
 
 
-  if(carrito.length === 0){
+  if (total <= 0) {
 
-    alert(
-      "Agrega al menos un producto."
-    );
+    alert("Agrega al menos un producto.");
 
     return;
 
   }
-
-
-  let total = 0;
 
 
   let mensaje =
@@ -564,24 +430,25 @@ function enviarWhatsApp(){
     "🛒 *PEDIDO:*%0A";
 
 
-  carrito.forEach(producto => {
+  productos.forEach(producto => {
 
-    const subtotal =
-      producto.precio *
-      producto.cantidad;
+    const cantidad = carrito[producto.id] || 0;
 
-    total += subtotal;
+    if (cantidad > 0) {
 
+      const subtotal =
+        producto.precio * cantidad;
 
-    mensaje +=
-      encodeURIComponent(
-        producto.cantidad +
-        "× " +
-        producto.nombre +
+      mensaje +=
+        "• " +
+        cantidad +
+        " × " +
+        encodeURIComponent(producto.nombre) +
         " — $" +
-        subtotal
-      ) +
-      "%0A";
+        subtotal +
+        "%0A";
+
+    }
 
   });
 
@@ -593,7 +460,7 @@ function enviarWhatsApp(){
 
 
   mensaje +=
-    "Gracias por pedir en *Elotemanía* 🌽❤️";
+    "¡Gracias por comprar en Elotemanía! 🌽❤️";
 
 
   const url =
@@ -603,46 +470,29 @@ function enviarWhatsApp(){
     mensaje;
 
 
-  window.open(
-    url,
-    "_blank"
-  );
+  window.open(url, "_blank");
 
 }
 
 
-document
-  .getElementById("whatsapp")
-  .addEventListener(
-    "click",
-    enviarWhatsApp
-  );
+actualizar();
 
 
-mostrarMenu();
+if ("serviceWorker" in navigator) {
 
-mostrarCarrito();
+  window.addEventListener("load", () => {
 
+    navigator.serviceWorker.register("/sw.js")
+      .catch(error => {
 
-if("serviceWorker" in navigator){
-
-  window.addEventListener(
-    "load",
-    () => {
-
-      navigator
-        .serviceWorker
-        .register("/sw.js")
-        .catch(
-          error =>
-            console.log(
-              "Service Worker:",
-              error
-            )
+        console.log(
+          "Error registrando Service Worker:",
+          error
         );
 
-    }
-  );
+      });
+
+  });
 
 }
 
