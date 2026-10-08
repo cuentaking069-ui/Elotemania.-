@@ -20,12 +20,20 @@ export default async function handler(req, res) {
     }
 
     const tablasPermitidas = [
-      "productos"
+      "productos",
+      "configuracion",
+      "clientes",
+      "ventas",
+      "detalle_ventas",
+      "cierres_turno",
+      "usuarios"
     ];
 
     if (!tablasPermitidas.includes(table)) {
       return res.status(400).json({
-        error: "Tabla no permitida."
+        error: "Tabla no permitida.",
+        tabla_recibida: table,
+        tablas_permitidas: tablasPermitidas
       });
     }
 
@@ -40,21 +48,23 @@ export default async function handler(req, res) {
       "offset",
       "id",
       "activo",
-      "categoria",
-      "nombre"
+      "whatsapp",
+      "corte_id",
+      "venta_id",
+      "cliente_id",
+      "usuario",
+      "rol",
+      "nombre",
+      "categoria"
     ];
 
     for (const key of allowedParams) {
-
       if (req.query[key] !== undefined) {
-
         url.searchParams.set(
           key,
           req.query[key]
         );
-
       }
-
     }
 
     const response = await fetch(
@@ -74,18 +84,12 @@ export default async function handler(req, res) {
     let data;
 
     try {
-
-      data = text
-        ? JSON.parse(text)
-        : null;
-
+      data = text ? JSON.parse(text) : null;
     } catch {
-
       return res.status(response.status).json({
         error: "Supabase no devolvió JSON.",
         detalle: text
       });
-
     }
 
     return res
@@ -100,5 +104,4 @@ export default async function handler(req, res) {
     });
 
   }
-
 }
