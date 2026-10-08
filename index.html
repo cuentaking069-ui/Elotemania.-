@@ -6,7 +6,7 @@
 
   <title>Elotemanía 🌽</title>
 
-  <meta name="theme-color" content="#ffcc00">
+  <meta name="theme-color" content="#080808">
   <meta name="description" content="Elotemanía - Entre compas sabe mejor">
 
   <link rel="manifest" href="/manifest.json">
@@ -16,244 +16,540 @@
       box-sizing: border-box;
     }
 
+    :root {
+      --negro: #070707;
+      --negro-2: #0d0d0d;
+      --negro-3: #151515;
+      --dorado: #d4af37;
+      --dorado-claro: #f5d76e;
+      --dorado-oscuro: #9c7620;
+      --blanco: #f7f3e7;
+      --gris: #b9b4a8;
+      --verde: #25d366;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
       font-family: Arial, Helvetica, sans-serif;
-      background: #fff8df;
-      color: #222;
+      background:
+        radial-gradient(
+          circle at 50% 0%,
+          rgba(212,175,55,.12),
+          transparent 35%
+        ),
+        linear-gradient(
+          180deg,
+          #050505 0%,
+          #0b0b0b 45%,
+          #050505 100%
+        );
+      color: var(--blanco);
+      min-height: 100vh;
     }
 
+    /* =========================
+       HEADER
+    ========================= */
+
     header {
-      background: #111;
-      color: white;
+      position: relative;
+      overflow: hidden;
       text-align: center;
-      padding: 25px 15px;
+      padding: 32px 15px 28px;
+      background:
+        linear-gradient(
+          180deg,
+          #050505,
+          #101010
+        );
+      border-bottom: 1px solid rgba(212,175,55,.45);
+      box-shadow:
+        0 8px 30px rgba(0,0,0,.5);
+    }
+
+    header::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background:
+        linear-gradient(
+          90deg,
+          transparent,
+          var(--dorado),
+          var(--dorado-claro),
+          var(--dorado),
+          transparent
+        );
+    }
+
+    header::after {
+      content: "";
+      position: absolute;
+      width: 250px;
+      height: 250px;
+      left: 50%;
+      top: -160px;
+      transform: translateX(-50%);
+      background: rgba(212,175,55,.08);
+      border-radius: 50%;
+      filter: blur(35px);
     }
 
     header h1 {
+      position: relative;
+      z-index: 1;
       margin: 0;
-      font-size: 38px;
-      color: #ffd21c;
+      font-size: 42px;
       font-weight: 900;
-      text-shadow: 2px 2px #000;
+      letter-spacing: 1px;
+      color: var(--dorado-claro);
+      text-shadow:
+        0 0 8px rgba(212,175,55,.25),
+        0 3px 10px #000;
     }
 
     header p {
-      margin: 8px 0 0;
-      font-size: 18px;
+      position: relative;
+      z-index: 1;
+      margin: 9px 0 0;
+      font-size: 17px;
+      color: var(--gris);
       font-weight: bold;
+      letter-spacing: .4px;
     }
 
     .horario {
-      margin-top: 12px;
+      position: relative;
+      z-index: 1;
+      margin-top: 16px;
       display: inline-block;
-      background: #ffd21c;
-      color: #111;
-      padding: 8px 15px;
-      border-radius: 20px;
+      padding: 9px 18px;
+      border-radius: 30px;
+      border: 1px solid var(--dorado);
+      background: rgba(212,175,55,.08);
+      color: var(--dorado-claro);
       font-weight: bold;
+      box-shadow:
+        0 0 15px rgba(212,175,55,.12);
     }
+
+    /* =========================
+       CONTENEDOR
+    ========================= */
 
     .contenedor {
-      max-width: 900px;
+      max-width: 950px;
       margin: auto;
-      padding: 15px;
+      padding: 18px 15px 40px;
     }
 
+    /* =========================
+       CATEGORÍAS
+    ========================= */
+
     .categoria {
-      margin-top: 25px;
+      margin-top: 30px;
     }
 
     .categoria h2 {
-      background: #111;
-      color: #ffd21c;
-      padding: 12px;
-      border-radius: 12px;
-      margin-bottom: 12px;
+      position: relative;
+      margin: 0 0 14px;
+      padding: 13px 15px;
       text-align: center;
+      color: var(--dorado-claro);
+      background:
+        linear-gradient(
+          135deg,
+          #111,
+          #181818
+        );
+      border: 1px solid rgba(212,175,55,.45);
+      border-radius: 14px;
+      font-size: 21px;
+      box-shadow:
+        0 5px 20px rgba(0,0,0,.35);
     }
+
+    .categoria h2::after {
+      content: "";
+      display: block;
+      width: 45px;
+      height: 2px;
+      margin: 8px auto 0;
+      background: var(--dorado);
+      border-radius: 10px;
+    }
+
+    /* =========================
+       PRODUCTOS
+    ========================= */
 
     .productos {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 12px;
+      grid-template-columns:
+        repeat(auto-fit, minmax(165px, 1fr));
+      gap: 14px;
     }
 
     .producto {
-      background: white;
-      border-radius: 15px;
-      padding: 15px;
-      box-shadow: 0 3px 10px rgba(0,0,0,.12);
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(
+          145deg,
+          #171717,
+          #0d0d0d
+        );
+      border-radius: 17px;
+      padding: 17px 13px;
       text-align: center;
-      border: 2px solid #f2d76b;
+      border: 1px solid rgba(212,175,55,.32);
+      box-shadow:
+        0 7px 20px rgba(0,0,0,.45);
+      transition:
+        transform .2s ease,
+        border-color .2s ease,
+        box-shadow .2s ease;
+    }
+
+    .producto::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 18%;
+      right: 18%;
+      height: 1px;
+      background:
+        linear-gradient(
+          90deg,
+          transparent,
+          var(--dorado),
+          transparent
+        );
+    }
+
+    .producto:hover {
+      transform: translateY(-3px);
+      border-color: var(--dorado);
+      box-shadow:
+        0 10px 25px rgba(0,0,0,.6),
+        0 0 18px rgba(212,175,55,.10);
     }
 
     .producto h3 {
-      margin: 5px 0 10px;
-      font-size: 18px;
+      margin: 6px 0 11px;
+      font-size: 17px;
+      line-height: 1.3;
+      color: var(--blanco);
     }
 
     .precio {
-      font-size: 21px;
+      margin-bottom: 13px;
+      font-size: 22px;
       font-weight: 900;
-      color: #d35400;
-      margin-bottom: 12px;
+      color: var(--dorado-claro);
     }
 
     .cantidad {
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 12px;
+      gap: 13px;
     }
 
     .cantidad button {
       width: 42px;
       height: 42px;
-      border: 0;
+      border: 1px solid var(--dorado);
       border-radius: 50%;
+      background:
+        linear-gradient(
+          145deg,
+          var(--dorado-claro),
+          var(--dorado)
+        );
+      color: #080808;
       font-size: 24px;
-      font-weight: bold;
-      background: #ffd21c;
+      font-weight: 900;
       cursor: pointer;
+      box-shadow:
+        0 3px 10px rgba(212,175,55,.18);
+    }
+
+    .cantidad button:active {
+      transform: scale(.94);
     }
 
     .cantidad span {
-      font-size: 21px;
-      font-weight: bold;
       min-width: 25px;
+      font-size: 21px;
+      font-weight: 900;
+      color: var(--blanco);
     }
 
-    #carrito {
-      margin-top: 30px;
-      background: white;
-      border-radius: 18px;
+    /* =========================
+       INSTALAR
+    ========================= */
+
+    .instalar {
+      position: relative;
+      overflow: hidden;
+      margin: 22px auto 5px;
+      max-width: 650px;
       padding: 20px;
-      box-shadow: 0 4px 15px rgba(0,0,0,.15);
+      text-align: center;
+      background:
+        linear-gradient(
+          145deg,
+          #171717,
+          #090909
+        );
+      border: 1px solid var(--dorado);
+      border-radius: 18px;
+      box-shadow:
+        0 8px 25px rgba(0,0,0,.5),
+        0 0 20px rgba(212,175,55,.08);
+    }
+
+    .instalar::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background:
+        linear-gradient(
+          90deg,
+          transparent,
+          var(--dorado-claro),
+          transparent
+        );
+    }
+
+    .instalar button {
+      margin-top: 12px;
+      padding: 13px 22px;
+      border: 1px solid var(--dorado-claro);
+      border-radius: 11px;
+      background:
+        linear-gradient(
+          145deg,
+          var(--dorado-claro),
+          var(--dorado)
+        );
+      color: #080808;
+      font-weight: 900;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    /* =========================
+       CARRITO
+    ========================= */
+
+    #carrito {
+      margin-top: 35px;
+      padding: 22px;
+      background:
+        linear-gradient(
+          145deg,
+          #171717,
+          #0b0b0b
+        );
+      border: 1px solid rgba(212,175,55,.55);
+      border-radius: 20px;
+      box-shadow:
+        0 10px 30px rgba(0,0,0,.55);
     }
 
     #carrito h2 {
+      margin: 0 0 18px;
       text-align: center;
-      margin-top: 0;
+      color: var(--dorado-claro);
+      font-size: 25px;
     }
 
     .item-carrito {
       display: flex;
       justify-content: space-between;
       gap: 10px;
-      border-bottom: 1px solid #ddd;
-      padding: 10px 0;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      color: var(--blanco);
+    }
+
+    .item-carrito strong:last-child {
+      color: var(--dorado-claro);
     }
 
     .total {
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(212,175,55,.3);
       text-align: right;
-      font-size: 25px;
+      font-size: 26px;
       font-weight: 900;
-      margin-top: 15px;
+      color: var(--dorado-claro);
     }
 
+    /* =========================
+       DATOS
+    ========================= */
+
     .datos {
-      margin-top: 20px;
+      margin-top: 22px;
     }
 
     .datos input {
       width: 100%;
-      padding: 13px;
+      padding: 14px;
       margin-bottom: 10px;
-      border: 1px solid #ccc;
-      border-radius: 10px;
+      border: 1px solid rgba(212,175,55,.35);
+      border-radius: 11px;
+      background: #080808;
+      color: var(--blanco);
       font-size: 16px;
+      outline: none;
     }
+
+    .datos input::placeholder,
+    #domicilio::placeholder {
+      color: #888;
+    }
+
+    .datos input:focus,
+    #domicilio:focus {
+      border-color: var(--dorado);
+      box-shadow:
+        0 0 0 2px rgba(212,175,55,.10);
+    }
+
+    /* =========================
+       ENTREGA
+    ========================= */
 
     .entrega {
       margin-top: 20px;
-      padding: 15px;
-      background: #fff7d1;
-      border-radius: 15px;
-      border: 2px solid #ffd21c;
+      padding: 16px;
+      background:
+        linear-gradient(
+          145deg,
+          #171717,
+          #0c0c0c
+        );
+      border: 1px solid rgba(212,175,55,.5);
+      border-radius: 16px;
     }
 
     .entrega h3 {
-      margin-top: 0;
+      margin: 0 0 13px;
       text-align: center;
+      color: var(--dorado-claro);
+      font-size: 18px;
     }
 
     .opcion-entrega {
       display: block;
-      padding: 13px;
-      background: white;
-      border-radius: 10px;
-      margin-bottom: 8px;
+      padding: 14px;
+      margin-bottom: 9px;
+      border: 1px solid rgba(212,175,55,.25);
+      border-radius: 11px;
+      background: #090909;
+      color: var(--blanco);
       font-weight: bold;
       cursor: pointer;
     }
 
+    .opcion-entrega:has(input:checked) {
+      border-color: var(--dorado);
+      background: rgba(212,175,55,.09);
+      color: var(--dorado-claro);
+    }
+
     .opcion-entrega input {
-      margin-right: 8px;
+      margin-right: 9px;
       transform: scale(1.3);
+      accent-color: var(--dorado);
     }
 
     #contenedor-domicilio {
       display: none;
-      margin-top: 12px;
+      margin-top: 13px;
+    }
+
+    #contenedor-domicilio label {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--dorado-claro);
+      font-weight: bold;
     }
 
     #domicilio {
       width: 100%;
-      padding: 13px;
-      border-radius: 10px;
-      border: 1px solid #bbb;
+      padding: 14px;
+      border: 1px solid rgba(212,175,55,.35);
+      border-radius: 11px;
+      background: #080808;
+      color: var(--blanco);
       font-size: 16px;
+      outline: none;
     }
+
+    /* =========================
+       WHATSAPP
+    ========================= */
 
     .boton-whatsapp {
       width: 100%;
       margin-top: 20px;
-      padding: 16px;
-      border: 0;
-      border-radius: 12px;
-      background: #25d366;
+      padding: 17px;
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 13px;
+      background:
+        linear-gradient(
+          145deg,
+          #25d366,
+          #1faa52
+        );
       color: white;
       font-size: 19px;
       font-weight: 900;
       cursor: pointer;
+      box-shadow:
+        0 7px 18px rgba(0,0,0,.35);
     }
 
-    .instalar {
-      margin: 20px auto;
-      max-width: 600px;
-      background: #111;
-      color: white;
-      padding: 18px;
-      border-radius: 16px;
-      text-align: center;
+    .boton-whatsapp:active {
+      transform: scale(.99);
     }
 
-    .instalar button {
-      margin-top: 10px;
-      padding: 13px 20px;
-      border: 0;
-      border-radius: 10px;
-      background: #ffd21c;
-      color: #111;
-      font-weight: bold;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    /* ==============================
-       MENSAJE DE AGRADECIMIENTO
-       ============================== */
+    /* =========================
+       MODAL GRACIAS
+    ========================= */
 
     #modalGracias {
       display: none;
       position: fixed;
       inset: 0;
       z-index: 999999;
-      background: rgba(0,0,0,.92);
       align-items: center;
       justify-content: center;
       padding: 20px;
+      background:
+        radial-gradient(
+          circle,
+          rgba(212,175,55,.13),
+          transparent 40%
+        ),
+        rgba(0,0,0,.96);
     }
 
     #modalGracias.visible {
@@ -261,20 +557,47 @@
     }
 
     .gracias-contenido {
+      position: relative;
+      overflow: hidden;
       width: 100%;
-      max-width: 520px;
-      background: linear-gradient(145deg, #fffdf0, #fff0a8);
-      border-radius: 30px;
-      padding: 35px 22px;
+      max-width: 540px;
+      padding: 38px 23px;
       text-align: center;
-      box-shadow: 0 0 40px rgba(255,210,28,.45);
+      background:
+        linear-gradient(
+          145deg,
+          #181818,
+          #080808
+        );
+      border: 1px solid var(--dorado);
+      border-radius: 28px;
+      box-shadow:
+        0 0 45px rgba(212,175,55,.18),
+        0 20px 50px rgba(0,0,0,.7);
       animation: aparecer .45s ease;
+    }
+
+    .gracias-contenido::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background:
+        linear-gradient(
+          90deg,
+          transparent,
+          var(--dorado-claro),
+          var(--dorado),
+          transparent
+        );
     }
 
     @keyframes aparecer {
       from {
         opacity: 0;
-        transform: scale(.75);
+        transform: scale(.78);
       }
 
       to {
@@ -284,35 +607,38 @@
     }
 
     .gracias-emoji {
-      font-size: 65px;
-      margin-bottom: 10px;
+      font-size: 62px;
+      margin-bottom: 12px;
     }
 
     .gracias-titulo {
       font-size: 30px;
-      font-weight: 900;
-      color: #111;
       line-height: 1.1;
+      font-weight: 900;
+      color: var(--dorado-claro);
+      text-shadow:
+        0 0 12px rgba(212,175,55,.15);
     }
 
     .gracias-texto {
       margin-top: 18px;
-      font-size: 19px;
-      line-height: 1.5;
+      color: var(--gris);
+      font-size: 18px;
+      line-height: 1.55;
     }
 
     .gracias-marca {
-      color: #d35400;
+      color: var(--dorado-claro);
       font-weight: 900;
     }
 
     .gracias-enviando {
       margin-top: 25px;
-      background: #25d366;
-      color: white;
       padding: 14px;
       border-radius: 12px;
-      font-weight: bold;
+      background: var(--verde);
+      color: white;
+      font-weight: 900;
     }
 
     #botonAbrirWhatsApp {
@@ -320,23 +646,67 @@
       width: 100%;
       margin-top: 12px;
       padding: 14px;
-      border: 0;
+      border: 1px solid var(--dorado);
       border-radius: 12px;
-      background: #111;
-      color: white;
-      font-weight: bold;
+      background:
+        linear-gradient(
+          145deg,
+          var(--dorado-claro),
+          var(--dorado)
+        );
+      color: #080808;
+      font-weight: 900;
       font-size: 17px;
       cursor: pointer;
     }
 
-    /* ==============================
+    /* =========================
        RESPONSIVE
-       ============================== */
+    ========================= */
 
     @media (max-width: 600px) {
 
+      header {
+        padding-top: 28px;
+      }
+
       header h1 {
-        font-size: 30px;
+        font-size: 31px;
+      }
+
+      header p {
+        font-size: 15px;
+      }
+
+      .productos {
+        grid-template-columns:
+          repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .producto {
+        padding: 14px 8px;
+      }
+
+      .producto h3 {
+        font-size: 15px;
+      }
+
+      .precio {
+        font-size: 20px;
+      }
+
+      .cantidad {
+        gap: 8px;
+      }
+
+      .cantidad button {
+        width: 39px;
+        height: 39px;
+      }
+
+      #carrito {
+        padding: 17px;
       }
 
       .gracias-titulo {
@@ -344,7 +714,7 @@
       }
 
       .gracias-texto {
-        font-size: 17px;
+        font-size: 16px;
       }
     }
   </style>
@@ -353,56 +723,101 @@
 <body>
 
 <header>
-  <h1>🌽 ELOTEMANÍA</h1>
-  <p>Entre compas sabe mejor 🔥</p>
+
+  <h1>
+    🌽 ELOTEMANÍA
+  </h1>
+
+  <p>
+    Entre compas sabe mejor 🔥
+  </p>
 
   <div class="horario">
     🕖 Horario: 7:00 PM a 5:00 AM
   </div>
+
 </header>
 
-<!-- INSTALACIÓN -->
+
+<!-- =========================
+     INSTALACIÓN
+========================= -->
+
 <div
   id="seccion-instalar"
   class="instalar"
   style="display:none;"
 >
-  <div style="font-size:30px;">📲</div>
 
-  <strong style="font-size:20px;">
+  <div style="font-size:30px;">
+    📲
+  </div>
+
+  <strong style="font-size:20px;color:#f5d76e;">
     ¡Instala Elotemanía!
   </strong>
 
-  <div style="margin-top:7px;">
+  <div style="margin-top:7px;color:#b9b4a8;">
     Ten nuestro menú más rápido en tu celular.
   </div>
 
   <button id="botonInstalar">
     📲 Instalar Elotemanía
   </button>
+
 </div>
+
 
 <div class="contenedor">
 
+  <!-- =========================
+       MENÚ
+  ========================= -->
+
   <div id="menu">
-    <p style="text-align:center;">
+
+    <p style="
+      text-align:center;
+      color:#d4af37;
+    ">
       🌽 Cargando menú...
     </p>
+
   </div>
+
+
+  <!-- =========================
+       CARRITO
+  ========================= -->
 
   <div id="carrito">
 
-    <h2>🛒 Tu pedido</h2>
+    <h2>
+      🛒 Tu pedido
+    </h2>
+
 
     <div id="lista-carrito">
-      <p style="text-align:center;">
+
+      <p style="
+        text-align:center;
+        color:#999;
+      ">
         Tu carrito está vacío.
       </p>
+
     </div>
 
+
     <div class="total">
-      Total: $<span id="total">0</span>
+
+      Total:
+      $<span id="total">0</span>
+
     </div>
+
+
+    <!-- DATOS -->
 
     <div class="datos">
 
@@ -420,13 +835,18 @@
 
     </div>
 
+
+    <!-- ENTREGA -->
+
     <div class="entrega">
 
       <h3>
         🚚 ¿Cómo quieres recibir tu pedido?
       </h3>
 
+
       <label class="opcion-entrega">
+
         <input
           type="radio"
           name="tipoEntrega"
@@ -434,9 +854,12 @@
         >
 
         🛵 Servicio a domicilio
+
       </label>
 
+
       <label class="opcion-entrega">
+
         <input
           type="radio"
           name="tipoEntrega"
@@ -444,7 +867,9 @@
         >
 
         🏃 Para recoger
+
       </label>
+
 
       <div id="contenedor-domicilio">
 
@@ -462,6 +887,9 @@
 
     </div>
 
+
+    <!-- WHATSAPP -->
+
     <button
       id="botonPedido"
       class="boton-whatsapp"
@@ -473,9 +901,10 @@
 
 </div>
 
-<!-- ==============================
-     MODAL DE AGRADECIMIENTO
-     ============================== -->
+
+<!-- =========================
+     MODAL GRACIAS
+========================= -->
 
 <div id="modalGracias">
 
@@ -485,9 +914,11 @@
       🌽❤️✨
     </div>
 
+
     <div class="gracias-titulo">
       ¡GRACIAS POR TU COMPRA!
     </div>
+
 
     <div class="gracias-texto">
 
@@ -508,13 +939,15 @@
 
       <br><br>
 
-      <strong>
+      <strong style="color:#f5d76e;">
         ¡Entre compas sabe mejor! 🌽🔥
       </strong>
+
 
       <div class="gracias-enviando">
         📲 Abriendo WhatsApp...
       </div>
+
 
       <button id="botonAbrirWhatsApp">
         💬 Abrir WhatsApp
@@ -526,11 +959,8 @@
 
 </div>
 
-<script>
 
-  /* =====================================
-     CONFIGURACIÓN
-     ===================================== */
+<script>
 
   const API = "/api/supabase";
 
@@ -545,13 +975,14 @@
   let urlWhatsAppPendiente = "";
 
 
-  /* =====================================
+  /* =========================
      CARGAR PRODUCTOS
-     ===================================== */
+  ========================= */
 
   async function cargarProductos() {
 
-    const menu = document.getElementById("menu");
+    const menu =
+      document.getElementById("menu");
 
     try {
 
@@ -562,46 +993,65 @@
         "&activo=eq.true" +
         "&order=id.asc";
 
-      const respuesta = await fetch(url);
+
+      const respuesta =
+        await fetch(url);
+
 
       if (!respuesta.ok) {
-        throw new Error("Error cargando productos");
+        throw new Error(
+          "Error cargando productos"
+        );
       }
 
-      productos = await respuesta.json();
+
+      productos =
+        await respuesta.json();
+
 
       if (!Array.isArray(productos)) {
-        throw new Error("Respuesta inválida");
+        throw new Error(
+          "Respuesta inválida"
+        );
       }
 
+
       productos.forEach(producto => {
+
         carrito[producto.id] = 0;
+
       });
+
 
       mostrarMenu();
 
       actualizarCarrito();
 
+
     } catch (error) {
 
       console.error(error);
 
+
       menu.innerHTML = `
+
         <div style="
           text-align:center;
-          padding:30px;
-          background:white;
-          border-radius:15px;
+          padding:35px 20px;
+          background:#111;
+          border:1px solid #d4af37;
+          border-radius:16px;
         ">
+
           <div style="font-size:45px;">
             😔
           </div>
 
-          <h2>
+          <h2 style="color:#f5d76e;">
             No se pudo cargar el menú
           </h2>
 
-          <p>
+          <p style="color:#aaa;">
             Estamos intentando conectar con Elotemanía.
           </p>
 
@@ -609,9 +1059,10 @@
             onclick="location.reload()"
             style="
               padding:12px 20px;
-              border:0;
+              border:1px solid #d4af37;
               border-radius:10px;
-              background:#ffd21c;
+              background:#d4af37;
+              color:#080808;
               font-weight:bold;
             "
           >
@@ -619,139 +1070,189 @@
           </button>
 
         </div>
+
       `;
+
     }
+
   }
 
 
-  /* =====================================
+  /* =========================
      MOSTRAR MENÚ
-     ===================================== */
+  ========================= */
 
   function mostrarMenu() {
 
-    const menu = document.getElementById("menu");
+    const menu =
+      document.getElementById("menu");
 
     menu.innerHTML = "";
 
+
     const categorias = {};
+
 
     productos.forEach(producto => {
 
       if (!categorias[producto.categoria]) {
+
         categorias[producto.categoria] = [];
+
       }
 
-      categorias[producto.categoria].push(producto);
+      categorias[producto.categoria]
+        .push(producto);
 
     });
 
 
-    Object.keys(categorias).forEach(categoria => {
+    Object.keys(categorias)
+      .forEach(categoria => {
 
-      const seccion =
-        document.createElement("div");
-
-      seccion.className = "categoria";
-
-      seccion.innerHTML = `
-        <h2>
-          ${categoria}
-        </h2>
-
-        <div class="productos"></div>
-      `;
-
-      const contenedorProductos =
-        seccion.querySelector(".productos");
-
-
-      categorias[categoria].forEach(producto => {
-
-        const tarjeta =
+        const seccion =
           document.createElement("div");
 
-        tarjeta.className = "producto";
+        seccion.className =
+          "categoria";
 
-        tarjeta.innerHTML = `
 
-          <h3>
-            ${producto.nombre}
-          </h3>
+        seccion.innerHTML = `
 
-          <div class="precio">
-            $${Number(producto.precio).toFixed(0)}
-          </div>
+          <h2>
+            ${categoria}
+          </h2>
 
-          <div class="cantidad">
+          <div class="productos"></div>
 
-            <button
-              type="button"
-              onclick="cambiarCantidad(${producto.id}, -1)"
-            >
-              −
-            </button>
-
-            <span id="cantidad-${producto.id}">
-              0
-            </span>
-
-            <button
-              type="button"
-              onclick="cambiarCantidad(${producto.id}, 1)"
-            >
-              +
-            </button>
-
-          </div>
         `;
 
-        contenedorProductos.appendChild(tarjeta);
+
+        const contenedorProductos =
+          seccion.querySelector(
+            ".productos"
+          );
+
+
+        categorias[categoria]
+          .forEach(producto => {
+
+            const tarjeta =
+              document.createElement(
+                "div"
+              );
+
+
+            tarjeta.className =
+              "producto";
+
+
+            tarjeta.innerHTML = `
+
+              <h3>
+                ${producto.nombre}
+              </h3>
+
+              <div class="precio">
+                $${Number(
+                  producto.precio
+                ).toFixed(0)}
+              </div>
+
+              <div class="cantidad">
+
+                <button
+                  type="button"
+                  onclick="
+                    cambiarCantidad(
+                      ${producto.id},
+                      -1
+                    )
+                  "
+                >
+                  −
+                </button>
+
+                <span
+                  id="cantidad-${producto.id}"
+                >
+                  0
+                </span>
+
+                <button
+                  type="button"
+                  onclick="
+                    cambiarCantidad(
+                      ${producto.id},
+                      1
+                    )
+                  "
+                >
+                  +
+                </button>
+
+              </div>
+
+            `;
+
+
+            contenedorProductos
+              .appendChild(tarjeta);
+
+          });
+
+
+        menu.appendChild(seccion);
 
       });
-
-
-      menu.appendChild(seccion);
-
-    });
 
   }
 
 
-  /* =====================================
-     CANTIDADES
-     ===================================== */
+  /* =========================
+     CAMBIAR CANTIDAD
+  ========================= */
 
-  function cambiarCantidad(id, cambio) {
+  function cambiarCantidad(
+    id,
+    cambio
+  ) {
 
     if (!carrito[id]) {
       carrito[id] = 0;
     }
 
+
     carrito[id] += cambio;
+
 
     if (carrito[id] < 0) {
       carrito[id] = 0;
     }
+
 
     const elemento =
       document.getElementById(
         "cantidad-" + id
       );
 
+
     if (elemento) {
+
       elemento.textContent =
         carrito[id];
+
     }
+
 
     actualizarCarrito();
 
   }
 
 
-  /* =====================================
+  /* =========================
      ACTUALIZAR CARRITO
-     ===================================== */
+  ========================= */
 
   function actualizarCarrito() {
 
@@ -760,10 +1261,15 @@
         "lista-carrito"
       );
 
+
     const totalElemento =
-      document.getElementById("total");
+      document.getElementById(
+        "total"
+      );
+
 
     lista.innerHTML = "";
+
 
     let total = 0;
 
@@ -775,36 +1281,49 @@
       const cantidad =
         carrito[producto.id] || 0;
 
+
       if (cantidad <= 0) {
         return;
       }
 
+
       cantidadTotal += cantidad;
+
 
       const subtotal =
         cantidad *
         Number(producto.precio);
 
+
       total += subtotal;
 
 
       const item =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
+
 
       item.className =
         "item-carrito";
 
+
       item.innerHTML = `
 
         <div>
+
           <strong>
             ${producto.nombre}
           </strong>
 
           <br>
 
-          ${cantidad} ×
-          $${Number(producto.precio).toFixed(0)}
+          ${cantidad}
+          ×
+          $${Number(
+            producto.precio
+          ).toFixed(0)}
+
         </div>
 
         <strong>
@@ -812,6 +1331,7 @@
         </strong>
 
       `;
+
 
       lista.appendChild(item);
 
@@ -821,9 +1341,14 @@
     if (cantidadTotal === 0) {
 
       lista.innerHTML = `
-        <p style="text-align:center;">
+
+        <p style="
+          text-align:center;
+          color:#888;
+        ">
           Tu carrito está vacío.
         </p>
+
       `;
 
     }
@@ -835,9 +1360,9 @@
   }
 
 
-  /* =====================================
-     ENTREGA
-     ===================================== */
+  /* =========================
+     DOMICILIO
+  ========================= */
 
   document
     .querySelectorAll(
@@ -853,6 +1378,7 @@
             document.getElementById(
               "contenedor-domicilio"
             );
+
 
           if (
             this.value ===
@@ -875,17 +1401,23 @@
     });
 
 
-  /* =====================================
-     ENVIAR PEDIDO
-     ===================================== */
+  /* =========================
+     BOTÓN PEDIDO
+  ========================= */
 
   document
-    .getElementById("botonPedido")
+    .getElementById(
+      "botonPedido"
+    )
     .addEventListener(
       "click",
       enviarPedido
     );
 
+
+  /* =========================
+     ENVIAR PEDIDO
+  ========================= */
 
   function enviarPedido() {
 
@@ -895,16 +1427,19 @@
         .value
         .trim();
 
+
     const telefono =
       document
         .getElementById("telefono")
         .value
         .trim();
 
+
     const entrega =
       document.querySelector(
         'input[name="tipoEntrega"]:checked'
       );
+
 
     const domicilio =
       document
@@ -913,11 +1448,8 @@
         .trim();
 
 
-    /* ===============================
-       VALIDACIONES
-       =============================== */
-
     let cantidadProductos = 0;
+
 
     productos.forEach(producto => {
 
@@ -934,6 +1466,7 @@
       );
 
       return;
+
     }
 
 
@@ -948,6 +1481,7 @@
         .focus();
 
       return;
+
     }
 
 
@@ -962,6 +1496,7 @@
         .focus();
 
       return;
+
     }
 
 
@@ -972,6 +1507,7 @@
       );
 
       return;
+
     }
 
 
@@ -989,32 +1525,35 @@
         .focus();
 
       return;
+
     }
 
 
-    /* ===============================
-       CREAR MENSAJE
-       =============================== */
-
     const lineas = [];
+
 
     lineas.push(
       "🌽 *PEDIDO ELOTEMANÍA*"
     );
 
+
     lineas.push("");
+
 
     lineas.push(
       "👤 *Cliente:* " +
       nombre
     );
 
+
     lineas.push(
       "📱 *Teléfono:* " +
       telefono
     );
 
+
     lineas.push("");
+
 
     lineas.push(
       "🛒 *PEDIDO:*"
@@ -1029,6 +1568,7 @@
       const cantidad =
         carrito[producto.id] || 0;
 
+
       if (cantidad <= 0) {
         return;
       }
@@ -1037,6 +1577,7 @@
       const subtotal =
         cantidad *
         Number(producto.precio);
+
 
       total += subtotal;
 
@@ -1055,18 +1596,16 @@
 
     lineas.push("");
 
+
     lineas.push(
       "💰 *TOTAL: $" +
       total.toFixed(0) +
       "*"
     );
 
+
     lineas.push("");
 
-
-    /* ===============================
-       ENTREGA
-       =============================== */
 
     if (
       entrega.value ===
@@ -1076,6 +1615,7 @@
       lineas.push(
         "🛵 *ENTREGA:* Servicio a domicilio"
       );
+
 
       lineas.push(
         "📍 *DOMICILIO:* " +
@@ -1093,11 +1633,14 @@
 
     lineas.push("");
 
+
     lineas.push(
       "🕖 *Horario:* 7:00 PM a 5:00 AM"
     );
 
+
     lineas.push("");
+
 
     lineas.push(
       "🌽 ¡Entre compas sabe mejor!"
@@ -1112,16 +1655,17 @@
       "https://wa.me/" +
       WHATSAPP +
       "?text=" +
-      encodeURIComponent(mensaje);
+      encodeURIComponent(
+        mensaje
+      );
 
 
-    /* ===============================
-       LIMPIAR CARRITO
-       =============================== */
+    /* LIMPIAR CARRITO */
 
     productos.forEach(producto => {
 
       carrito[producto.id] = 0;
+
 
       const cantidad =
         document.getElementById(
@@ -1129,8 +1673,11 @@
           producto.id
         );
 
+
       if (cantidad) {
+
         cantidad.textContent = "0";
+
       }
 
     });
@@ -1139,17 +1686,15 @@
     actualizarCarrito();
 
 
-    /* ===============================
-       LIMPIAR DATOS
-       =============================== */
-
     document
       .getElementById("nombre")
       .value = "";
 
+
     document
       .getElementById("telefono")
       .value = "";
+
 
     document
       .getElementById("domicilio")
@@ -1174,18 +1719,14 @@
       .style.display = "none";
 
 
-    /* ===============================
-       MOSTRAR AGRADECIMIENTO
-       =============================== */
-
     mostrarAgradecimiento();
 
   }
 
 
-  /* =====================================
+  /* =========================
      AGRADECIMIENTO
-     ===================================== */
+  ========================= */
 
   function mostrarAgradecimiento() {
 
@@ -1194,19 +1735,17 @@
         "modalGracias"
       );
 
+
     const botonWhatsApp =
       document.getElementById(
         "botonAbrirWhatsApp"
       );
 
 
-    modal.classList.add("visible");
+    modal.classList.add(
+      "visible"
+    );
 
-
-    /*
-      Intentamos abrir WhatsApp después
-      de 3 segundos.
-    */
 
     setTimeout(() => {
 
@@ -1215,13 +1754,6 @@
       }
 
 
-      /*
-        Abrimos una nueva pestaña.
-        Esto evita que el navegador
-        destruya el mensaje antes
-        de que pueda verse.
-      */
-
       const ventana =
         window.open(
           urlWhatsAppPendiente,
@@ -1229,15 +1761,11 @@
         );
 
 
-      /*
-        Si el navegador bloqueó
-        la ventana, mostramos botón.
-      */
-
       if (
         !ventana ||
         ventana.closed ||
-        typeof ventana.closed === "undefined"
+        typeof ventana.closed ===
+        "undefined"
       ) {
 
         botonWhatsApp.style.display =
@@ -1250,9 +1778,9 @@
   }
 
 
-  /* =====================================
-     BOTÓN ABRIR WHATSAPP
-     ===================================== */
+  /* =========================
+     ABRIR WHATSAPP
+  ========================= */
 
   document
     .getElementById(
@@ -1266,6 +1794,7 @@
           return;
         }
 
+
         window.open(
           urlWhatsAppPendiente,
           "_blank"
@@ -1275,14 +1804,15 @@
     );
 
 
-  /* =====================================
+  /* =========================
      INSTALACIÓN PWA
-     ===================================== */
+  ========================= */
 
   const seccionInstalar =
     document.getElementById(
       "seccion-instalar"
     );
+
 
   const botonInstalar =
     document.getElementById(
@@ -1296,6 +1826,7 @@
       return;
     }
 
+
     seccionInstalar.style.display =
       "none";
 
@@ -1308,15 +1839,12 @@
       return;
     }
 
+
     seccionInstalar.style.display =
       "block";
 
   }
 
-
-  /*
-    Detectar si ya está instalada
-  */
 
   function estaInstalada() {
 
@@ -1331,8 +1859,10 @@
       window.navigator.standalone === true;
 
 
-    return standalone ||
-      iosStandalone;
+    return (
+      standalone ||
+      iosStandalone
+    );
 
   }
 
@@ -1344,10 +1874,6 @@
   }
 
 
-  /*
-    Chrome / Android
-  */
-
   window.addEventListener(
     "beforeinstallprompt",
     function(evento) {
@@ -1356,22 +1882,16 @@
 
       deferredPrompt = evento;
 
-      /*
-        Solo mostramos el recuadro
-        si todavía NO está instalada.
-      */
 
       if (!estaInstalada()) {
+
         mostrarInstalacion();
+
       }
 
     }
   );
 
-
-  /*
-    Botón instalar
-  */
 
   botonInstalar.addEventListener(
     "click",
@@ -1379,17 +1899,12 @@
 
       if (!deferredPrompt) {
 
-        /*
-          En algunos navegadores
-          la instalación se hace desde
-          el menú del navegador.
-        */
-
         alert(
           "Para instalar Elotemanía, usa la opción 'Instalar aplicación' o 'Agregar a pantalla de inicio' de tu navegador."
         );
 
         return;
+
       }
 
 
@@ -1408,6 +1923,7 @@
         const resultado =
           await evento.userChoice;
 
+
         console.log(
           "Resultado instalación:",
           resultado
@@ -1420,21 +1936,11 @@
       }
 
 
-      /*
-        LO OCULTAMOS INMEDIATAMENTE
-        después de intentar instalar.
-      */
-
       ocultarInstalacion();
 
     }
   );
 
-
-  /*
-    Cuando el navegador confirma
-    que la app fue instalada.
-  */
 
   window.addEventListener(
     "appinstalled",
@@ -1444,6 +1950,7 @@
         "Elotemanía instalada."
       );
 
+
       deferredPrompt = null;
 
       ocultarInstalacion();
@@ -1452,32 +1959,33 @@
   );
 
 
-  /*
-    Si el usuario vuelve a entrar
-    como aplicación instalada.
-  */
+  if (
+    window.matchMedia
+  ) {
 
-  window
-    .matchMedia(
-      "(display-mode: standalone)"
-    )
-    .addEventListener(
-      "change",
-      function(evento) {
+    window
+      .matchMedia(
+        "(display-mode: standalone)"
+      )
+      .addEventListener(
+        "change",
+        function(evento) {
 
-        if (evento.matches) {
+          if (evento.matches) {
 
-          ocultarInstalacion();
+            ocultarInstalacion();
+
+          }
 
         }
+      );
 
-      }
-    );
+  }
 
 
-  /* =====================================
+  /* =========================
      SERVICE WORKER
-     ===================================== */
+  ========================= */
 
   if (
     "serviceWorker" in navigator
@@ -1489,7 +1997,7 @@
 
         navigator.serviceWorker
           .register(
-            "/sw.js?v=9"
+            "/sw.js?v=10"
           )
           .then(
             registro => {
@@ -1518,9 +2026,9 @@
   }
 
 
-  /* =====================================
+  /* =========================
      INICIAR
-     ===================================== */
+  ========================= */
 
   cargarProductos();
 
