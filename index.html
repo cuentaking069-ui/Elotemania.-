@@ -315,6 +315,13 @@
       font-weight: bold;
     }
 
+    .mensaje-enviando {
+      color: #25d366;
+      font-weight: bold;
+      margin-top: 18px;
+      font-size: 15px;
+    }
+
     @keyframes aparecer {
       from {
         opacity: 0;
@@ -354,7 +361,10 @@
 
   <!-- INSTALACIÓN -->
 
-  <section class="instalar">
+  <section
+    class="instalar"
+    id="seccion-instalar"
+  >
 
     <h2>📲 Instala Elotemanía</h2>
 
@@ -1067,7 +1077,7 @@ function actualizarCarrito() {
 
 
 /* =====================================================
-   MOSTRAR / OCULTAR DOMICILIO
+   DOMICILIO
 ===================================================== */
 
 document
@@ -1358,6 +1368,20 @@ document
 
 
       /* =============================================
+         DESACTIVAR BOTÓN
+      ============================================= */
+
+      const botonWhatsApp =
+        document.getElementById(
+          "btn-whatsapp"
+        );
+
+      botonWhatsApp.disabled = true;
+
+      botonWhatsApp.style.opacity = "0.6";
+
+
+      /* =============================================
          LIMPIAR CARRITO
       ============================================= */
 
@@ -1420,6 +1444,17 @@ document
          MENSAJE DE AGRADECIMIENTO
       ============================================= */
 
+      const mensajeAnterior =
+        document.querySelector(
+          ".mensaje-gracias"
+        );
+
+
+      if (mensajeAnterior) {
+        mensajeAnterior.remove();
+      }
+
+
       const mensajeGracias =
         document.createElement("div");
 
@@ -1448,8 +1483,8 @@ document
 
           <br><br>
 
-          Tu pedido ya fue enviado
-          por WhatsApp. 📲
+          Tu pedido está listo
+          para enviarse. 📲
 
           <br><br>
 
@@ -1466,10 +1501,19 @@ document
 
           ❤️ ¡Esperamos verte muy pronto!
 
+          <div class="mensaje-enviando">
+            📲 Abriendo WhatsApp...
+          </div>
+
         </div>
 
       `;
 
+
+      /*
+        Mostrar el mensaje ANTES
+        de abrir WhatsApp.
+      */
 
       document
         .getElementById("carrito")
@@ -1478,12 +1522,18 @@ document
         );
 
 
-      /* =============================================
-         ABRIR WHATSAPP
-      ============================================= */
+      /*
+        Esperar 2.5 segundos
+        para que el cliente pueda
+        ver el mensaje.
+      */
 
-      window.location.href =
-        url;
+      setTimeout(() => {
+
+        window.location.href =
+          url;
+
+      }, 2500);
 
     }
   );
@@ -1502,6 +1552,17 @@ const botonInstalar =
   );
 
 
+const seccionInstalar =
+  document.getElementById(
+    "seccion-instalar"
+  );
+
+
+/*
+  Mostrar botón cuando el navegador
+  permita instalar la aplicación.
+*/
+
 window.addEventListener(
   "beforeinstallprompt",
   evento => {
@@ -1518,25 +1579,66 @@ window.addEventListener(
 );
 
 
+/*
+  Instalar aplicación.
+*/
+
 botonInstalar.addEventListener(
   "click",
   async () => {
 
     if (!deferredPrompt) {
-
       return;
-
     }
 
 
     deferredPrompt.prompt();
 
-    await deferredPrompt.userChoice;
+
+    const resultado =
+      await deferredPrompt.userChoice;
+
 
     deferredPrompt = null;
 
+
     botonInstalar.style.display =
       "none";
+
+
+    /*
+      Si aceptó la instalación,
+      desaparece completamente
+      el recuadro.
+    */
+
+    if (
+      resultado &&
+      resultado.outcome === "accepted"
+    ) {
+
+      seccionInstalar.style.display =
+        "none";
+
+    }
+
+  }
+);
+
+
+/*
+  Detectar cuando la aplicación
+  ya fue instalada.
+*/
+
+window.addEventListener(
+  "appinstalled",
+  () => {
+
+    seccionInstalar.style.display =
+      "none";
+
+    deferredPrompt = null;
 
   }
 );
@@ -1568,6 +1670,19 @@ if (
     "ios"
   ).style.display =
     "block";
+
+}
+
+
+/*
+  Si ya está instalada como PWA,
+  ocultar el recuadro de instalación.
+*/
+
+if (estaEnModoApp) {
+
+  seccionInstalar.style.display =
+    "none";
 
 }
 
@@ -1620,4 +1735,4 @@ cargarProductos();
 </script>
 
 </body>
-</html>
+</html> 
