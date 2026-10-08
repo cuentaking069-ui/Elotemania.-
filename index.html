@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -64,8 +63,6 @@
       margin-bottom: 15px;
       color: #ddd;
     }
-
-    /* HORARIO */
 
     .horario {
       color: #d4af37;
@@ -200,8 +197,6 @@
       font-size: 16px;
     }
 
-    /* ENTREGA */
-
     .entrega {
       margin-top: 18px;
       padding: 15px;
@@ -277,6 +272,59 @@
       font-size: 12px;
       word-break: break-word;
       text-align: left;
+    }
+
+    /* MENSAJE DE AGRADECIMIENTO */
+
+    .mensaje-gracias {
+      margin: 25px 0;
+      padding: 30px 20px;
+      background: linear-gradient(
+        145deg,
+        #171717,
+        #0b0b0b
+      );
+      border: 3px solid #d4af37;
+      border-radius: 22px;
+      box-shadow: 0 0 30px rgba(212,175,55,.35);
+      text-align: center;
+      animation: aparecer .5s ease;
+    }
+
+    .mensaje-gracias .emoji {
+      font-size: 48px;
+      margin-bottom: 10px;
+    }
+
+    .mensaje-gracias .titulo {
+      color: #d4af37;
+      font-size: 30px;
+      font-weight: bold;
+      line-height: 1.2;
+      margin-bottom: 15px;
+    }
+
+    .mensaje-gracias .texto {
+      color: white;
+      font-size: 18px;
+      line-height: 1.5;
+    }
+
+    .mensaje-gracias .destacado {
+      color: #d4af37;
+      font-weight: bold;
+    }
+
+    @keyframes aparecer {
+      from {
+        opacity: 0;
+        transform: scale(.9);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
   </style>
 </head>
@@ -676,10 +724,6 @@ async function cargarProductos() {
     }
 
 
-    /*
-      Inicializar cantidades
-    */
-
     productos.forEach(producto => {
 
       if (
@@ -1058,7 +1102,10 @@ document
           domicilio.required =
             true;
 
-        } else if (
+        }
+
+
+        if (
           radio.value === "recoger" &&
           radio.checked
         ) {
@@ -1191,8 +1238,6 @@ document
       );
 
 
-      /* ENTREGA */
-
       lineas.push("");
 
 
@@ -1311,6 +1356,131 @@ document
         "?text=" +
         mensaje;
 
+
+      /* =============================================
+         LIMPIAR CARRITO
+      ============================================= */
+
+      Object.keys(carrito).forEach(id => {
+        carrito[id] = 0;
+      });
+
+
+      productos.forEach(producto => {
+
+        const cantidad =
+          document.getElementById(
+            "cantidad-" + producto.id
+          );
+
+        if (cantidad) {
+          cantidad.textContent = "0";
+        }
+
+      });
+
+
+      document
+        .getElementById("nombre")
+        .value = "";
+
+
+      document
+        .getElementById("telefono")
+        .value = "";
+
+
+      document
+        .getElementById("domicilio")
+        .value = "";
+
+
+      document
+        .querySelectorAll(
+          'input[name="tipoEntrega"]'
+        )
+        .forEach(radio => {
+
+          radio.checked = false;
+
+        });
+
+
+      document
+        .getElementById(
+          "contenedor-domicilio"
+        )
+        .style.display = "none";
+
+
+      actualizarCarrito();
+
+
+      /* =============================================
+         MENSAJE DE AGRADECIMIENTO
+      ============================================= */
+
+      const mensajeGracias =
+        document.createElement("div");
+
+
+      mensajeGracias.className =
+        "mensaje-gracias";
+
+
+      mensajeGracias.innerHTML = `
+
+        <div class="emoji">
+          🌽✨
+        </div>
+
+        <div class="titulo">
+          ¡GRACIAS POR TU COMPRA!
+        </div>
+
+        <div class="texto">
+
+          💛 En
+          <span class="destacado">
+            Elotemanía
+          </span>
+          nos encanta consentirte.
+
+          <br><br>
+
+          Tu pedido ya fue enviado
+          por WhatsApp. 📲
+
+          <br><br>
+
+          🫶 Gracias por apoyar
+          nuestro sueño.
+
+          <br><br>
+
+          <span class="destacado">
+            ¡Entre compas sabe mejor! 🌽🔥
+          </span>
+
+          <br><br>
+
+          ❤️ ¡Esperamos verte muy pronto!
+
+        </div>
+
+      `;
+
+
+      document
+        .getElementById("carrito")
+        .appendChild(
+          mensajeGracias
+        );
+
+
+      /* =============================================
+         ABRIR WHATSAPP
+      ============================================= */
 
       window.location.href =
         url;
