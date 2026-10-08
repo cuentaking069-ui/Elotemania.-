@@ -7,10 +7,9 @@
   <title>Elotemanía - Menú Digital</title>
 
   <meta name="theme-color" content="#d4af37">
-  <meta name="description" content="Menú digital de Elotemanía">
+  <meta name="description" content="Menú digital y pedidos de Elotemanía">
 
   <link rel="stylesheet" href="style.css">
-
   <link rel="manifest" href="manifest.json">
 
   <link rel="icon" href="logo.png">
@@ -19,10 +18,8 @@
 
 <body>
 
-  <!-- FONDO -->
   <div class="fondo-logo"></div>
 
-  <!-- ENCABEZADO -->
   <header class="header">
 
     <div class="logo-principal">
@@ -30,13 +27,13 @@
     </div>
 
     <h1>🌽 ELOTEMANÍA</h1>
-
     <p>Entre compas sabe mejor</p>
 
   </header>
 
 
   <!-- INSTALACIÓN -->
+
   <section id="instalar-app" class="instalar-app">
 
     <h2>📲 Instala Elotemanía</h2>
@@ -45,15 +42,13 @@
       Ten nuestro menú siempre a la mano.
     </p>
 
-    <!-- ANDROID -->
     <button
       id="btn-instalar"
       type="button"
       style="display:none;">
-      📲 Descargar app
+      📲 Instalar Elotemanía
     </button>
 
-    <!-- IPHONE -->
     <div
       id="ios-instrucciones"
       style="display:none;">
@@ -61,9 +56,7 @@
       <strong>🍎 iPhone / iPad</strong>
 
       <p>
-        Toca el botón
-        <strong>Compartir ⬆️</strong>
-        y después
+        Toca <strong>Compartir ⬆️</strong> y después
         <strong>“Añadir a pantalla de inicio”</strong>.
       </p>
 
@@ -72,176 +65,112 @@
   </section>
 
 
-  <!-- MENÚ -->
   <main class="contenedor">
 
     <h2 class="titulo-seccion">🌽 Nuestro menú</h2>
 
     <div id="menu" class="menu-grid">
 
-
-      <!-- ELOTES EN VASO -->
-
       <article class="producto">
         <h3>🌽 Elote en vaso chico</h3>
         <p>$35</p>
-        <button onclick="agregarProducto('Elote en vaso chico', 35)">
-          Agregar
-        </button>
+        <button onclick="agregarProducto('Elote en vaso chico',35)">Agregar</button>
       </article>
-
 
       <article class="producto">
         <h3>🌽 Elote en vaso mediano</h3>
         <p>$40</p>
-        <button onclick="agregarProducto('Elote en vaso mediano', 40)">
-          Agregar
-        </button>
+        <button onclick="agregarProducto('Elote en vaso mediano',40)">Agregar</button>
       </article>
-
 
       <article class="producto">
         <h3>🌽 Elote en vaso grande</h3>
         <p>$45</p>
-        <button onclick="agregarProducto('Elote en vaso grande', 45)">
-          Agregar
-        </button>
+        <button onclick="agregarProducto('Elote en vaso grande',45)">Agregar</button>
       </article>
-
 
       <article class="producto">
         <h3>🌽 Elote en vaso jumbo</h3>
         <p>$55</p>
-        <button onclick="agregarProducto('Elote en vaso jumbo', 55)">
-          Agregar
-        </button>
+        <button onclick="agregarProducto('Elote en vaso jumbo',55)">Agregar</button>
       </article>
-
 
       <article class="producto">
         <h3>🌽 Elote en vaso 1/2 litro</h3>
         <p>$75</p>
-        <button onclick="agregarProducto('Elote en vaso 1/2 litro', 75)">
-          Agregar
-        </button>
+        <button onclick="agregarProducto('Elote en vaso 1/2 litro',75)">Agregar</button>
       </article>
-
 
       <article class="producto">
         <h3>🌽 Elote en vaso litro</h3>
         <p>$150</p>
-        <button onclick="agregarProducto('Elote en vaso litro', 150)">
-          Agregar
-        </button>
+        <button onclick="agregarProducto('Elote en vaso litro',150)">Agregar</button>
       </article>
-
-
-      <!-- ELOTE ENTERO -->
 
       <article class="producto">
         <h3>🌽 Elote entero sencillo</h3>
         <p>$45</p>
-        <button onclick="agregarProducto('Elote entero sencillo', 45)">
-          Agregar
-        </button>
+        <button onclick="agregarProducto('Elote entero sencillo',45)">Agregar</button>
       </article>
-
 
       <article class="producto">
         <h3>🌽 Elote entero revolcado</h3>
         <p>$80</p>
-        <button onclick="agregarProducto('Elote entero revolcado', 80)">
-          Agregar
-        </button>
+        <button onclick="agregarProducto('Elote entero revolcado',80)">Agregar</button>
       </article>
-
 
       <article class="producto">
         <h3>🌽 Elote entero especial</h3>
         <p>$90</p>
-        <button onclick="agregarProducto('Elote entero especial', 90)">
-          Agregar
-        </button>
+        <button onclick="agregarProducto('Elote entero especial',90)">Agregar</button>
       </article>
-
-
-      <!-- NACHOS -->
 
       <article class="producto">
         <h3>🧀 Nachos sencillo</h3>
         <p>$70</p>
-        <button onclick="agregarProducto('Nachos sencillo', 70)">
-          Agregar
-        </button>
+        <button onclick="agregarProducto('Nachos sencillo',70)">Agregar</button>
       </article>
-
 
       <article class="producto">
         <h3>🔥 Dorinachos especial</h3>
         <p>$80</p>
-        <button onclick="agregarProducto('Dorinachos especial', 80)">
-          Agregar
-        </button>
+        <button onclick="agregarProducto('Dorinachos especial',80)">Agregar</button>
       </article>
-
-
-      <!-- MARUCHAN -->
 
       <article class="producto">
         <h3>🍜 Maruchan preparada 1/2 litro</h3>
         <p>$75</p>
-        <button onclick="agregarProducto('Maruchan preparada 1/2 litro', 75)">
-          Agregar
-        </button>
+        <button onclick="agregarProducto('Maruchan preparada 1/2 litro',75)">Agregar</button>
       </article>
-
 
       <article class="producto">
         <h3>🍜 Maruchan preparada litro</h3>
         <p>$100</p>
-        <button onclick="agregarProducto('Maruchan preparada litro', 100)">
-          Agregar
-        </button>
+        <button onclick="agregarProducto('Maruchan preparada litro',100)">Agregar</button>
       </article>
-
-
-      <!-- ELOTE CHORREADO -->
 
       <article class="producto">
         <h3>🔥 Elote chorreado chico</h3>
         <p>$125</p>
-        <button onclick="agregarProducto('Elote chorreado chico', 125)">
-          Agregar
-        </button>
+        <button onclick="agregarProducto('Elote chorreado chico',125)">Agregar</button>
       </article>
-
 
       <article class="producto">
         <h3>🔥 Elote chorreado entero</h3>
         <p>$125</p>
-        <button onclick="agregarProducto('Elote chorreado entero', 125)">
-          Agregar
-        </button>
+        <button onclick="agregarProducto('Elote chorreado entero',125)">Agregar</button>
       </article>
-
 
       <article class="producto">
         <h3>🔥 Elote chorreado grande</h3>
         <p>$160</p>
-        <button onclick="agregarProducto('Elote chorreado grande', 160)">
-          Agregar
-        </button>
+        <button onclick="agregarProducto('Elote chorreado grande',160)">Agregar</button>
       </article>
-
-
-      <!-- BEBIDA -->
 
       <article class="producto">
         <h3>🥤 Soda 600 ml</h3>
         <p>$30</p>
-        <button onclick="agregarProducto('Soda 600 ml', 30)">
-          Agregar
-        </button>
+        <button onclick="agregarProducto('Soda 600 ml',30)">Agregar</button>
       </article>
 
     </div>
@@ -258,17 +187,14 @@
       </div>
 
       <div class="total">
-
         <strong>Total:</strong>
-
         <span id="total">$0</span>
-
       </div>
 
     </section>
 
 
-    <!-- DATOS DEL CLIENTE -->
+    <!-- DATOS -->
 
     <section class="datos">
 
@@ -278,20 +204,16 @@
         type="text"
         id="nombre"
         placeholder="Tu nombre"
-        autocomplete="name"
-      >
+        autocomplete="name">
 
       <input
         type="tel"
         id="telefono"
         placeholder="Tu teléfono"
-        autocomplete="tel"
-      >
+        autocomplete="tel">
 
     </section>
 
-
-    <!-- WHATSAPP -->
 
     <button
       id="btn-whatsapp"
@@ -308,7 +230,6 @@
   <footer>
 
     <p>🌽 ELOTEMANÍA</p>
-
     <p>Entre compas sabe mejor ❤️</p>
 
   </footer>
@@ -316,366 +237,289 @@
 
 <script>
 
-  /* =========================
-     CONFIGURACIÓN
-  ========================= */
+const WHATSAPP = "526143839513";
 
-  const WHATSAPP = "526143839513";
-
-  let carrito = [];
+let carrito = [];
 
 
-  /* =========================
-     AGREGAR PRODUCTO
-  ========================= */
+/* AGREGAR PRODUCTO */
 
-  function agregarProducto(nombre, precio) {
+function agregarProducto(nombre, precio) {
 
-    const productoExistente =
-      carrito.find(producto => producto.nombre === nombre);
+  const existente =
+    carrito.find(producto => producto.nombre === nombre);
 
-    if (productoExistente) {
+  if (existente) {
 
-      productoExistente.cantidad++;
+    existente.cantidad++;
 
-    } else {
+  } else {
 
-      carrito.push({
-        nombre: nombre,
-        precio: precio,
-        cantidad: 1
-      });
+    carrito.push({
+      nombre: nombre,
+      precio: precio,
+      cantidad: 1
+    });
 
-    }
-
-    mostrarCarrito();
   }
 
+  mostrarCarrito();
+}
 
-  /* =========================
-     CAMBIAR CANTIDAD
-  ========================= */
 
-  function cambiarCantidad(index, cambio) {
+/* CAMBIAR CANTIDAD */
 
-    carrito[index].cantidad += cambio;
+function cambiarCantidad(index, cambio) {
 
-    if (carrito[index].cantidad <= 0) {
+  carrito[index].cantidad += cambio;
 
-      carrito.splice(index, 1);
+  if (carrito[index].cantidad <= 0) {
 
-    }
+    carrito.splice(index, 1);
 
-    mostrarCarrito();
   }
 
+  mostrarCarrito();
+}
 
-  /* =========================
-     MOSTRAR CARRITO
-  ========================= */
 
-  function mostrarCarrito() {
+/* MOSTRAR CARRITO */
 
-    const contenedor =
-      document.getElementById("carrito");
+function mostrarCarrito() {
 
-    const totalElemento =
-      document.getElementById("total");
+  const contenedor =
+    document.getElementById("carrito");
 
+  const totalElemento =
+    document.getElementById("total");
+
+  if (carrito.length === 0) {
+
+    contenedor.innerHTML =
+      "<p>No has agregado productos.</p>";
+
+    totalElemento.textContent = "$0";
+
+    return;
+  }
+
+  let html = "";
+  let total = 0;
+
+  carrito.forEach((producto, index) => {
+
+    const subtotal =
+      producto.precio * producto.cantidad;
+
+    total += subtotal;
+
+    html += `
+      <div class="item-carrito">
+
+        <div>
+          <strong>${producto.nombre}</strong>
+          <br>
+          $${producto.precio} × ${producto.cantidad}
+          <br>
+          <strong>Subtotal: $${subtotal}</strong>
+        </div>
+
+        <div>
+
+          <button
+            type="button"
+            onclick="cambiarCantidad(${index},-1)">
+            −
+          </button>
+
+          <button
+            type="button"
+            onclick="cambiarCantidad(${index},1)">
+            +
+          </button>
+
+        </div>
+
+      </div>
+    `;
+
+  });
+
+  contenedor.innerHTML = html;
+
+  totalElemento.textContent = "$" + total;
+}
+
+
+/* WHATSAPP */
+
+document
+  .getElementById("btn-whatsapp")
+  .addEventListener("click", function() {
 
     if (carrito.length === 0) {
 
-      contenedor.innerHTML =
-        "<p>No has agregado productos.</p>";
-
-      totalElemento.textContent = "$0";
+      alert("Agrega al menos un producto a tu pedido.");
 
       return;
-
     }
 
+    const nombre =
+      document.getElementById("nombre").value.trim();
 
-    let html = "";
+    const telefono =
+      document.getElementById("telefono").value.trim();
+
+    if (!nombre) {
+
+      alert("Escribe tu nombre.");
+
+      document.getElementById("nombre").focus();
+
+      return;
+    }
+
+    if (!telefono) {
+
+      alert("Escribe tu número de teléfono.");
+
+      document.getElementById("telefono").focus();
+
+      return;
+    }
 
     let total = 0;
 
+    let mensaje =
+      "🌽 *NUEVO PEDIDO — ELOTEMANÍA*%0A%0A";
 
-    carrito.forEach((producto, index) => {
+    mensaje +=
+      "👤 *Nombre:* " +
+      encodeURIComponent(nombre) +
+      "%0A";
+
+    mensaje +=
+      "📱 *Teléfono:* " +
+      encodeURIComponent(telefono) +
+      "%0A%0A";
+
+    mensaje += "🛒 *PEDIDO:*%0A";
+
+    carrito.forEach(producto => {
 
       const subtotal =
         producto.precio * producto.cantidad;
 
       total += subtotal;
 
-
-      html += `
-        <div class="item-carrito">
-
-          <div>
-
-            <strong>${producto.nombre}</strong>
-
-            <br>
-
-            $${producto.precio} × ${producto.cantidad}
-
-            <br>
-
-            <strong>Subtotal: $${subtotal}</strong>
-
-          </div>
-
-          <div>
-
-            <button
-              type="button"
-              onclick="cambiarCantidad(${index}, -1)">
-              −
-            </button>
-
-            <button
-              type="button"
-              onclick="cambiarCantidad(${index}, 1)">
-              +
-            </button>
-
-          </div>
-
-        </div>
-      `;
-
-    });
-
-
-    contenedor.innerHTML = html;
-
-    totalElemento.textContent =
-      "$" + total;
-
-  }
-
-
-  /* =========================
-     ENVIAR POR WHATSAPP
-  ========================= */
-
-  document
-    .getElementById("btn-whatsapp")
-    .addEventListener("click", function() {
-
-      if (carrito.length === 0) {
-
-        alert("Agrega al menos un producto a tu pedido.");
-
-        return;
-
-      }
-
-
-      const nombre =
-        document.getElementById("nombre").value.trim();
-
-      const telefono =
-        document.getElementById("telefono").value.trim();
-
-
-      if (!nombre) {
-
-        alert("Escribe tu nombre.");
-
-        document.getElementById("nombre").focus();
-
-        return;
-
-      }
-
-
-      if (!telefono) {
-
-        alert("Escribe tu número de teléfono.");
-
-        document.getElementById("telefono").focus();
-
-        return;
-
-      }
-
-
-      let total = 0;
-
-      let mensaje =
-        "🌽 *NUEVO PEDIDO — ELOTEMANÍA*%0A%0A";
-
-
       mensaje +=
-        "👤 *Nombre:* " +
-        encodeURIComponent(nombre) +
+        "• " +
+        encodeURIComponent(producto.nombre) +
+        " × " +
+        producto.cantidad +
+        " = $" +
+        subtotal +
         "%0A";
 
-
-      mensaje +=
-        "📱 *Teléfono:* " +
-        encodeURIComponent(telefono) +
-        "%0A%0A";
-
-
-      mensaje +=
-        "🛒 *PEDIDO:*%0A";
-
-
-      carrito.forEach(producto => {
-
-        const subtotal =
-          producto.precio * producto.cantidad;
-
-        total += subtotal;
-
-
-        mensaje +=
-          "• " +
-          encodeURIComponent(producto.nombre) +
-          " × " +
-          producto.cantidad +
-          " = $" +
-          subtotal +
-          "%0A";
-
-      });
-
-
-      mensaje +=
-        "%0A💰 *TOTAL: $" +
-        total +
-        "*%0A%0A";
-
-
-      mensaje +=
-        "¡Gracias por comprar en ELOTEMANÍA! 🌽❤️";
-
-
-      const url =
-        "https://wa.me/" +
-        WHATSAPP +
-        "?text=" +
-        mensaje;
-
-
-      window.open(url, "_blank");
-
     });
 
+    mensaje +=
+      "%0A💰 *TOTAL: $" +
+      total +
+      "*%0A%0A";
 
-  /* =========================
-     INSTALAR APP
-  ========================= */
+    mensaje +=
+      "¡Gracias por comprar en ELOTEMANÍA! 🌽❤️";
 
-  let deferredPrompt = null;
+    const url =
+      "https://wa.me/" +
+      WHATSAPP +
+      "?text=" +
+      mensaje;
 
-  const btnInstalar =
-    document.getElementById("btn-instalar");
+    window.open(url, "_blank");
 
-  const iosInstrucciones =
-    document.getElementById("ios-instrucciones");
-
-  const mensajeInstalacion =
-    document.getElementById("mensaje-instalacion");
-
-
-  const esIOS =
-    /iphone|ipad|ipod/i.test(navigator.userAgent);
-
-  const estaInstalada =
-    window.matchMedia("(display-mode: standalone)").matches ||
-    window.navigator.standalone === true;
+  });
 
 
-  /* iPhone / iPad */
+/* INSTALACIÓN */
 
-  if (esIOS && !estaInstalada) {
+let deferredPrompt = null;
 
-    iosInstrucciones.style.display = "block";
+const btnInstalar =
+  document.getElementById("btn-instalar");
+
+const iosInstrucciones =
+  document.getElementById("ios-instrucciones");
+
+const mensajeInstalacion =
+  document.getElementById("mensaje-instalacion");
+
+
+const esIOS =
+  /iphone|ipad|ipod/i.test(navigator.userAgent);
+
+const estaInstalada =
+  window.matchMedia("(display-mode: standalone)").matches ||
+  window.navigator.standalone === true;
+
+
+/* iPHONE */
+
+if (esIOS && !estaInstalada) {
+
+  iosInstrucciones.style.display = "block";
+
+  mensajeInstalacion.textContent =
+    "Instala Elotemanía en tu pantalla de inicio.";
+
+}
+
+
+/* ANDROID */
+
+window.addEventListener(
+  "beforeinstallprompt",
+  function(event) {
+
+    event.preventDefault();
+
+    deferredPrompt = event;
+
+    btnInstalar.style.display = "inline-block";
 
     mensajeInstalacion.textContent =
-      "Instala Elotemanía directamente en tu pantalla de inicio.";
+      "Instala Elotemanía como una aplicación.";
 
   }
+);
 
 
-  /* Android */
+/* BOTÓN INSTALAR */
 
-  window.addEventListener(
-    "beforeinstallprompt",
-    function(event) {
+btnInstalar.addEventListener(
+  "click",
+  async function() {
 
-      event.preventDefault();
+    if (!deferredPrompt) {
 
-      deferredPrompt = event;
+      alert(
+        "Abre el menú ⋮ de Chrome y selecciona «Instalar Elotemanía»."
+      );
 
-      btnInstalar.style.display = "block";
-
-      mensajeInstalacion.textContent =
-        "Instala Elotemanía en tu celular para tenerla siempre a la mano.";
-
+      return;
     }
-  );
 
+    deferredPrompt.prompt();
 
-  btnInstalar.addEventListener(
-    "click",
-    async function() {
+    await deferredPrompt.userChoice;
 
-      if (!deferredPrompt) {
+    deferredPrompt = null;
 
-        alert(
-          "Si no aparece la instalación, abre el menú del navegador y selecciona «Instalar aplicación» o «Añadir a pantalla de inicio»."
-        );
-
-        return;
-
-      }
-
-
-      deferredPrompt.prompt();
-
-      const resultado =
-        await deferredPrompt.userChoice;
-
-
-      if (resultado.outcome === "accepted") {
-
-        btnInstalar.style.display = "none";
-
-      }
-
-
-      deferredPrompt = null;
-
-    }
-  );
-
-
-  /* =========================
-     SERVICE WORKER
-  ========================= */
-
-  if ("serviceWorker" in navigator) {
-
-    window.addEventListener("load", function() {
-
-      navigator.serviceWorker
-        .register("/sw.js")
-        .catch(function(error) {
-
-          console.log(
-            "Error registrando Service Worker:",
-            error
-          );
-
-        });
-
-    });
+    btnInstalar.style.display = "none";
 
   }
+);
 
 </script>
 
