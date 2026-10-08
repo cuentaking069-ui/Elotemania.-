@@ -1,13 +1,14 @@
 {
-  "name": "Elotemanía - Menú Digital",
+  "name": "Elotemanía",
   "short_name": "Elotemanía",
-  "description": "Menú digital de Elotemanía",
+  "description": "Menú digital y pedidos de Elotemanía",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "background_color": "#050505",
   "theme_color": "#d4af37",
   "orientation": "portrait",
+  "prefer_related_applications": false,
   "icons": [
     {
       "src": "/logo.png",
