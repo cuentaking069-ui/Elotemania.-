@@ -717,6 +717,47 @@
         font-size: 16px;
       }
     }
+
+
+    /* =========================
+       REDES SOCIALES
+    ========================= */
+    .redes-sociales {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .redes-sociales a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border: 1px solid rgba(212,175,55,.65);
+      border-radius: 999px;
+      background: rgba(212,175,55,.08);
+      color: var(--dorado-claro);
+      text-decoration: none;
+      font-weight: bold;
+      transition: background .2s ease, transform .2s ease;
+    }
+
+    .redes-sociales a:hover {
+      background: rgba(212,175,55,.18);
+      transform: translateY(-2px);
+    }
+
+    .redes-sociales a:focus-visible {
+      outline: 2px solid var(--dorado-claro);
+      outline-offset: 3px;
+    }
+
   </style>
 </head>
 
@@ -735,6 +776,15 @@
   <div class="horario">
     🕖 Horario: 7:00 PM a 5:00 AM
   </div>
+
+  <nav class="redes-sociales" aria-label="Síguenos en redes sociales">
+    <a href="https://www.tiktok.com/@elotemaniacuu" target="_blank" rel="noopener noreferrer" aria-label="Síguenos en TikTok">
+      🎵 TikTok
+    </a>
+    <a href="https://www.instagram.com/elotemania.cuu/" target="_blank" rel="noopener noreferrer" aria-label="Síguenos en Instagram">
+      📸 Instagram
+    </a>
+  </nav>
 
 </header>
 
