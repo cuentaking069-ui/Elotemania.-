@@ -4,14 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Elotemanía</title>
+  <title>Elotemanía 🌽</title>
 
-  <meta name="theme-color" content="#d4af37">
-  <meta name="description" content="Menú digital y pedidos de Elotemanía">
+  <meta name="theme-color" content="#ffcc00">
+  <meta name="description" content="Elotemanía - Entre compas sabe mejor">
 
   <link rel="manifest" href="/manifest.json">
-  <link rel="icon" href="/logo.png">
-  <link rel="apple-touch-icon" href="/logo.png">
 
   <style>
     * {
@@ -20,212 +18,179 @@
 
     body {
       margin: 0;
-      background: #050505;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #fff8df;
+      color: #222;
+    }
+
+    header {
+      background: #111;
       color: white;
-      font-family: Arial, sans-serif;
       text-align: center;
+      padding: 25px 15px;
     }
 
-    .fondo {
-      position: fixed;
-      inset: 0;
-      background: url("/logo.png") center/500px no-repeat;
-      opacity: .06;
-      pointer-events: none;
+    header h1 {
+      margin: 0;
+      font-size: 38px;
+      color: #ffd21c;
+      font-weight: 900;
+      text-shadow: 2px 2px #000;
     }
 
-    main {
-      position: relative;
-      z-index: 1;
-      max-width: 650px;
-      margin: auto;
-      padding: 20px 15px 40px;
-    }
-
-    .logo {
-      width: 190px;
-      height: 190px;
-      object-fit: cover;
-      border-radius: 50%;
-      border: 4px solid #d4af37;
-      margin: 10px auto 15px;
-      display: block;
-      box-shadow: 0 0 25px rgba(212,175,55,.3);
-    }
-
-    h1 {
-      color: #d4af37;
-      margin: 5px 0;
-      font-size: 30px;
-    }
-
-    .slogan {
-      margin-bottom: 15px;
-      color: #ddd;
+    header p {
+      margin: 8px 0 0;
+      font-size: 18px;
+      font-weight: bold;
     }
 
     .horario {
-      color: #d4af37;
-      font-weight: bold;
-      font-size: 17px;
-      margin-bottom: 25px;
-    }
-
-    .instalar {
-      border: 2px solid #d4af37;
-      border-radius: 18px;
-      padding: 20px;
-      margin-bottom: 25px;
-      background: #111;
-    }
-
-    .instalar h2 {
-      color: #d4af37;
-      margin-top: 0;
-    }
-
-    button {
-      border: 0;
-      border-radius: 12px;
-      padding: 13px 18px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    #btn-instalar {
-      background: #d4af37;
-      color: #000;
-      margin-top: 10px;
-    }
-
-    .cargando {
-      padding: 25px;
-      color: #d4af37;
+      margin-top: 12px;
+      display: inline-block;
+      background: #ffd21c;
+      color: #111;
+      padding: 8px 15px;
+      border-radius: 20px;
       font-weight: bold;
     }
 
-    .error-menu {
-      background: #241818;
-      border: 1px solid #8b3a3a;
-      border-radius: 12px;
+    .contenedor {
+      max-width: 900px;
+      margin: auto;
       padding: 15px;
-      margin: 15px 0;
-      color: #ffbaba;
     }
 
     .categoria {
-      color: #d4af37;
-      font-size: 22px;
-      margin: 28px 0 12px;
-      border-bottom: 1px solid #444;
-      padding-bottom: 8px;
+      margin-top: 25px;
+    }
+
+    .categoria h2 {
+      background: #111;
+      color: #ffd21c;
+      padding: 12px;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    .productos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
     }
 
     .producto {
-      background: #111;
-      border: 1px solid #333;
+      background: white;
       border-radius: 15px;
       padding: 15px;
-      margin: 12px 0;
-      text-align: left;
+      box-shadow: 0 3px 10px rgba(0,0,0,.12);
+      text-align: center;
+      border: 2px solid #f2d76b;
     }
 
     .producto h3 {
-      color: #d4af37;
-      margin: 0 0 5px;
-      font-size: 19px;
-    }
-
-    .precio {
-      color: #fff;
-      font-weight: bold;
-      margin-bottom: 10px;
+      margin: 5px 0 10px;
       font-size: 18px;
     }
 
-    .controles {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-    }
-
-    .controles button {
-      background: #d4af37;
-      color: #000;
-      min-width: 45px;
-      font-size: 20px;
+    .precio {
+      font-size: 21px;
+      font-weight: 900;
+      color: #d35400;
+      margin-bottom: 12px;
     }
 
     .cantidad {
-      font-size: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .cantidad button {
+      width: 42px;
+      height: 42px;
+      border: 0;
+      border-radius: 50%;
+      font-size: 24px;
       font-weight: bold;
+      background: #ffd21c;
+      cursor: pointer;
+    }
+
+    .cantidad span {
+      font-size: 21px;
+      font-weight: bold;
+      min-width: 25px;
     }
 
     #carrito {
-      margin-top: 25px;
-      padding: 20px;
-      border: 2px solid #d4af37;
+      margin-top: 30px;
+      background: white;
       border-radius: 18px;
-      background: #101010;
+      padding: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,.15);
     }
 
     #carrito h2 {
-      color: #d4af37;
+      text-align: center;
+      margin-top: 0;
     }
 
-    #lista-carrito {
-      text-align: left;
+    .item-carrito {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      border-bottom: 1px solid #ddd;
+      padding: 10px 0;
     }
 
     .total {
+      text-align: right;
       font-size: 25px;
-      font-weight: bold;
-      color: #d4af37;
-      margin: 15px 0;
+      font-weight: 900;
+      margin-top: 15px;
     }
 
-    input {
+    .datos {
+      margin-top: 20px;
+    }
+
+    .datos input {
       width: 100%;
-      padding: 14px;
-      margin: 7px 0;
+      padding: 13px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
       border-radius: 10px;
-      border: 1px solid #555;
-      background: #1a1a1a;
-      color: white;
       font-size: 16px;
     }
 
     .entrega {
-      margin-top: 18px;
+      margin-top: 20px;
       padding: 15px;
-      border: 1px solid #444;
-      border-radius: 14px;
-      background: #151515;
-      text-align: left;
+      background: #fff7d1;
+      border-radius: 15px;
+      border: 2px solid #ffd21c;
     }
 
     .entrega h3 {
-      color: #d4af37;
+      margin-top: 0;
       text-align: center;
-      margin: 0 0 15px;
     }
 
     .opcion-entrega {
       display: block;
       padding: 13px;
-      margin: 8px 0;
-      border: 1px solid #444;
+      background: white;
       border-radius: 10px;
+      margin-bottom: 8px;
+      font-weight: bold;
       cursor: pointer;
-      background: #1a1a1a;
     }
 
     .opcion-entrega input {
-      width: auto;
-      margin: 0 8px 0 0;
-      transform: scale(1.2);
+      margin-right: 8px;
+      transform: scale(1.3);
     }
 
     #contenedor-domicilio {
@@ -233,99 +198,83 @@
       margin-top: 12px;
     }
 
-    #contenedor-domicilio label {
-      display: block;
-      color: #d4af37;
-      font-weight: bold;
-      margin-bottom: 5px;
+    #domicilio {
+      width: 100%;
+      padding: 13px;
+      border-radius: 10px;
+      border: 1px solid #bbb;
+      font-size: 16px;
     }
 
-    #btn-whatsapp {
+    .boton-whatsapp {
       width: 100%;
+      margin-top: 20px;
+      padding: 16px;
+      border: 0;
+      border-radius: 12px;
       background: #25d366;
       color: white;
-      margin-top: 12px;
-      font-size: 18px;
+      font-size: 19px;
+      font-weight: 900;
+      cursor: pointer;
     }
 
-    #ios {
-      display: none;
-      margin-top: 12px;
-      padding: 12px;
-      border-radius: 10px;
-      background: #222;
-    }
-
-    .actualizando {
-      font-size: 12px;
-      color: #777;
-      margin-top: 10px;
-    }
-
-    .diagnostico {
-      display: none;
-      margin-top: 12px;
-      padding: 10px;
-      background: #171717;
-      border-radius: 8px;
-      color: #aaa;
-      font-size: 12px;
-      word-break: break-word;
-      text-align: left;
-    }
-
-    /* MENSAJE DE AGRADECIMIENTO */
-
-    .mensaje-gracias {
-      margin: 25px 0;
-      padding: 30px 20px;
-      background: linear-gradient(
-        145deg,
-        #171717,
-        #0b0b0b
-      );
-      border: 3px solid #d4af37;
-      border-radius: 22px;
-      box-shadow: 0 0 30px rgba(212,175,55,.35);
-      text-align: center;
-      animation: aparecer .5s ease;
-    }
-
-    .mensaje-gracias .emoji {
-      font-size: 48px;
-      margin-bottom: 10px;
-    }
-
-    .mensaje-gracias .titulo {
-      color: #d4af37;
-      font-size: 30px;
-      font-weight: bold;
-      line-height: 1.2;
-      margin-bottom: 15px;
-    }
-
-    .mensaje-gracias .texto {
+    .instalar {
+      margin: 20px auto;
+      max-width: 600px;
+      background: #111;
       color: white;
-      font-size: 18px;
-      line-height: 1.5;
+      padding: 18px;
+      border-radius: 16px;
+      text-align: center;
     }
 
-    .mensaje-gracias .destacado {
-      color: #d4af37;
+    .instalar button {
+      margin-top: 10px;
+      padding: 13px 20px;
+      border: 0;
+      border-radius: 10px;
+      background: #ffd21c;
+      color: #111;
       font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
     }
 
-    .mensaje-enviando {
-      color: #25d366;
-      font-weight: bold;
-      margin-top: 18px;
-      font-size: 15px;
+    /* ==============================
+       MENSAJE DE AGRADECIMIENTO
+       ============================== */
+
+    #modalGracias {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 999999;
+      background: rgba(0,0,0,.92);
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    #modalGracias.visible {
+      display: flex;
+    }
+
+    .gracias-contenido {
+      width: 100%;
+      max-width: 520px;
+      background: linear-gradient(145deg, #fffdf0, #fff0a8);
+      border-radius: 30px;
+      padding: 35px 22px;
+      text-align: center;
+      box-shadow: 0 0 40px rgba(255,210,28,.45);
+      animation: aparecer .45s ease;
     }
 
     @keyframes aparecer {
       from {
         opacity: 0;
-        transform: scale(.9);
+        transform: scale(.75);
       }
 
       to {
@@ -333,117 +282,143 @@
         transform: scale(1);
       }
     }
+
+    .gracias-emoji {
+      font-size: 65px;
+      margin-bottom: 10px;
+    }
+
+    .gracias-titulo {
+      font-size: 30px;
+      font-weight: 900;
+      color: #111;
+      line-height: 1.1;
+    }
+
+    .gracias-texto {
+      margin-top: 18px;
+      font-size: 19px;
+      line-height: 1.5;
+    }
+
+    .gracias-marca {
+      color: #d35400;
+      font-weight: 900;
+    }
+
+    .gracias-enviando {
+      margin-top: 25px;
+      background: #25d366;
+      color: white;
+      padding: 14px;
+      border-radius: 12px;
+      font-weight: bold;
+    }
+
+    #botonAbrirWhatsApp {
+      display: none;
+      width: 100%;
+      margin-top: 12px;
+      padding: 14px;
+      border: 0;
+      border-radius: 12px;
+      background: #111;
+      color: white;
+      font-weight: bold;
+      font-size: 17px;
+      cursor: pointer;
+    }
+
+    /* ==============================
+       RESPONSIVE
+       ============================== */
+
+    @media (max-width: 600px) {
+
+      header h1 {
+        font-size: 30px;
+      }
+
+      .gracias-titulo {
+        font-size: 25px;
+      }
+
+      .gracias-texto {
+        font-size: 17px;
+      }
+    }
   </style>
 </head>
 
 <body>
 
-<div class="fondo"></div>
-
-<main>
-
-  <img
-    src="/logo.png"
-    class="logo"
-    alt="Elotemanía"
-  >
-
+<header>
   <h1>🌽 ELOTEMANÍA</h1>
-
-  <div class="slogan">
-    Entre compas sabe mejor
-  </div>
+  <p>Entre compas sabe mejor 🔥</p>
 
   <div class="horario">
     🕖 Horario: 7:00 PM a 5:00 AM
   </div>
+</header>
 
+<!-- INSTALACIÓN -->
+<div
+  id="seccion-instalar"
+  class="instalar"
+  style="display:none;"
+>
+  <div style="font-size:30px;">📲</div>
 
-  <!-- INSTALACIÓN -->
+  <strong style="font-size:20px;">
+    ¡Instala Elotemanía!
+  </strong>
 
-  <section
-    class="instalar"
-    id="seccion-instalar"
-  >
-
-    <h2>📲 Instala Elotemanía</h2>
-
-    <p>
-      Ten nuestro menú siempre a la mano.
-    </p>
-
-    <button
-      id="btn-instalar"
-      style="display:none;"
-      type="button"
-    >
-      📲 Instalar Elotemanía
-    </button>
-
-    <div id="ios">
-
-      🍎 <b>iPhone / iPad</b>
-
-      <br><br>
-
-      Toca <b>Compartir ⬆️</b> y después
-      <b>“Añadir a pantalla de inicio”</b>.
-
-    </div>
-
-  </section>
-
-
-  <!-- MENÚ -->
-
-  <h2 style="color:#d4af37;">
-    🌽 Nuestro menú
-  </h2>
-
-  <div id="productos">
-
-    <div class="cargando">
-      🌽 Cargando menú...
-    </div>
-
+  <div style="margin-top:7px;">
+    Ten nuestro menú más rápido en tu celular.
   </div>
 
+  <button id="botonInstalar">
+    📲 Instalar Elotemanía
+  </button>
+</div>
 
-  <!-- CARRITO -->
+<div class="contenedor">
 
-  <section id="carrito">
+  <div id="menu">
+    <p style="text-align:center;">
+      🌽 Cargando menú...
+    </p>
+  </div>
+
+  <div id="carrito">
 
     <h2>🛒 Tu pedido</h2>
 
     <div id="lista-carrito">
-
-      <p>
-        Aún no has agregado productos.
+      <p style="text-align:center;">
+        Tu carrito está vacío.
       </p>
-
     </div>
 
     <div class="total">
-
-      Total:
-      $<span id="total">0</span>
-
+      Total: $<span id="total">0</span>
     </div>
 
-    <input
-      id="nombre"
-      type="text"
-      placeholder="Tu nombre"
-    >
+    <div class="datos">
 
-    <input
-      id="telefono"
-      type="tel"
-      placeholder="Tu teléfono"
-    >
+      <input
+        id="nombre"
+        type="text"
+        placeholder="Tu nombre"
+      >
 
+      <input
+        id="telefono"
+        type="tel"
+        placeholder="Tu teléfono"
+      >
 
-    <!-- TIPO DE ENTREGA -->
+    </div>
 
     <div class="entrega">
 
@@ -452,7 +427,6 @@
       </h3>
 
       <label class="opcion-entrega">
-
         <input
           type="radio"
           name="tipoEntrega"
@@ -460,12 +434,9 @@
         >
 
         🛵 Servicio a domicilio
-
       </label>
 
-
       <label class="opcion-entrega">
-
         <input
           type="radio"
           name="tipoEntrega"
@@ -473,13 +444,11 @@
         >
 
         🏃 Para recoger
-
       </label>
-
 
       <div id="contenedor-domicilio">
 
-        <label for="domicilio">
+        <label>
           📍 Escribe tu domicilio
         </label>
 
@@ -493,1246 +462,1069 @@
 
     </div>
 
-
     <button
-      id="btn-whatsapp"
-      type="button"
+      id="botonPedido"
+      class="boton-whatsapp"
     >
-      📲 Enviar pedido por WhatsApp
+      📲 ENVIAR PEDIDO POR WHATSAPP
     </button>
 
-  </section>
-
-
-  <div class="actualizando">
-    Menú actualizado automáticamente desde Elotemanía.
   </div>
 
-</main>
+</div>
 
+<!-- ==============================
+     MODAL DE AGRADECIMIENTO
+     ============================== -->
+
+<div id="modalGracias">
+
+  <div class="gracias-contenido">
+
+    <div class="gracias-emoji">
+      🌽❤️✨
+    </div>
+
+    <div class="gracias-titulo">
+      ¡GRACIAS POR TU COMPRA!
+    </div>
+
+    <div class="gracias-texto">
+
+      En
+      <span class="gracias-marca">
+        Elotemanía
+      </span>
+
+      nos encanta consentirte. 🫶
+
+      <br><br>
+
+      Tu pedido está listo para enviarse. 📲
+
+      <br><br>
+
+      Gracias por apoyar nuestro sueño. ❤️
+
+      <br><br>
+
+      <strong>
+        ¡Entre compas sabe mejor! 🌽🔥
+      </strong>
+
+      <div class="gracias-enviando">
+        📲 Abriendo WhatsApp...
+      </div>
+
+      <button id="botonAbrirWhatsApp">
+        💬 Abrir WhatsApp
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
 
 <script>
 
-/* =====================================================
-   CONFIGURACIÓN
-===================================================== */
+  /* =====================================
+     CONFIGURACIÓN
+     ===================================== */
 
-const API = "/api/supabase";
+  const API = "/api/supabase";
 
-const WHATSAPP = "526143839513";
+  const WHATSAPP = "526143839513";
 
+  let productos = [];
 
-/* =====================================================
-   VARIABLES
-===================================================== */
+  let carrito = {};
 
-let productos = [];
+  let deferredPrompt = null;
 
-const carrito = {};
-
-
-/* =====================================================
-   ELEMENTOS
-===================================================== */
-
-const contenedorProductos =
-  document.getElementById("productos");
-
-const listaCarrito =
-  document.getElementById("lista-carrito");
-
-const totalElemento =
-  document.getElementById("total");
+  let urlWhatsAppPendiente = "";
 
 
-/* =====================================================
-   ESCAPAR HTML
-===================================================== */
+  /* =====================================
+     CARGAR PRODUCTOS
+     ===================================== */
 
-function escaparHTML(texto) {
+  async function cargarProductos() {
 
-  return String(texto)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-
-}
-
-
-/* =====================================================
-   FORMATO DE PRECIO
-===================================================== */
-
-function formatearPrecio(precio) {
-
-  const numero =
-    Number(precio);
-
-  if (!Number.isFinite(numero)) {
-    return "0";
-  }
-
-  return numero.toLocaleString(
-    "es-MX",
-    {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 2
-    }
-  );
-
-}
-
-
-/* =====================================================
-   CARGAR PRODUCTOS
-===================================================== */
-
-async function cargarProductos() {
-
-  contenedorProductos.innerHTML = `
-    <div class="cargando">
-      🌽 Cargando menú...
-    </div>
-  `;
-
-  try {
-
-    const parametros =
-      new URLSearchParams();
-
-    parametros.set(
-      "table",
-      "productos"
-    );
-
-    parametros.set(
-      "select",
-      "id,nombre,precio,categoria,activo"
-    );
-
-    parametros.set(
-      "activo",
-      "eq.true"
-    );
-
-    parametros.set(
-      "order",
-      "id.asc"
-    );
-
-
-    const url =
-      API +
-      "?" +
-      parametros.toString();
-
-
-    console.log(
-      "Elotemanía API:",
-      url
-    );
-
-
-    const respuesta =
-      await fetch(
-        url,
-        {
-          method: "GET",
-          headers: {
-            "Accept": "application/json"
-          },
-          cache: "no-store"
-        }
-      );
-
-
-    const texto =
-      await respuesta.text();
-
-
-    console.log(
-      "Respuesta API:",
-      texto
-    );
-
-
-    if (!respuesta.ok) {
-
-      throw new Error(
-        "HTTP " +
-        respuesta.status +
-        ": " +
-        texto
-      );
-
-    }
-
-
-    let datos;
+    const menu = document.getElementById("menu");
 
     try {
 
-      datos =
-        JSON.parse(texto);
+      const url =
+        API +
+        "?table=productos" +
+        "&select=id,nombre,precio,categoria,activo" +
+        "&activo=eq.true" +
+        "&order=id.asc";
 
-    } catch {
+      const respuesta = await fetch(url);
 
-      throw new Error(
-        "La API no devolvió JSON válido."
-      );
+      if (!respuesta.ok) {
+        throw new Error("Error cargando productos");
+      }
 
-    }
+      productos = await respuesta.json();
 
+      if (!Array.isArray(productos)) {
+        throw new Error("Respuesta inválida");
+      }
 
-    if (!Array.isArray(datos)) {
+      productos.forEach(producto => {
+        carrito[producto.id] = 0;
+      });
 
-      throw new Error(
-        "La API devolvió un formato inesperado."
-      );
+      mostrarMenu();
 
-    }
+      actualizarCarrito();
 
+    } catch (error) {
 
-    productos =
-      datos.map(producto => ({
+      console.error(error);
 
-        id:
-          Number(producto.id),
+      menu.innerHTML = `
+        <div style="
+          text-align:center;
+          padding:30px;
+          background:white;
+          border-radius:15px;
+        ">
+          <div style="font-size:45px;">
+            😔
+          </div>
 
-        nombre:
-          producto.nombre ||
-          "Producto",
+          <h2>
+            No se pudo cargar el menú
+          </h2>
 
-        precio:
-          Number(producto.precio) || 0,
+          <p>
+            Estamos intentando conectar con Elotemanía.
+          </p>
 
-        categoria:
-          producto.categoria ||
-          "Nuestro menú",
-
-        activo:
-          producto.activo === true
-
-      }));
-
-
-    if (productos.length === 0) {
-
-      contenedorProductos.innerHTML = `
-        <div class="error-menu">
-
-          🌽 No hay productos activos
-          en este momento.
+          <button
+            onclick="location.reload()"
+            style="
+              padding:12px 20px;
+              border:0;
+              border-radius:10px;
+              background:#ffd21c;
+              font-weight:bold;
+            "
+          >
+            🔄 Intentar nuevamente
+          </button>
 
         </div>
       `;
-
-      return;
-
     }
+  }
+
+
+  /* =====================================
+     MOSTRAR MENÚ
+     ===================================== */
+
+  function mostrarMenu() {
+
+    const menu = document.getElementById("menu");
+
+    menu.innerHTML = "";
+
+    const categorias = {};
+
+    productos.forEach(producto => {
+
+      if (!categorias[producto.categoria]) {
+        categorias[producto.categoria] = [];
+      }
+
+      categorias[producto.categoria].push(producto);
+
+    });
+
+
+    Object.keys(categorias).forEach(categoria => {
+
+      const seccion =
+        document.createElement("div");
+
+      seccion.className = "categoria";
+
+      seccion.innerHTML = `
+        <h2>
+          ${categoria}
+        </h2>
+
+        <div class="productos"></div>
+      `;
+
+      const contenedorProductos =
+        seccion.querySelector(".productos");
+
+
+      categorias[categoria].forEach(producto => {
+
+        const tarjeta =
+          document.createElement("div");
+
+        tarjeta.className = "producto";
+
+        tarjeta.innerHTML = `
+
+          <h3>
+            ${producto.nombre}
+          </h3>
+
+          <div class="precio">
+            $${Number(producto.precio).toFixed(0)}
+          </div>
+
+          <div class="cantidad">
+
+            <button
+              type="button"
+              onclick="cambiarCantidad(${producto.id}, -1)"
+            >
+              −
+            </button>
+
+            <span id="cantidad-${producto.id}">
+              0
+            </span>
+
+            <button
+              type="button"
+              onclick="cambiarCantidad(${producto.id}, 1)"
+            >
+              +
+            </button>
+
+          </div>
+        `;
+
+        contenedorProductos.appendChild(tarjeta);
+
+      });
+
+
+      menu.appendChild(seccion);
+
+    });
+
+  }
+
+
+  /* =====================================
+     CANTIDADES
+     ===================================== */
+
+  function cambiarCantidad(id, cambio) {
+
+    if (!carrito[id]) {
+      carrito[id] = 0;
+    }
+
+    carrito[id] += cambio;
+
+    if (carrito[id] < 0) {
+      carrito[id] = 0;
+    }
+
+    const elemento =
+      document.getElementById(
+        "cantidad-" + id
+      );
+
+    if (elemento) {
+      elemento.textContent =
+        carrito[id];
+    }
+
+    actualizarCarrito();
+
+  }
+
+
+  /* =====================================
+     ACTUALIZAR CARRITO
+     ===================================== */
+
+  function actualizarCarrito() {
+
+    const lista =
+      document.getElementById(
+        "lista-carrito"
+      );
+
+    const totalElemento =
+      document.getElementById("total");
+
+    lista.innerHTML = "";
+
+    let total = 0;
+
+    let cantidadTotal = 0;
 
 
     productos.forEach(producto => {
 
-      if (
-        carrito[producto.id] === undefined
-      ) {
+      const cantidad =
+        carrito[producto.id] || 0;
 
-        carrito[producto.id] = 0;
-
+      if (cantidad <= 0) {
+        return;
       }
 
-    });
-
-
-    mostrarProductos();
-
-    actualizarCarrito();
-
-
-  } catch (error) {
-
-    console.error(
-      "ERROR MENÚ ELOTEMANÍA:",
-      error
-    );
-
-
-    contenedorProductos.innerHTML = `
-
-      <div class="error-menu">
-
-        ❌ <b>No se pudo cargar el menú.</b>
-
-        <br><br>
-
-        Estamos intentando conectar
-        con Elotemanía.
-
-        <br><br>
-
-        <button
-          id="btn-reintentar"
-          type="button"
-          style="
-            background:#d4af37;
-            color:#000;
-          "
-        >
-          🔄 Intentar nuevamente
-        </button>
-
-        <div
-          id="diagnostico"
-          class="diagnostico"
-          style="display:block;"
-        >
-          ${escaparHTML(error.message)}
-        </div>
-
-      </div>
-
-    `;
-
-
-    const boton =
-      document.getElementById(
-        "btn-reintentar"
-      );
-
-
-    if (boton) {
-
-      boton.addEventListener(
-        "click",
-        cargarProductos
-      );
-
-    }
-
-  }
-
-}
-
-
-/* =====================================================
-   MOSTRAR PRODUCTOS
-===================================================== */
-
-function mostrarProductos() {
-
-  contenedorProductos.innerHTML = "";
-
-  const categorias = {};
-
-
-  productos.forEach(producto => {
-
-    const categoria =
-      producto.categoria ||
-      "Nuestro menú";
-
-
-    if (
-      !categorias[categoria]
-    ) {
-
-      categorias[categoria] = [];
-
-    }
-
-
-    categorias[categoria].push(
-      producto
-    );
-
-  });
-
-
-  Object.keys(categorias)
-    .forEach(categoria => {
-
-      const titulo =
-        document.createElement("div");
-
-      titulo.className =
-        "categoria";
-
-      titulo.textContent =
-        "🌽 " + categoria;
-
-      contenedorProductos.appendChild(
-        titulo
-      );
-
-
-      categorias[categoria]
-        .forEach(producto => {
-
-          const div =
-            document.createElement("div");
-
-          div.className =
-            "producto";
-
-
-          div.innerHTML = `
-
-            <h3>
-              ${escaparHTML(producto.nombre)}
-            </h3>
-
-            <div class="precio">
-              $${formatearPrecio(producto.precio)}
-            </div>
-
-            <div class="controles">
-
-              <button
-                type="button"
-                data-id="${producto.id}"
-                data-cambio="-1"
-                class="btn-cantidad"
-              >
-                −
-              </button>
-
-              <span
-                class="cantidad"
-                id="cantidad-${producto.id}"
-              >
-                ${carrito[producto.id] || 0}
-              </span>
-
-              <button
-                type="button"
-                data-id="${producto.id}"
-                data-cambio="1"
-                class="btn-cantidad"
-              >
-                +
-              </button>
-
-            </div>
-
-          `;
-
-
-          contenedorProductos.appendChild(
-            div
-          );
-
-        });
-
-    });
-
-
-  document
-    .querySelectorAll(".btn-cantidad")
-    .forEach(boton => {
-
-      boton.addEventListener(
-        "click",
-        () => {
-
-          const id =
-            Number(
-              boton.dataset.id
-            );
-
-          const cambio =
-            Number(
-              boton.dataset.cambio
-            );
-
-          cambiarCantidad(
-            id,
-            cambio
-          );
-
-        }
-      );
-
-    });
-
-}
-
-
-/* =====================================================
-   CAMBIAR CANTIDAD
-===================================================== */
-
-function cambiarCantidad(
-  id,
-  cambio
-) {
-
-  if (
-    carrito[id] === undefined
-  ) {
-
-    carrito[id] = 0;
-
-  }
-
-
-  carrito[id] += cambio;
-
-
-  if (
-    carrito[id] < 0
-  ) {
-
-    carrito[id] = 0;
-
-  }
-
-
-  const cantidad =
-    document.getElementById(
-      "cantidad-" + id
-    );
-
-
-  if (cantidad) {
-
-    cantidad.textContent =
-      carrito[id];
-
-  }
-
-
-  actualizarCarrito();
-
-}
-
-
-/* =====================================================
-   ACTUALIZAR CARRITO
-===================================================== */
-
-function actualizarCarrito() {
-
-  let total = 0;
-
-  let html = "";
-
-
-  productos.forEach(producto => {
-
-    const cantidad =
-      carrito[producto.id] || 0;
-
-
-    if (
-      cantidad > 0
-    ) {
+      cantidadTotal += cantidad;
 
       const subtotal =
         cantidad *
-        producto.precio;
-
+        Number(producto.precio);
 
       total += subtotal;
 
 
-      html += `
+      const item =
+        document.createElement("div");
 
-        <p>
+      item.className =
+        "item-carrito";
 
-          ${cantidad}
-          ×
-          ${escaparHTML(producto.nombre)}
+      item.innerHTML = `
 
-          — $${formatearPrecio(subtotal)}
+        <div>
+          <strong>
+            ${producto.nombre}
+          </strong>
 
+          <br>
+
+          ${cantidad} ×
+          $${Number(producto.precio).toFixed(0)}
+        </div>
+
+        <strong>
+          $${subtotal.toFixed(0)}
+        </strong>
+
+      `;
+
+      lista.appendChild(item);
+
+    });
+
+
+    if (cantidadTotal === 0) {
+
+      lista.innerHTML = `
+        <p style="text-align:center;">
+          Tu carrito está vacío.
         </p>
-
       `;
 
     }
 
-  });
 
-
-  if (!html) {
-
-    listaCarrito.innerHTML =
-      "<p>Aún no has agregado productos.</p>";
-
-  } else {
-
-    listaCarrito.innerHTML =
-      html;
+    totalElemento.textContent =
+      total.toFixed(0);
 
   }
 
 
-  totalElemento.textContent =
-    formatearPrecio(total);
+  /* =====================================
+     ENTREGA
+     ===================================== */
 
-}
+  document
+    .querySelectorAll(
+      'input[name="tipoEntrega"]'
+    )
+    .forEach(radio => {
 
+      radio.addEventListener(
+        "change",
+        function() {
 
-/* =====================================================
-   DOMICILIO
-===================================================== */
+          const contenedor =
+            document.getElementById(
+              "contenedor-domicilio"
+            );
 
-document
-  .querySelectorAll(
-    'input[name="tipoEntrega"]'
-  )
-  .forEach(radio => {
-
-    radio.addEventListener(
-      "change",
-      () => {
-
-        const contenedor =
-          document.getElementById(
-            "contenedor-domicilio"
-          );
-
-        const domicilio =
-          document.getElementById(
+          if (
+            this.value ===
             "domicilio"
-          );
+          ) {
 
+            contenedor.style.display =
+              "block";
 
-        if (
-          radio.value === "domicilio" &&
-          radio.checked
-        ) {
+          } else {
 
-          contenedor.style.display =
-            "block";
+            contenedor.style.display =
+              "none";
 
-          domicilio.required =
-            true;
+          }
 
         }
+      );
+
+    });
 
 
-        if (
-          radio.value === "recoger" &&
-          radio.checked
-        ) {
+  /* =====================================
+     ENVIAR PEDIDO
+     ===================================== */
 
-          contenedor.style.display =
-            "none";
+  document
+    .getElementById("botonPedido")
+    .addEventListener(
+      "click",
+      enviarPedido
+    );
 
-          domicilio.required =
-            false;
 
-          domicilio.value =
-            "";
+  function enviarPedido() {
+
+    const nombre =
+      document
+        .getElementById("nombre")
+        .value
+        .trim();
+
+    const telefono =
+      document
+        .getElementById("telefono")
+        .value
+        .trim();
+
+    const entrega =
+      document.querySelector(
+        'input[name="tipoEntrega"]:checked'
+      );
+
+    const domicilio =
+      document
+        .getElementById("domicilio")
+        .value
+        .trim();
+
+
+    /* ===============================
+       VALIDACIONES
+       =============================== */
+
+    let cantidadProductos = 0;
+
+    productos.forEach(producto => {
+
+      cantidadProductos +=
+        carrito[producto.id] || 0;
+
+    });
+
+
+    if (cantidadProductos === 0) {
+
+      alert(
+        "Agrega al menos un producto a tu pedido."
+      );
+
+      return;
+    }
+
+
+    if (!nombre) {
+
+      alert(
+        "Escribe tu nombre."
+      );
+
+      document
+        .getElementById("nombre")
+        .focus();
+
+      return;
+    }
+
+
+    if (!telefono) {
+
+      alert(
+        "Escribe tu teléfono."
+      );
+
+      document
+        .getElementById("telefono")
+        .focus();
+
+      return;
+    }
+
+
+    if (!entrega) {
+
+      alert(
+        "Selecciona si quieres servicio a domicilio o para recoger."
+      );
+
+      return;
+    }
+
+
+    if (
+      entrega.value === "domicilio" &&
+      !domicilio
+    ) {
+
+      alert(
+        "Escribe tu domicilio para poder enviar el pedido."
+      );
+
+      document
+        .getElementById("domicilio")
+        .focus();
+
+      return;
+    }
+
+
+    /* ===============================
+       CREAR MENSAJE
+       =============================== */
+
+    const lineas = [];
+
+    lineas.push(
+      "🌽 *PEDIDO ELOTEMANÍA*"
+    );
+
+    lineas.push("");
+
+    lineas.push(
+      "👤 *Cliente:* " +
+      nombre
+    );
+
+    lineas.push(
+      "📱 *Teléfono:* " +
+      telefono
+    );
+
+    lineas.push("");
+
+    lineas.push(
+      "🛒 *PEDIDO:*"
+    );
+
+
+    let total = 0;
+
+
+    productos.forEach(producto => {
+
+      const cantidad =
+        carrito[producto.id] || 0;
+
+      if (cantidad <= 0) {
+        return;
+      }
+
+
+      const subtotal =
+        cantidad *
+        Number(producto.precio);
+
+      total += subtotal;
+
+
+      lineas.push(
+        "• " +
+        cantidad +
+        " × " +
+        producto.nombre +
+        " = $" +
+        subtotal.toFixed(0)
+      );
+
+    });
+
+
+    lineas.push("");
+
+    lineas.push(
+      "💰 *TOTAL: $" +
+      total.toFixed(0) +
+      "*"
+    );
+
+    lineas.push("");
+
+
+    /* ===============================
+       ENTREGA
+       =============================== */
+
+    if (
+      entrega.value ===
+      "domicilio"
+    ) {
+
+      lineas.push(
+        "🛵 *ENTREGA:* Servicio a domicilio"
+      );
+
+      lineas.push(
+        "📍 *DOMICILIO:* " +
+        domicilio
+      );
+
+    } else {
+
+      lineas.push(
+        "🏃 *ENTREGA:* Para recoger"
+      );
+
+    }
+
+
+    lineas.push("");
+
+    lineas.push(
+      "🕖 *Horario:* 7:00 PM a 5:00 AM"
+    );
+
+    lineas.push("");
+
+    lineas.push(
+      "🌽 ¡Entre compas sabe mejor!"
+    );
+
+
+    const mensaje =
+      lineas.join("\n");
+
+
+    urlWhatsAppPendiente =
+      "https://wa.me/" +
+      WHATSAPP +
+      "?text=" +
+      encodeURIComponent(mensaje);
+
+
+    /* ===============================
+       LIMPIAR CARRITO
+       =============================== */
+
+    productos.forEach(producto => {
+
+      carrito[producto.id] = 0;
+
+      const cantidad =
+        document.getElementById(
+          "cantidad-" +
+          producto.id
+        );
+
+      if (cantidad) {
+        cantidad.textContent = "0";
+      }
+
+    });
+
+
+    actualizarCarrito();
+
+
+    /* ===============================
+       LIMPIAR DATOS
+       =============================== */
+
+    document
+      .getElementById("nombre")
+      .value = "";
+
+    document
+      .getElementById("telefono")
+      .value = "";
+
+    document
+      .getElementById("domicilio")
+      .value = "";
+
+
+    document
+      .querySelectorAll(
+        'input[name="tipoEntrega"]'
+      )
+      .forEach(radio => {
+
+        radio.checked = false;
+
+      });
+
+
+    document
+      .getElementById(
+        "contenedor-domicilio"
+      )
+      .style.display = "none";
+
+
+    /* ===============================
+       MOSTRAR AGRADECIMIENTO
+       =============================== */
+
+    mostrarAgradecimiento();
+
+  }
+
+
+  /* =====================================
+     AGRADECIMIENTO
+     ===================================== */
+
+  function mostrarAgradecimiento() {
+
+    const modal =
+      document.getElementById(
+        "modalGracias"
+      );
+
+    const botonWhatsApp =
+      document.getElementById(
+        "botonAbrirWhatsApp"
+      );
+
+
+    modal.classList.add("visible");
+
+
+    /*
+      Intentamos abrir WhatsApp después
+      de 3 segundos.
+    */
+
+    setTimeout(() => {
+
+      if (!urlWhatsAppPendiente) {
+        return;
+      }
+
+
+      /*
+        Abrimos una nueva pestaña.
+        Esto evita que el navegador
+        destruya el mensaje antes
+        de que pueda verse.
+      */
+
+      const ventana =
+        window.open(
+          urlWhatsAppPendiente,
+          "_blank"
+        );
+
+
+      /*
+        Si el navegador bloqueó
+        la ventana, mostramos botón.
+      */
+
+      if (
+        !ventana ||
+        ventana.closed ||
+        typeof ventana.closed === "undefined"
+      ) {
+
+        botonWhatsApp.style.display =
+          "block";
+
+      }
+
+    }, 3000);
+
+  }
+
+
+  /* =====================================
+     BOTÓN ABRIR WHATSAPP
+     ===================================== */
+
+  document
+    .getElementById(
+      "botonAbrirWhatsApp"
+    )
+    .addEventListener(
+      "click",
+      function() {
+
+        if (!urlWhatsAppPendiente) {
+          return;
+        }
+
+        window.open(
+          urlWhatsAppPendiente,
+          "_blank"
+        );
+
+      }
+    );
+
+
+  /* =====================================
+     INSTALACIÓN PWA
+     ===================================== */
+
+  const seccionInstalar =
+    document.getElementById(
+      "seccion-instalar"
+    );
+
+  const botonInstalar =
+    document.getElementById(
+      "botonInstalar"
+    );
+
+
+  function ocultarInstalacion() {
+
+    if (!seccionInstalar) {
+      return;
+    }
+
+    seccionInstalar.style.display =
+      "none";
+
+  }
+
+
+  function mostrarInstalacion() {
+
+    if (!seccionInstalar) {
+      return;
+    }
+
+    seccionInstalar.style.display =
+      "block";
+
+  }
+
+
+  /*
+    Detectar si ya está instalada
+  */
+
+  function estaInstalada() {
+
+    const standalone =
+      window.matchMedia &&
+      window.matchMedia(
+        "(display-mode: standalone)"
+      ).matches;
+
+
+    const iosStandalone =
+      window.navigator.standalone === true;
+
+
+    return standalone ||
+      iosStandalone;
+
+  }
+
+
+  if (estaInstalada()) {
+
+    ocultarInstalacion();
+
+  }
+
+
+  /*
+    Chrome / Android
+  */
+
+  window.addEventListener(
+    "beforeinstallprompt",
+    function(evento) {
+
+      evento.preventDefault();
+
+      deferredPrompt = evento;
+
+      /*
+        Solo mostramos el recuadro
+        si todavía NO está instalada.
+      */
+
+      if (!estaInstalada()) {
+        mostrarInstalacion();
+      }
+
+    }
+  );
+
+
+  /*
+    Botón instalar
+  */
+
+  botonInstalar.addEventListener(
+    "click",
+    async function() {
+
+      if (!deferredPrompt) {
+
+        /*
+          En algunos navegadores
+          la instalación se hace desde
+          el menú del navegador.
+        */
+
+        alert(
+          "Para instalar Elotemanía, usa la opción 'Instalar aplicación' o 'Agregar a pantalla de inicio' de tu navegador."
+        );
+
+        return;
+      }
+
+
+      const evento =
+        deferredPrompt;
+
+
+      deferredPrompt = null;
+
+
+      await evento.prompt();
+
+
+      try {
+
+        const resultado =
+          await evento.userChoice;
+
+        console.log(
+          "Resultado instalación:",
+          resultado
+        );
+
+      } catch (error) {
+
+        console.log(error);
+
+      }
+
+
+      /*
+        LO OCULTAMOS INMEDIATAMENTE
+        después de intentar instalar.
+      */
+
+      ocultarInstalacion();
+
+    }
+  );
+
+
+  /*
+    Cuando el navegador confirma
+    que la app fue instalada.
+  */
+
+  window.addEventListener(
+    "appinstalled",
+    function() {
+
+      console.log(
+        "Elotemanía instalada."
+      );
+
+      deferredPrompt = null;
+
+      ocultarInstalacion();
+
+    }
+  );
+
+
+  /*
+    Si el usuario vuelve a entrar
+    como aplicación instalada.
+  */
+
+  window
+    .matchMedia(
+      "(display-mode: standalone)"
+    )
+    .addEventListener(
+      "change",
+      function(evento) {
+
+        if (evento.matches) {
+
+          ocultarInstalacion();
 
         }
 
       }
     );
 
-  });
 
-
-/* =====================================================
-   WHATSAPP
-===================================================== */
-
-document
-  .getElementById("btn-whatsapp")
-  .addEventListener(
-    "click",
-    () => {
-
-      const nombre =
-        document
-          .getElementById("nombre")
-          .value
-          .trim();
-
-
-      const telefono =
-        document
-          .getElementById("telefono")
-          .value
-          .trim();
-
-
-      const entregaSeleccionada =
-        document.querySelector(
-          'input[name="tipoEntrega"]:checked'
-        );
-
-
-      const domicilio =
-        document
-          .getElementById("domicilio")
-          .value
-          .trim();
-
-
-      if (!nombre) {
-
-        alert(
-          "Escribe tu nombre."
-        );
-
-        return;
-
-      }
-
-
-      if (!telefono) {
-
-        alert(
-          "Escribe tu teléfono."
-        );
-
-        return;
-
-      }
-
-
-      if (!entregaSeleccionada) {
-
-        alert(
-          "Selecciona si quieres servicio a domicilio o para recoger."
-        );
-
-        return;
-
-      }
-
-
-      if (
-        entregaSeleccionada.value ===
-        "domicilio" &&
-        !domicilio
-      ) {
-
-        alert(
-          "Escribe tu domicilio para poder enviar el pedido."
-        );
-
-        document
-          .getElementById("domicilio")
-          .focus();
-
-        return;
-
-      }
-
-
-      let lineas = [];
-
-
-      lineas.push(
-        "🌽 *NUEVO PEDIDO — ELOTEMANÍA*"
-      );
-
-      lineas.push("");
-
-
-      lineas.push(
-        "*Cliente:* " +
-        nombre
-      );
-
-
-      lineas.push(
-        "*Teléfono:* " +
-        telefono
-      );
-
-
-      lineas.push("");
-
-
-      if (
-        entregaSeleccionada.value ===
-        "domicilio"
-      ) {
-
-        lineas.push(
-          "🛵 *Entrega:* Servicio a domicilio"
-        );
-
-        lineas.push(
-          "📍 *Domicilio:* " +
-          domicilio
-        );
-
-      } else {
-
-        lineas.push(
-          "🏃 *Entrega:* Para recoger"
-        );
-
-      }
-
-
-      lineas.push("");
-
-
-      let total = 0;
-
-      let hayProductos = false;
-
-
-      productos.forEach(producto => {
-
-        const cantidad =
-          carrito[producto.id] || 0;
-
-
-        if (
-          cantidad > 0
-        ) {
-
-          hayProductos = true;
-
-
-          const subtotal =
-            cantidad *
-            producto.precio;
-
-
-          total += subtotal;
-
-
-          lineas.push(
-            "🌽 " +
-            cantidad +
-            " × " +
-            producto.nombre +
-            " — $" +
-            formatearPrecio(subtotal)
+  /* =====================================
+     SERVICE WORKER
+     ===================================== */
+
+  if (
+    "serviceWorker" in navigator
+  ) {
+
+    window.addEventListener(
+      "load",
+      function() {
+
+        navigator.serviceWorker
+          .register(
+            "/sw.js?v=9"
+          )
+          .then(
+            registro => {
+
+              console.log(
+                "Service Worker activo:",
+                registro
+              );
+
+            }
+          )
+          .catch(
+            error => {
+
+              console.log(
+                "Error Service Worker:",
+                error
+              );
+
+            }
           );
 
-        }
-
-      });
-
-
-      if (!hayProductos) {
-
-        alert(
-          "Agrega al menos un producto."
-        );
-
-        return;
-
       }
-
-
-      lineas.push("");
-
-
-      lineas.push(
-        "*TOTAL: $" +
-        formatearPrecio(total) +
-        "*"
-      );
-
-
-      lineas.push("");
-
-
-      lineas.push(
-        "🕖 *Horario:* 7:00 PM a 5:00 AM"
-      );
-
-
-      lineas.push("");
-
-
-      lineas.push(
-        "¡Gracias por tu pedido! 🌽🔥"
-      );
-
-
-      const mensaje =
-        encodeURIComponent(
-          lineas.join("\n")
-        );
-
-
-      const url =
-        "https://wa.me/" +
-        WHATSAPP +
-        "?text=" +
-        mensaje;
-
-
-      /* =============================================
-         DESACTIVAR BOTÓN
-      ============================================= */
-
-      const botonWhatsApp =
-        document.getElementById(
-          "btn-whatsapp"
-        );
-
-      botonWhatsApp.disabled = true;
-
-      botonWhatsApp.style.opacity = "0.6";
-
-
-      /* =============================================
-         LIMPIAR CARRITO
-      ============================================= */
-
-      Object.keys(carrito).forEach(id => {
-        carrito[id] = 0;
-      });
-
-
-      productos.forEach(producto => {
-
-        const cantidad =
-          document.getElementById(
-            "cantidad-" + producto.id
-          );
-
-        if (cantidad) {
-          cantidad.textContent = "0";
-        }
-
-      });
-
-
-      document
-        .getElementById("nombre")
-        .value = "";
-
-
-      document
-        .getElementById("telefono")
-        .value = "";
-
-
-      document
-        .getElementById("domicilio")
-        .value = "";
-
-
-      document
-        .querySelectorAll(
-          'input[name="tipoEntrega"]'
-        )
-        .forEach(radio => {
-
-          radio.checked = false;
-
-        });
-
-
-      document
-        .getElementById(
-          "contenedor-domicilio"
-        )
-        .style.display = "none";
-
-
-      actualizarCarrito();
-
-
-      /* =============================================
-         MENSAJE DE AGRADECIMIENTO
-      ============================================= */
-
-      const mensajeAnterior =
-        document.querySelector(
-          ".mensaje-gracias"
-        );
-
-
-      if (mensajeAnterior) {
-        mensajeAnterior.remove();
-      }
-
-
-      const mensajeGracias =
-        document.createElement("div");
-
-
-      mensajeGracias.className =
-        "mensaje-gracias";
-
-
-      mensajeGracias.innerHTML = `
-
-        <div class="emoji">
-          🌽✨
-        </div>
-
-        <div class="titulo">
-          ¡GRACIAS POR TU COMPRA!
-        </div>
-
-        <div class="texto">
-
-          💛 En
-          <span class="destacado">
-            Elotemanía
-          </span>
-          nos encanta consentirte.
-
-          <br><br>
-
-          Tu pedido está listo
-          para enviarse. 📲
-
-          <br><br>
-
-          🫶 Gracias por apoyar
-          nuestro sueño.
-
-          <br><br>
-
-          <span class="destacado">
-            ¡Entre compas sabe mejor! 🌽🔥
-          </span>
-
-          <br><br>
-
-          ❤️ ¡Esperamos verte muy pronto!
-
-          <div class="mensaje-enviando">
-            📲 Abriendo WhatsApp...
-          </div>
-
-        </div>
-
-      `;
-
-
-      /*
-        Mostrar el mensaje ANTES
-        de abrir WhatsApp.
-      */
-
-      document
-        .getElementById("carrito")
-        .appendChild(
-          mensajeGracias
-        );
-
-
-      /*
-        Esperar 2.5 segundos
-        para que el cliente pueda
-        ver el mensaje.
-      */
-
-      setTimeout(() => {
-
-        window.location.href =
-          url;
-
-      }, 2500);
-
-    }
-  );
-
-
-/* =====================================================
-   INSTALACIÓN ANDROID
-===================================================== */
-
-let deferredPrompt = null;
-
-
-const botonInstalar =
-  document.getElementById(
-    "btn-instalar"
-  );
-
-
-const seccionInstalar =
-  document.getElementById(
-    "seccion-instalar"
-  );
-
-
-/*
-  Mostrar botón cuando el navegador
-  permita instalar la aplicación.
-*/
-
-window.addEventListener(
-  "beforeinstallprompt",
-  evento => {
-
-    evento.preventDefault();
-
-    deferredPrompt =
-      evento;
-
-    botonInstalar.style.display =
-      "inline-block";
+    );
 
   }
-);
 
 
-/*
-  Instalar aplicación.
-*/
+  /* =====================================
+     INICIAR
+     ===================================== */
 
-botonInstalar.addEventListener(
-  "click",
-  async () => {
-
-    if (!deferredPrompt) {
-      return;
-    }
-
-
-    deferredPrompt.prompt();
-
-
-    const resultado =
-      await deferredPrompt.userChoice;
-
-
-    deferredPrompt = null;
-
-
-    botonInstalar.style.display =
-      "none";
-
-
-    /*
-      Si aceptó la instalación,
-      desaparece completamente
-      el recuadro.
-    */
-
-    if (
-      resultado &&
-      resultado.outcome === "accepted"
-    ) {
-
-      seccionInstalar.style.display =
-        "none";
-
-    }
-
-  }
-);
-
-
-/*
-  Detectar cuando la aplicación
-  ya fue instalada.
-*/
-
-window.addEventListener(
-  "appinstalled",
-  () => {
-
-    seccionInstalar.style.display =
-      "none";
-
-    deferredPrompt = null;
-
-  }
-);
-
-
-/* =====================================================
-   IPHONE
-===================================================== */
-
-const esIOS =
-  /iphone|ipad|ipod/i.test(
-    navigator.userAgent
-  );
-
-
-const estaEnModoApp =
-  window.navigator.standalone === true ||
-  window.matchMedia(
-    "(display-mode: standalone)"
-  ).matches;
-
-
-if (
-  esIOS &&
-  !estaEnModoApp
-) {
-
-  document.getElementById(
-    "ios"
-  ).style.display =
-    "block";
-
-}
-
-
-/*
-  Si ya está instalada como PWA,
-  ocultar el recuadro de instalación.
-*/
-
-if (estaEnModoApp) {
-
-  seccionInstalar.style.display =
-    "none";
-
-}
-
-
-/* =====================================================
-   SERVICE WORKER
-===================================================== */
-
-if (
-  "serviceWorker" in navigator
-) {
-
-  window.addEventListener(
-    "load",
-    () => {
-
-      navigator.serviceWorker
-        .register(
-          "/sw.js?v=8"
-        )
-        .then(registro => {
-
-          console.log(
-            "Elotemanía Service Worker activo",
-            registro
-          );
-
-        })
-        .catch(error => {
-
-          console.log(
-            "Service Worker:",
-            error
-          );
-
-        });
-
-    }
-  );
-
-}
-
-
-/* =====================================================
-   INICIAR
-===================================================== */
-
-cargarProductos();
+  cargarProductos();
 
 </script>
 
 </body>
-</html> 
+</html>
