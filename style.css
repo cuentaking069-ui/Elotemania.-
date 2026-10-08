@@ -20,7 +20,7 @@ body {
 .fondo-logo {
   position: fixed;
   inset: 0;
-  background-image: url("images/logo.png");
+  background-image: url("logo.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: min(95vw, 600px);
@@ -57,8 +57,7 @@ footer {
   overflow: hidden;
   border: 4px solid #d4af37;
   background: #000000;
-  box-shadow:
-    0 0 25px rgba(212, 175, 55, 0.35);
+  box-shadow: 0 0 25px rgba(212, 175, 55, 0.35);
 }
 
 .logo-principal img {
@@ -95,8 +94,9 @@ section {
   margin-bottom: 25px;
 }
 
-.cliente,
-.pedido {
+.pedido,
+.carrito,
+.datos {
   background: rgba(17, 17, 17, 0.96);
   border: 1px solid #292929;
   border-radius: 18px;
@@ -107,11 +107,6 @@ h2 {
   margin-top: 0;
   color: #d4af37;
   font-size: 22px;
-}
-
-.titulo {
-  text-align: center;
-  margin-bottom: 15px;
 }
 
 /* DATOS */
@@ -145,7 +140,7 @@ input::placeholder {
 
 /* MENU */
 
-.menu {
+#menu {
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -159,19 +154,6 @@ input::placeholder {
   border: 1px solid #292929;
   border-radius: 16px;
   padding: 13px;
-}
-
-.producto-icono {
-  width: 52px;
-  height: 52px;
-  min-width: 52px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #000000;
-  border: 1px solid #d4af37;
-  border-radius: 14px;
-  font-size: 27px;
 }
 
 .producto-info {
@@ -191,26 +173,34 @@ input::placeholder {
   font-size: 18px;
 }
 
-.btn-agregar {
-  width: 46px;
-  height: 46px;
-  min-width: 46px;
-  border: none;
-  border-radius: 50%;
+.controles {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.controles button {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  border: 1px solid #d4af37;
   background: #d4af37;
   color: #000000;
-  font-size: 30px;
+  font-size: 25px;
   font-weight: bold;
   cursor: pointer;
 }
 
-.btn-agregar:active {
-  transform: scale(0.94);
+.controles span {
+  min-width: 25px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 /* CARRITO */
 
-.carrito {
+#carrito {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -224,7 +214,7 @@ input::placeholder {
 
 .carrito-item {
   display: grid;
-  grid-template-columns: 1fr auto auto;
+  grid-template-columns: 1fr auto;
   align-items: center;
   gap: 10px;
   padding: 13px 0;
@@ -240,30 +230,6 @@ input::placeholder {
   display: block;
   margin-top: 4px;
   color: #888888;
-}
-
-.cantidad {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.cantidad button {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  border: 1px solid #d4af37;
-  background: transparent;
-  color: #d4af37;
-  font-size: 22px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.cantidad span {
-  min-width: 20px;
-  text-align: center;
-  font-weight: bold;
 }
 
 /* TOTAL */
@@ -302,14 +268,6 @@ input::placeholder {
   transform: scale(0.98);
 }
 
-.nota {
-  margin: 12px 0 0;
-  color: #888888;
-  text-align: center;
-  font-size: 13px;
-  line-height: 1.4;
-}
-
 /* PIE */
 
 footer {
@@ -320,12 +278,8 @@ footer {
   background: rgba(0, 0, 0, 0.92);
 }
 
-footer strong {
-  color: #d4af37;
-}
-
 footer p {
-  margin-bottom: 0;
+  margin: 6px 0;
 }
 
 /* CELULAR */
@@ -343,6 +297,15 @@ footer p {
 
   .producto-info h3 {
     font-size: 15px;
+  }
+
+  .producto {
+    padding: 12px;
+  }
+
+  .controles button {
+    width: 40px;
+    height: 40px;
   }
 
 }
