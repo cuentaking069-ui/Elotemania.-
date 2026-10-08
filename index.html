@@ -1,1 +1,1453 @@
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Elotemanía</title>
+
+  <meta name="theme-color" content="#d4af37">
+  <meta name="description" content="Menú digital y pedidos de Elotemanía">
+
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" href="/logo.png">
+  <link rel="apple-touch-icon" href="/logo.png">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #050505;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    .fondo {
+      position: fixed;
+      inset: 0;
+      background: url("/logo.png") center/500px no-repeat;
+      opacity: .06;
+      pointer-events: none;
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+      max-width: 650px;
+      margin: auto;
+      padding: 20px 15px 40px;
+    }
+
+    .logo {
+      width: 190px;
+      height: 190px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 4px solid #d4af37;
+      margin: 10px auto 15px;
+      display: block;
+      box-shadow: 0 0 25px rgba(212,175,55,.3);
+    }
+
+    h1 {
+      color: #d4af37;
+      margin: 5px 0;
+      font-size: 30px;
+    }
+
+    .slogan {
+      margin-bottom: 15px;
+      color: #ddd;
+    }
+
+    /* HORARIO */
+
+    .horario {
+      color: #d4af37;
+      font-weight: bold;
+      font-size: 17px;
+      margin-bottom: 25px;
+    }
+
+    .instalar {
+      border: 2px solid #d4af37;
+      border-radius: 18px;
+      padding: 20px;
+      margin-bottom: 25px;
+      background: #111;
+    }
+
+    .instalar h2 {
+      color: #d4af37;
+      margin-top: 0;
+    }
+
+    button {
+      border: 0;
+      border-radius: 12px;
+      padding: 13px 18px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #btn-instalar {
+      background: #d4af37;
+      color: #000;
+      margin-top: 10px;
+    }
+
+    .cargando {
+      padding: 25px;
+      color: #d4af37;
+      font-weight: bold;
+    }
+
+    .error-menu {
+      background: #241818;
+      border: 1px solid #8b3a3a;
+      border-radius: 12px;
+      padding: 15px;
+      margin: 15px 0;
+      color: #ffbaba;
+    }
+
+    .categoria {
+      color: #d4af37;
+      font-size: 22px;
+      margin: 28px 0 12px;
+      border-bottom: 1px solid #444;
+      padding-bottom: 8px;
+    }
+
+    .producto {
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 15px;
+      padding: 15px;
+      margin: 12px 0;
+      text-align: left;
+    }
+
+    .producto h3 {
+      color: #d4af37;
+      margin: 0 0 5px;
+      font-size: 19px;
+    }
+
+    .precio {
+      color: #fff;
+      font-weight: bold;
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
+
+    .controles {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .controles button {
+      background: #d4af37;
+      color: #000;
+      min-width: 45px;
+      font-size: 20px;
+    }
+
+    .cantidad {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    #carrito {
+      margin-top: 25px;
+      padding: 20px;
+      border: 2px solid #d4af37;
+      border-radius: 18px;
+      background: #101010;
+    }
+
+    #carrito h2 {
+      color: #d4af37;
+    }
+
+    #lista-carrito {
+      text-align: left;
+    }
+
+    .total {
+      font-size: 25px;
+      font-weight: bold;
+      color: #d4af37;
+      margin: 15px 0;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      margin: 7px 0;
+      border-radius: 10px;
+      border: 1px solid #555;
+      background: #1a1a1a;
+      color: white;
+      font-size: 16px;
+    }
+
+    /* ENTREGA */
+
+    .entrega {
+      margin-top: 18px;
+      padding: 15px;
+      border: 1px solid #444;
+      border-radius: 14px;
+      background: #151515;
+      text-align: left;
+    }
+
+    .entrega h3 {
+      color: #d4af37;
+      text-align: center;
+      margin: 0 0 15px;
+    }
+
+    .opcion-entrega {
+      display: block;
+      padding: 13px;
+      margin: 8px 0;
+      border: 1px solid #444;
+      border-radius: 10px;
+      cursor: pointer;
+      background: #1a1a1a;
+    }
+
+    .opcion-entrega input {
+      width: auto;
+      margin: 0 8px 0 0;
+      transform: scale(1.2);
+    }
+
+    #contenedor-domicilio {
+      display: none;
+      margin-top: 12px;
+    }
+
+    #contenedor-domicilio label {
+      display: block;
+      color: #d4af37;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    #btn-whatsapp {
+      width: 100%;
+      background: #25d366;
+      color: white;
+      margin-top: 12px;
+      font-size: 18px;
+    }
+
+    #ios {
+      display: none;
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 10px;
+      background: #222;
+    }
+
+    .actualizando {
+      font-size: 12px;
+      color: #777;
+      margin-top: 10px;
+    }
+
+    .diagnostico {
+      display: none;
+      margin-top: 12px;
+      padding: 10px;
+      background: #171717;
+      border-radius: 8px;
+      color: #aaa;
+      font-size: 12px;
+      word-break: break-word;
+      text-align: left;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="fondo"></div>
+
+<main>
+
+  <img
+    src="/logo.png"
+    class="logo"
+    alt="Elotemanía"
+  >
+
+  <h1>🌽 ELOTEMANÍA</h1>
+
+  <div class="slogan">
+    Entre compas sabe mejor
+  </div>
+
+  <div class="horario">
+    🕖 Horario: 7:00 PM a 5:00 AM
+  </div>
+
+
+  <!-- INSTALACIÓN -->
+
+  <section class="instalar">
+
+    <h2>📲 Instala Elotemanía</h2>
+
+    <p>
+      Ten nuestro menú siempre a la mano.
+    </p>
+
+    <button
+      id="btn-instalar"
+      style="display:none;"
+      type="button"
+    >
+      📲 Instalar Elotemanía
+    </button>
+
+    <div id="ios">
+
+      🍎 <b>iPhone / iPad</b>
+
+      <br><br>
+
+      Toca <b>Compartir ⬆️</b> y después
+      <b>“Añadir a pantalla de inicio”</b>.
+
+    </div>
+
+  </section>
+
+
+  <!-- MENÚ -->
+
+  <h2 style="color:#d4af37;">
+    🌽 Nuestro menú
+  </h2>
+
+  <div id="productos">
+
+    <div class="cargando">
+      🌽 Cargando menú...
+    </div>
+
+  </div>
+
+
+  <!-- CARRITO -->
+
+  <section id="carrito">
+
+    <h2>🛒 Tu pedido</h2>
+
+    <div id="lista-carrito">
+
+      <p>
+        Aún no has agregado productos.
+      </p>
+
+    </div>
+
+    <div class="total">
+
+      Total:
+      $<span id="total">0</span>
+
+    </div>
+
+    <input
+      id="nombre"
+      type="text"
+      placeholder="Tu nombre"
+    >
+
+    <input
+      id="telefono"
+      type="tel"
+      placeholder="Tu teléfono"
+    >
+
+
+    <!-- TIPO DE ENTREGA -->
+
+    <div class="entrega">
+
+      <h3>
+        🚚 ¿Cómo quieres recibir tu pedido?
+      </h3>
+
+      <label class="opcion-entrega">
+
+        <input
+          type="radio"
+          name="tipoEntrega"
+          value="domicilio"
+        >
+
+        🛵 Servicio a domicilio
+
+      </label>
+
+
+      <label class="opcion-entrega">
+
+        <input
+          type="radio"
+          name="tipoEntrega"
+          value="recoger"
+        >
+
+        🏃 Para recoger
+
+      </label>
+
+
+      <div id="contenedor-domicilio">
+
+        <label for="domicilio">
+          📍 Escribe tu domicilio
+        </label>
+
+        <input
+          id="domicilio"
+          type="text"
+          placeholder="Calle, número, colonia y referencias"
+        >
+
+      </div>
+
+    </div>
+
+
+    <button
+      id="btn-whatsapp"
+      type="button"
+    >
+      📲 Enviar pedido por WhatsApp
+    </button>
+
+  </section>
+
+
+  <div class="actualizando">
+    Menú actualizado automáticamente desde Elotemanía.
+  </div>
+
+</main>
+
+
+<script>
+
+/* =====================================================
+   CONFIGURACIÓN
+===================================================== */
+
+const API = "/api/supabase";
+
+const WHATSAPP = "526143839513";
+
+
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+let productos = [];
+
+const carrito = {};
+
+
+/* =====================================================
+   ELEMENTOS
+===================================================== */
+
+const contenedorProductos =
+  document.getElementById("productos");
+
+const listaCarrito =
+  document.getElementById("lista-carrito");
+
+const totalElemento =
+  document.getElementById("total");
+
+
+/* =====================================================
+   ESCAPAR HTML
+===================================================== */
+
+function escaparHTML(texto) {
+
+  return String(texto)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+
+}
+
+
+/* =====================================================
+   FORMATO DE PRECIO
+===================================================== */
+
+function formatearPrecio(precio) {
+
+  const numero =
+    Number(precio);
+
+  if (!Number.isFinite(numero)) {
+    return "0";
+  }
+
+  return numero.toLocaleString(
+    "es-MX",
+    {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 2
+    }
+  );
+
+}
+
+
+/* =====================================================
+   CARGAR PRODUCTOS
+===================================================== */
+
+async function cargarProductos() {
+
+  contenedorProductos.innerHTML = `
+    <div class="cargando">
+      🌽 Cargando menú...
+    </div>
+  `;
+
+  try {
+
+    const parametros =
+      new URLSearchParams();
+
+    parametros.set(
+      "table",
+      "productos"
+    );
+
+    parametros.set(
+      "select",
+      "id,nombre,precio,categoria,activo"
+    );
+
+    parametros.set(
+      "activo",
+      "eq.true"
+    );
+
+    parametros.set(
+      "order",
+      "id.asc"
+    );
+
+
+    const url =
+      API +
+      "?" +
+      parametros.toString();
+
+
+    console.log(
+      "Elotemanía API:",
+      url
+    );
+
+
+    const respuesta =
+      await fetch(
+        url,
+        {
+          method: "GET",
+          headers: {
+            "Accept": "application/json"
+          },
+          cache: "no-store"
+        }
+      );
+
+
+    const texto =
+      await respuesta.text();
+
+
+    console.log(
+      "Respuesta API:",
+      texto
+    );
+
+
+    if (!respuesta.ok) {
+
+      throw new Error(
+        "HTTP " +
+        respuesta.status +
+        ": " +
+        texto
+      );
+
+    }
+
+
+    let datos;
+
+    try {
+
+      datos =
+        JSON.parse(texto);
+
+    } catch {
+
+      throw new Error(
+        "La API no devolvió JSON válido."
+      );
+
+    }
+
+
+    if (!Array.isArray(datos)) {
+
+      throw new Error(
+        "La API devolvió un formato inesperado."
+      );
+
+    }
+
+
+    productos =
+      datos.map(producto => ({
+
+        id:
+          Number(producto.id),
+
+        nombre:
+          producto.nombre ||
+          "Producto",
+
+        precio:
+          Number(producto.precio) || 0,
+
+        categoria:
+          producto.categoria ||
+          "Nuestro menú",
+
+        activo:
+          producto.activo === true
+
+      }));
+
+
+    if (productos.length === 0) {
+
+      contenedorProductos.innerHTML = `
+        <div class="error-menu">
+
+          🌽 No hay productos activos
+          en este momento.
+
+        </div>
+      `;
+
+      return;
+
+    }
+
+
+    /*
+      Inicializar cantidades
+    */
+
+    productos.forEach(producto => {
+
+      if (
+        carrito[producto.id] === undefined
+      ) {
+
+        carrito[producto.id] = 0;
+
+      }
+
+    });
+
+
+    mostrarProductos();
+
+    actualizarCarrito();
+
+
+  } catch (error) {
+
+    console.error(
+      "ERROR MENÚ ELOTEMANÍA:",
+      error
+    );
+
+
+    contenedorProductos.innerHTML = `
+
+      <div class="error-menu">
+
+        ❌ <b>No se pudo cargar el menú.</b>
+
+        <br><br>
+
+        Estamos intentando conectar
+        con Elotemanía.
+
+        <br><br>
+
+        <button
+          id="btn-reintentar"
+          type="button"
+          style="
+            background:#d4af37;
+            color:#000;
+          "
+        >
+          🔄 Intentar nuevamente
+        </button>
+
+        <div
+          id="diagnostico"
+          class="diagnostico"
+          style="display:block;"
+        >
+          ${escaparHTML(error.message)}
+        </div>
+
+      </div>
+
+    `;
+
+
+    const boton =
+      document.getElementById(
+        "btn-reintentar"
+      );
+
+
+    if (boton) {
+
+      boton.addEventListener(
+        "click",
+        cargarProductos
+      );
+
+    }
+
+  }
+
+}
+
+
+/* =====================================================
+   MOSTRAR PRODUCTOS
+===================================================== */
+
+function mostrarProductos() {
+
+  contenedorProductos.innerHTML = "";
+
+  const categorias = {};
+
+
+  productos.forEach(producto => {
+
+    const categoria =
+      producto.categoria ||
+      "Nuestro menú";
+
+
+    if (
+      !categorias[categoria]
+    ) {
+
+      categorias[categoria] = [];
+
+    }
+
+
+    categorias[categoria].push(
+      producto
+    );
+
+  });
+
+
+  Object.keys(categorias)
+    .forEach(categoria => {
+
+      const titulo =
+        document.createElement("div");
+
+      titulo.className =
+        "categoria";
+
+      titulo.textContent =
+        "🌽 " + categoria;
+
+      contenedorProductos.appendChild(
+        titulo
+      );
+
+
+      categorias[categoria]
+        .forEach(producto => {
+
+          const div =
+            document.createElement("div");
+
+          div.className =
+            "producto";
+
+
+          div.innerHTML = `
+
+            <h3>
+              ${escaparHTML(producto.nombre)}
+            </h3>
+
+            <div class="precio">
+              $${formatearPrecio(producto.precio)}
+            </div>
+
+            <div class="controles">
+
+              <button
+                type="button"
+                data-id="${producto.id}"
+                data-cambio="-1"
+                class="btn-cantidad"
+              >
+                −
+              </button>
+
+              <span
+                class="cantidad"
+                id="cantidad-${producto.id}"
+              >
+                ${carrito[producto.id] || 0}
+              </span>
+
+              <button
+                type="button"
+                data-id="${producto.id}"
+                data-cambio="1"
+                class="btn-cantidad"
+              >
+                +
+              </button>
+
+            </div>
+
+          `;
+
+
+          contenedorProductos.appendChild(
+            div
+          );
+
+        });
+
+    });
+
+
+  document
+    .querySelectorAll(".btn-cantidad")
+    .forEach(boton => {
+
+      boton.addEventListener(
+        "click",
+        () => {
+
+          const id =
+            Number(
+              boton.dataset.id
+            );
+
+          const cambio =
+            Number(
+              boton.dataset.cambio
+            );
+
+          cambiarCantidad(
+            id,
+            cambio
+          );
+
+        }
+      );
+
+    });
+
+}
+
+
+/* =====================================================
+   CAMBIAR CANTIDAD
+===================================================== */
+
+function cambiarCantidad(
+  id,
+  cambio
+) {
+
+  if (
+    carrito[id] === undefined
+  ) {
+
+    carrito[id] = 0;
+
+  }
+
+
+  carrito[id] += cambio;
+
+
+  if (
+    carrito[id] < 0
+  ) {
+
+    carrito[id] = 0;
+
+  }
+
+
+  const cantidad =
+    document.getElementById(
+      "cantidad-" + id
+    );
+
+
+  if (cantidad) {
+
+    cantidad.textContent =
+      carrito[id];
+
+  }
+
+
+  actualizarCarrito();
+
+}
+
+
+/* =====================================================
+   ACTUALIZAR CARRITO
+===================================================== */
+
+function actualizarCarrito() {
+
+  let total = 0;
+
+  let html = "";
+
+
+  productos.forEach(producto => {
+
+    const cantidad =
+      carrito[producto.id] || 0;
+
+
+    if (
+      cantidad > 0
+    ) {
+
+      const subtotal =
+        cantidad *
+        producto.precio;
+
+
+      total += subtotal;
+
+
+      html += `
+
+        <p>
+
+          ${cantidad}
+          ×
+          ${escaparHTML(producto.nombre)}
+
+          — $${formatearPrecio(subtotal)}
+
+        </p>
+
+      `;
+
+    }
+
+  });
+
+
+  if (!html) {
+
+    listaCarrito.innerHTML =
+      "<p>Aún no has agregado productos.</p>";
+
+  } else {
+
+    listaCarrito.innerHTML =
+      html;
+
+  }
+
+
+  totalElemento.textContent =
+    formatearPrecio(total);
+
+}
+
+
+/* =====================================================
+   MOSTRAR / OCULTAR DOMICILIO
+===================================================== */
+
+document
+  .querySelectorAll(
+    'input[name="tipoEntrega"]'
+  )
+  .forEach(radio => {
+
+    radio.addEventListener(
+      "change",
+      () => {
+
+        const contenedor =
+          document.getElementById(
+            "contenedor-domicilio"
+          );
+
+        const domicilio =
+          document.getElementById(
+            "domicilio"
+          );
+
+
+        if (
+          radio.value === "domicilio" &&
+          radio.checked
+        ) {
+
+          contenedor.style.display =
+            "block";
+
+          domicilio.required =
+            true;
+
+        } else if (
+          radio.value === "recoger" &&
+          radio.checked
+        ) {
+
+          contenedor.style.display =
+            "none";
+
+          domicilio.required =
+            false;
+
+          domicilio.value =
+            "";
+
+        }
+
+      }
+    );
+
+  });
+
+
+/* =====================================================
+   WHATSAPP
+===================================================== */
+
+document
+  .getElementById("btn-whatsapp")
+  .addEventListener(
+    "click",
+    () => {
+
+      const nombre =
+        document
+          .getElementById("nombre")
+          .value
+          .trim();
+
+
+      const telefono =
+        document
+          .getElementById("telefono")
+          .value
+          .trim();
+
+
+      const entregaSeleccionada =
+        document.querySelector(
+          'input[name="tipoEntrega"]:checked'
+        );
+
+
+      const domicilio =
+        document
+          .getElementById("domicilio")
+          .value
+          .trim();
+
+
+      if (!nombre) {
+
+        alert(
+          "Escribe tu nombre."
+        );
+
+        return;
+
+      }
+
+
+      if (!telefono) {
+
+        alert(
+          "Escribe tu teléfono."
+        );
+
+        return;
+
+      }
+
+
+      if (!entregaSeleccionada) {
+
+        alert(
+          "Selecciona si quieres servicio a domicilio o para recoger."
+        );
+
+        return;
+
+      }
+
+
+      if (
+        entregaSeleccionada.value ===
+        "domicilio" &&
+        !domicilio
+      ) {
+
+        alert(
+          "Escribe tu domicilio para poder enviar el pedido."
+        );
+
+        document
+          .getElementById("domicilio")
+          .focus();
+
+        return;
+
+      }
+
+
+      let lineas = [];
+
+
+      lineas.push(
+        "🌽 *NUEVO PEDIDO — ELOTEMANÍA*"
+      );
+
+      lineas.push("");
+
+
+      lineas.push(
+        "*Cliente:* " +
+        nombre
+      );
+
+
+      lineas.push(
+        "*Teléfono:* " +
+        telefono
+      );
+
+
+      /* ENTREGA */
+
+      lineas.push("");
+
+
+      if (
+        entregaSeleccionada.value ===
+        "domicilio"
+      ) {
+
+        lineas.push(
+          "🛵 *Entrega:* Servicio a domicilio"
+        );
+
+        lineas.push(
+          "📍 *Domicilio:* " +
+          domicilio
+        );
+
+      } else {
+
+        lineas.push(
+          "🏃 *Entrega:* Para recoger"
+        );
+
+      }
+
+
+      lineas.push("");
+
+
+      let total = 0;
+
+      let hayProductos = false;
+
+
+      productos.forEach(producto => {
+
+        const cantidad =
+          carrito[producto.id] || 0;
+
+
+        if (
+          cantidad > 0
+        ) {
+
+          hayProductos = true;
+
+
+          const subtotal =
+            cantidad *
+            producto.precio;
+
+
+          total += subtotal;
+
+
+          lineas.push(
+            "🌽 " +
+            cantidad +
+            " × " +
+            producto.nombre +
+            " — $" +
+            formatearPrecio(subtotal)
+          );
+
+        }
+
+      });
+
+
+      if (!hayProductos) {
+
+        alert(
+          "Agrega al menos un producto."
+        );
+
+        return;
+
+      }
+
+
+      lineas.push("");
+
+
+      lineas.push(
+        "*TOTAL: $" +
+        formatearPrecio(total) +
+        "*"
+      );
+
+
+      lineas.push("");
+
+
+      lineas.push(
+        "🕖 *Horario:* 7:00 PM a 5:00 AM"
+      );
+
+
+      lineas.push("");
+
+
+      lineas.push(
+        "¡Gracias por tu pedido! 🌽🔥"
+      );
+
+
+      const mensaje =
+        encodeURIComponent(
+          lineas.join("\n")
+        );
+
+
+      const url =
+        "https://wa.me/" +
+        WHATSAPP +
+        "?text=" +
+        mensaje;
+
+
+      window.location.href =
+        url;
+
+    }
+  );
+
+
+/* =====================================================
+   INSTALACIÓN ANDROID
+===================================================== */
+
+let deferredPrompt = null;
+
+
+const botonInstalar =
+  document.getElementById(
+    "btn-instalar"
+  );
+
+
+window.addEventListener(
+  "beforeinstallprompt",
+  evento => {
+
+    evento.preventDefault();
+
+    deferredPrompt =
+      evento;
+
+    botonInstalar.style.display =
+      "inline-block";
+
+  }
+);
+
+
+botonInstalar.addEventListener(
+  "click",
+  async () => {
+
+    if (!deferredPrompt) {
+
+      return;
+
+    }
+
+
+    deferredPrompt.prompt();
+
+    await deferredPrompt.userChoice;
+
+    deferredPrompt = null;
+
+    botonInstalar.style.display =
+      "none";
+
+  }
+);
+
+
+/* =====================================================
+   IPHONE
+===================================================== */
+
+const esIOS =
+  /iphone|ipad|ipod/i.test(
+    navigator.userAgent
+  );
+
+
+const estaEnModoApp =
+  window.navigator.standalone === true ||
+  window.matchMedia(
+    "(display-mode: standalone)"
+  ).matches;
+
+
+if (
+  esIOS &&
+  !estaEnModoApp
+) {
+
+  document.getElementById(
+    "ios"
+  ).style.display =
+    "block";
+
+}
+
+
+/* =====================================================
+   SERVICE WORKER
+===================================================== */
+
+if (
+  "serviceWorker" in navigator
+) {
+
+  window.addEventListener(
+    "load",
+    () => {
+
+      navigator.serviceWorker
+        .register(
+          "/sw.js?v=8"
+        )
+        .then(registro => {
+
+          console.log(
+            "Elotemanía Service Worker activo",
+            registro
+          );
+
+        })
+        .catch(error => {
+
+          console.log(
+            "Service Worker:",
+            error
+          );
+
+        });
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   INICIAR
+===================================================== */
+
+cargarProductos();
+
+</script>
+
+</body>
+</html>
