@@ -1869,7 +1869,12 @@ header {
 
     totalElemento.textContent =
       total.toFixed(0);
-    const contador = document.getElementById("contador-carrito");
+  const contador = document.getElementById("contador-carrito");const cajaPedido = document.getElementById("carrito");
+
+if (cajaPedido) {
+  cajaPedido.style.display =
+    cantidadTotal > 0 ? "block" : "none";
+}
 
     if (contador) {
       contador.textContent = cantidadTotal;
