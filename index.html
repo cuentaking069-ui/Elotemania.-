@@ -800,6 +800,7 @@ width: 100%;
       text-transform: uppercase;
     }
 
+    
     .redes-sociales {
       position: relative;
       z-index: 1;
@@ -807,28 +808,37 @@ width: 100%;
       justify-content: center;
       align-items: center;
       flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 18px;
+      gap: 12px;
+      margin-top: 20px;
+      padding: 0 8px;
     }
 
     .redes-sociales a {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      padding: 10px 16px;
-      border: 1px solid rgba(212,175,55,.65);
+      gap: 9px;
+      padding: 10px 17px;
+      border: 1px solid rgba(212, 175, 55, 0.65);
       border-radius: 999px;
-      background: rgba(212,175,55,.08);
+      background: linear-gradient(
+        145deg,
+        rgba(212, 175, 55, 0.12),
+        rgba(212, 175, 55, 0.04)
+      );
       color: var(--dorado-claro);
       text-decoration: none;
       font-weight: bold;
-      transition: background .2s ease, transform .2s ease;
+      transition:
+        background 0.25s ease,
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
     }
 
     .redes-sociales a:hover {
-      background: rgba(212,175,55,.18);
-      transform: translateY(-2px);
+      background: rgba(212, 175, 55, 0.2);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 16px rgba(212, 175, 55, 0.12);
     }
 
     .redes-sociales .icono-red {
@@ -842,6 +852,24 @@ width: 100%;
     .redes-sociales a:focus-visible {
       outline: 2px solid var(--dorado-claro);
       outline-offset: 3px;
+    }
+
+    @media (max-width: 480px) {
+      .redes-sociales {
+        gap: 9px;
+      }
+
+      .redes-sociales a {
+        padding: 9px 13px;
+        gap: 7px;
+        font-size: 14px;
+      }
+
+      .redes-sociales .icono-red {
+        width: 26px;
+        height: 26px;
+        flex-basis: 26px;
+      }
     }
 
   </style>
