@@ -1175,15 +1175,30 @@ header {
   </div>
 </div>
  </header>
-<div style="text-align:center;padding:18px;">
-  <button
-    type="button"
-    onclick="document.getElementById('menu').style.display='block';document.getElementById('menu').scrollIntoView({behavior:'smooth'});this.style.display='none';"
-    style="background:#d4af37;color:#080808;padding:14px 25px;border:1px solid #f5d76e;border-radius:12px;font-size:16px;font-weight:bold;"
-  >
+<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:420px;margin:20px auto;padding:0 12px;">
+
+  <button type="button" onclick="const m=document.getElementById('menu');if(m){m.style.display='block';m.scrollIntoView({behavior:'smooth'});}" style="background:#d4af37;color:#080808;padding:14px 8px;border:1px solid #f5d76e;border-radius:12px;font-size:15px;font-weight:bold;">
     🌽 VER MENÚ
   </button>
+
+  <a href="#eventos" style="display:flex;align-items:center;justify-content:center;background:#d4af37;color:#080808;padding:14px 8px;border:1px solid #f5d76e;border-radius:12px;font-size:15px;font-weight:bold;text-decoration:none;">
+    🎉 EVENTOS
+  </a>
+
+  <a href="#nosotros" style="display:flex;align-items:center;justify-content:center;background:#d4af37;color:#080808;padding:14px 8px;border:1px solid #f5d76e;border-radius:12px;font-size:15px;font-weight:bold;text-decoration:none;">
+    💛 NOSOTROS
+  </a>
+
+  <a href="#contacto" style="display:flex;align-items:center;justify-content:center;background:#d4af37;color:#080808;padding:14px 8px;border:1px solid #f5d76e;border-radius:12px;font-size:15px;font-weight:bold;text-decoration:none;">
+    📱 CONTACTO
+  </a>
+
+  <a href="#resenas" style="grid-column:1 / -1;display:flex;align-items:center;justify-content:center;background:#d4af37;color:#080808;padding:14px 8px;border:1px solid #f5d76e;border-radius:12px;font-size:15px;font-weight:bold;text-decoration:none;">
+    ⭐ RESEÑAS
+  </a>
+
 </div>
+
 
 
 
