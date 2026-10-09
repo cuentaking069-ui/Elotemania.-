@@ -1731,7 +1731,11 @@ width: 100%;
 
     totalElemento.textContent =
       total.toFixed(0);
+    const contador = document.getElementById("contador-carrito");
 
+    if (contador) {
+      contador.textContent = cantidadTotal;
+    }
   }
 
 
