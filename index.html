@@ -2637,5 +2637,86 @@ const clienteSupabase = window.supabase.createClient(
   </form>
 </section>
 
+<script>
+async function cargarResenas() {
+  const lista = document.getElementById("lista-resenas");
+  if (!lista) return;
+
+  lista.textContent = "Cargando reseñas...";
+
+  const { data, error } = await clienteSupabase
+    .from("resenas")
+    .select("id,nombre,producto,calificacion,comentario,creado_en")
+    .order("creado_en", { ascending: false });
+
+  if (error) {
+    lista.textContent = "No se pudieron cargar las reseñas. Intenta más tarde.";
+    console.error(error);
+    return;
+  }
+
+  lista.replaceChildren();
+
+  if (!data || data.length === 0) {
+    lista.textContent = "Todavía no hay reseñas. ¡Sé el primero en calificar!";
+    return;
+  }
+
+  data.forEach(r => {
+    const tarjeta = document.createElement("article");
+    tarjeta.style.cssText =
+      "background:#151515;border:1px solid #5a4820;border-radius:12px;padding:18px;margin-bottom:14px;";
+
+    const nombre = document.createElement("strong");
+    nombre.textContent = r.nombre;
+
+    const estrellas = document.createElement("p");
+    estrellas.style.color = "#d4af37";
+    estrellas.textContent =
+      "★".repeat(r.calificacion) + "☆".repeat(5 - r.calificacion);
+
+    const producto = document.createElement("p");
+    producto.style.color = "#d4af37";
+    producto.textContent = r.producto;
+
+    const comentario = document.createElement("p");
+    comentario.textContent = r.comentario;
+
+    tarjeta.append(nombre, estrellas, producto, comentario);
+    lista.appendChild(tarjeta);
+  });
+}
+
+document.getElementById("form-resena")?.addEventListener("submit", async function(e) {
+  e.preventDefault();
+
+  const mensaje = document.getElementById("mensaje-resena");
+  const boton = this.querySelector('button[type="submit"]');
+  boton.disabled = true;
+  mensaje.textContent = "Publicando reseña...";
+
+  try {
+    const { error } = await clienteSupabase.from("resenas").insert([{
+      nombre: document.getElementById("resena-nombre").value.trim(),
+      producto: document.getElementById("resena-producto").value,
+      calificacion: Number(document.getElementById("resena-estrellas").value),
+      comentario: document.getElementById("resena-comentario").value.trim()
+    }]);
+
+    if (error) throw error;
+
+    mensaje.textContent = "¡Reseña publicada correctamente!";
+    this.reset();
+    await cargarResenas();
+  } catch (error) {
+    console.error(error);
+    mensaje.textContent = "No se pudo publicar. Revisa la conexión e inténtalo de nuevo.";
+  } finally {
+    boton.disabled = false;
+  }
+});
+
+cargarResenas();
+</script>
 </body>
 </html>
