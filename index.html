@@ -83,7 +83,8 @@ header {
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
-  background:
+  background-color: #050505;
+  background-image:
     radial-gradient(
       circle at 50% 0%,
       rgba(212,175,55,.12),
@@ -95,8 +96,11 @@ body {
       rgba(11,11,11,.84) 45%,
       rgba(5,5,5,.84) 100%
     ),
-    url("./logo.png") center center / min(75vw, 650px) auto fixed no-repeat;
-  background-color: #050505;
+    url("./logo.png");
+  background-position: center top, center top, center center;
+  background-size: auto, auto, min(75vw, 650px) auto;
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  background-attachment: scroll, scroll, scroll;
   color: var(--blanco);
   min-height: 100vh;
 }
