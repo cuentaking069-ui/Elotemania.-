@@ -2605,6 +2605,37 @@ const clienteSupabase = window.supabase.createClient(
 </div>
 </section>
 
+<section id="resenas" style="padding:40px 20px;background:#080808;color:#f7f3e7;text-align:center;">
+  <h2 style="color:#d4af37;font-size:30px;">⭐ LO QUE DICEN DE ELOTEMANÍA</h2>
+  <p style="color:#aaa;">Opiniones sobre nuestros productos</p>
+
+  <div id="lista-resenas" style="max-width:700px;margin:25px auto;text-align:left;">
+    <p style="color:#aaa;text-align:center;">Cargando reseñas...</p>
+  </div>
+
+  <h2 style="color:#d4af37;">¡CALIFÍCANOS!</h2>
+  <form id="form-resena" style="max-width:500px;margin:auto;display:grid;gap:12px;">
+    <input id="resena-nombre" maxlength="80" placeholder="Tu nombre" required style="padding:12px;border-radius:8px;">
+    <select id="resena-producto" required style="padding:12px;border-radius:8px;">
+      <option value="">¿Qué producto probaste?</option>
+      <option>Elote preparado</option>
+      <option>Elote en vaso</option>
+      <option>Esquites</option>
+      <option>Otro producto</option>
+    </select>
+    <select id="resena-estrellas" required style="padding:12px;border-radius:8px;">
+      <option value="">Tu calificación</option>
+      <option value="5">★★★★★ — 5 estrellas</option>
+      <option value="4">★★★★☆ — 4 estrellas</option>
+      <option value="3">★★★☆☆ — 3 estrellas</option>
+      <option value="2">★★☆☆☆ — 2 estrellas</option>
+      <option value="1">★☆☆☆☆ — 1 estrella</option>
+    </select>
+    <textarea id="resena-comentario" maxlength="1000" placeholder="Cuéntanos qué te pareció..." required style="padding:12px;border-radius:8px;min-height:100px;"></textarea>
+    <button type="submit" style="background:#d4af37;color:#080808;padding:14px;border:0;border-radius:8px;font-weight:bold;cursor:pointer;">PUBLICAR RESEÑA</button>
+    <p id="mensaje-resena" role="status"></p>
+  </form>
+</section>
 
 </body>
 </html>
