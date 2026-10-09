@@ -32,24 +32,27 @@
       scroll-behavior: smooth;
     }
 
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background:
-        radial-gradient(
-          circle at 50% 0%,
-          rgba(212,175,55,.12),
-          transparent 35%
-        ),
-        linear-gradient(
-          180deg,
-          #050505 0%,
-          #0b0b0b 45%,
-          #050505 100%
-        );
-      color: var(--blanco);
-      min-height: 100vh;
-    }
+    
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(212,175,55,.12),
+      transparent 35%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(5,5,5,.84) 0%,
+      rgba(11,11,11,.84) 45%,
+      rgba(5,5,5,.84) 100%
+    ),
+    url("./logo.png") center center / min(75vw, 650px) auto fixed no-repeat;
+  background-color: #050505;
+  color: var(--blanco);
+  min-height: 100vh;
+}
 
     /* =========================
        HEADER
