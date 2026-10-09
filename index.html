@@ -153,31 +153,34 @@
     /* =========================
        CATEGORÍAS
     ========================= */
+.categoria {
+margin-top: 32px;
+}
 
-    .categoria {
-      margin-top: 30px;
-    }
+.categoria h2 {
+position: relative;
+margin: 0 0 18px;
+padding: 15px 12px;
+text-align: center;
+color: var(--dorado-claro);
+background: linear-gradient(135deg, #242014, #101010 75%);
+border: 1px solid rgba(212,175,55,.6);
+border-radius: 16px;
+font-size: 23px;
+font-weight: 900;
+letter-spacing: .5px;
+box-shadow: 0 7px 22px rgba(0,0,0,.4);
+}
 
-    .categoria h2 {
-      position: relative;
-      margin: 0 0 14px;
-      padding: 13px 15px;
-      text-align: center;
-      color: var(--dorado-claro);
-      background:
-        linear-gradient(
-          135deg,
-          #111,
-          #181818
-        );
-      border: 1px solid rgba(212,175,55,.45);
-      border-radius: 14px;
-      font-size: 21px;
-      box-shadow:
-        0 5px 20px rgba(0,0,0,.35);
-    }
-
-    .categoria h2::after {
+.categoria h2::after {
+content: "";
+display: block;
+width: 58px;
+height: 3px;
+margin: 9px auto 0;
+background: linear-gradient(90deg, var(--dorado), var(--dorado-claro));
+border-radius: 10px;
+}
       content: "";
       display: block;
       width: 45px;
