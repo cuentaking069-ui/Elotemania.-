@@ -1062,11 +1062,11 @@
       const url =
   API +
   "?table=productos" +
-  "&select=id,nombre,precio,categoria,activo,url" +
+  "&select=id,nombre,precio,categoria,activo" +
   "&activo=eq.true" +
   "&order=id.asc";
 
-
+ 
       const respuesta =
         await fetch(url);
 
