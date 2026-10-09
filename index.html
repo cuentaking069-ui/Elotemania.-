@@ -1066,6 +1066,46 @@ body {
   background-color: #050505 !important;
   color: #f7f3e7;
 }
+  @media (max-width: 480px) {
+  .contenedor {
+    padding: 12px 10px 30px;
+  }
+
+  .productos {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .producto {
+    min-width: 0;
+    padding: 10px;
+    border-radius: 16px;
+  }
+
+  .producto img {
+    height: 125px;
+    border-radius: 10px;
+  }
+
+  .producto h3 {
+    font-size: 14px;
+    min-height: 0;
+  }
+
+  .precio {
+    font-size: 20px;
+  }
+
+  .cantidad {
+    gap: 8px;
+  }
+
+  .cantidad button {
+    width: 38px;
+    height: 38px;
+  }
+}
   </style>
 </head>
 
