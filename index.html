@@ -1878,6 +1878,12 @@ if (cajaPedido) {
 
     if (contador) {
       contador.textContent = cantidadTotal;
+      const seccionCarrito = document.getElementById("carrito");
+
+if (seccionCarrito) {
+  seccionCarrito.style.display =
+    cantidadTotal > 0 ? "block" : "none";
+}
     }
   }
 
