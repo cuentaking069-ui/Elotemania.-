@@ -313,6 +313,47 @@ footer p:first-child {
 
   .instalar-app {
     margin-top: 5px;
-  }
-
+    /* 🎃 ELOTEMANÍA: MODO TERROR HALLOWEEN */
+body {
+  background-color: #080309 !important;
+  background-image:
+    linear-gradient(
+      rgba(5, 0, 8, 0.38),
+      rgba(5, 0, 8, 0.58)
+    ),
+    url("./halloween-fondo.png") !important;
+  background-size: cover !important;
+  background-position: center top !important;
+  background-repeat: no-repeat !important;
+  background-attachment: fixed !important;
 }
+
+/* Tarjetas oscuras con bordes dorados */
+.producto,
+.product-card,
+.card-producto {
+  background: linear-gradient(145deg, #170d12, #050505) !important;
+  border: 2px solid #d4a017 !important;
+  border-radius: 14px !important;
+  box-shadow:
+    0 0 12px rgba(255, 90, 0, 0.35),
+    inset 0 0 12px rgba(212, 160, 23, 0.08) !important;
+}
+
+/* Botones dorados */
+button,
+.btn,
+.btn-agregar {
+  border-color: #ffb52e !important;
+}
+
+/* Ajuste para celulares */
+@media (max-width: 600px) {
+  body {
+    background-attachment: scroll !important;
+    background-position: center top !important;
+  }
+}
+ 
+
+
