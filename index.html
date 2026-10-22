@@ -1297,6 +1297,161 @@ footer,.pie-pagina { color:#ffd04b; }
   style="display:none;"
 >
 
+/* ===== ELOTEMANÍA: HALLOWEEN DE TERROR ===== */
+
+:root {
+  --negro: #050303;
+  --negro-2: #100506;
+  --negro-3: #1b0809;
+  --dorado: #ff4b16;
+  --dorado-claro: #ff9b35;
+  --dorado-oscuro: #751313;
+  --blanco: #fff0e8;
+  --gris: #c7aaa5;
+  --verde: #25d366;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background:
+    radial-gradient(ellipse at 50% 15%, #351010 0%, transparent 45%),
+    linear-gradient(180deg, #050303, #160506 48%, #030202);
+  color: #fff0e8;
+}
+
+/* Neblina y ambiente oscuro */
+body::before {
+  content: "🕸️";
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  font-size: 45px;
+  opacity: .55;
+  pointer-events: none;
+  z-index: 999;
+  filter: grayscale(.5);
+}
+
+body::after {
+  content: "🕷️";
+  position: fixed;
+  top: 10px;
+  right: 12px;
+  font-size: 35px;
+  opacity: .65;
+  pointer-events: none;
+  z-index: 999;
+  animation: halloween-arana 4s ease-in-out infinite;
+}
+
+@keyframes halloween-arana {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(18px); }
+}
+
+/* Encabezado de terror */
+header {
+  background:
+    linear-gradient(180deg, #080303, #260709 75%, #080303) !important;
+  border-bottom: 2px solid #a51b16 !important;
+  box-shadow: 0 5px 22px #8b090955;
+}
+
+.marca-texto h1,
+h1, h2, h3 {
+  text-shadow:
+    0 0 5px #ff4b16,
+    0 0 15px #b50909,
+    2px 2px 0 #250000;
+}
+
+/* Navegación */
+nav {
+  background: #100506 !important;
+  border-color: #a51b16 !important;
+}
+
+nav a,
+nav button {
+  color: #ffb36a !important;
+}
+
+/* Botones: naranja calabaza */
+button,
+.btn,
+.boton,
+a.boton {
+  border-color: #ff642b !important;
+}
+
+button:not(.producto button),
+.btn,
+.boton {
+  background: linear-gradient(135deg, #8d1010, #ed4b19) !important;
+  color: #fff4e9 !important;
+  box-shadow: 0 0 12px #c5232344;
+}
+
+/* Tarjetas de productos */
+.producto {
+  background:
+    linear-gradient(145deg, #1b090a, #080303 75%) !important;
+  border: 1px solid #b52a20 !important;
+  box-shadow:
+    0 0 10px #b51b1b33,
+    inset 0 0 18px #5d0b0b22 !important;
+  color: #fff0e8 !important;
+}
+
+.producto h2,
+.producto h3,
+.producto p {
+  color: #ffb36a;
+}
+
+.producto img {
+  border-color: #702020 !important;
+}
+
+/* Encabezados de categorías */
+.categoria,
+.titulo-categoria,
+h2 {
+  text-decoration-color: #a51b16;
+}
+
+/* Paneles, carrito y formularios */
+section,
+.panel,
+.carrito,
+#menu,
+#carrito {
+  border-color: #762020;
+}
+
+input,
+select,
+textarea {
+  background: #100607 !important;
+  color: #fff0e8 !important;
+  border: 1px solid #a52a24 !important;
+}
+
+/* Selección de texto */
+::selection {
+  background: #b51212;
+  color: white;
+}
+
+/* Brillo rojizo para el ambiente */
+.producto:hover {
+  border-color: #ff6a32 !important;
+  box-shadow: 0 0 20px #ed2b2544 !important;
+}
+
   <div style="font-size:30px;">
     📲
   </div>
