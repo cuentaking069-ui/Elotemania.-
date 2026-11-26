@@ -138,65 +138,39 @@ module.exports = async (req, res) => {
     const body = req.body || {};
     const action = body.action;
 
-    // CONSULTAR PUNTOS DEL CLIENTE
-    if (action === "customer_points") {
-      const whatsapp = String(body.whatsapp || "").replace(/\D/g, "");
+// CONSULTAR PUNTOS DEL CLIENTE
+if (action === "customer_points") {
+  const whatsapp = String(body.whatsapp || "").replace(/\D/g, "");
 
-      if (!whatsapp) {
-        return send(res, 400, { error: "Escribe tu WhatsApp" });
-      }
+  if (!whatsapp) {
+    return send(res, 400, { error: "Escribe tu WhatsApp" });
+  }
 
-const clientes = await supabase(
-  "clientes?select=nombre,whatsapp,puntos,premios_obtenidos",
-  {},
-  true
-);
+  const clientes = await supabase(
+    "clientes?select=nombre,whatsapp,puntos,premios_obtenidos",
+    {},
+    true
+  );
 
-const normalizar = numero => String(numero || "").replace(/\D/g, "").slice(-10);
+  const normalizar = numero =>
+    String(numero || "").replace(/\D/g, "").slice(-10);
 
-const data = clientes.filter(
-  cliente => normalizar(cliente.whatsapp) === normalizar(whatsapp)
-).slice(0, 1);
+  const cliente = clientes.find(
+    c => normalizar(c.whatsapp) === normalizar(whatsapp)
+  );
 
-      return send(res, 200, {
-    found: true
-        nombre: data[0].nombre,
-        puntos: data[0].puntos,
-        premios_obtenidos: data[0].premios_obtenidos
-      });
-    }
+  if (!cliente) {
+    return send(res, 200, { found: false });
+  }
 
-    // INICIAR SESIÓN DE ADMINISTRADOR
-    if (action === "admin_login") {
-      if (!SESSION_SECRET) {
-        return send(res, 500, { error: "Falta ADMIN_SESSION_SECRET en Vercel" });
-      }
+  return send(res, 200, {
+    found: true,
+    nombre: cliente.nombre,
+    puntos: Number(cliente.puntos || 0),
+    premios_obtenidos: Number(cliente.premios_obtenidos || 0)
+  });
+}
 
-      const usuario = String(body.usuario || "").trim();
-      const pin = String(body.pin || "");
-
-      if (!usuario || !pin) {
-        return send(res, 400, { error: "Completa usuario y PIN" });
-      }
-
-      const users = await supabase(
-        `usuarios?select=id,usuario,nombre,rol,pin&usuario=eq.${encodeURIComponent(usuario)}&activo=eq.true&limit=1`,
-        {},
-        true
-      );
-
-      const user = users && users[0];
-      const roles = ["admin", "administrador", "dueno", "dueño"];
-
-      if (
-        !user ||
-        user.pin !== pin ||
-        !roles.includes(String(user.rol || "").toLowerCase())
-      ) {
-        return send(res, 401, {
-          error: "Credenciales incorrectas o usuario sin permisos de administrador"
-        });
-      }
 
       const token = createToken({
         id: user.id,
