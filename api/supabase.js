@@ -1,22 +1,10 @@
 
 import crypto from "crypto";
 
-const TABLES = [
-  "productos",
-  "configuracion",
-  "clientes",
-  "ventas",
-  "detalle_ventas",
-  "cierres_turno",
-  "usuarios"
-];
+const TABLES = ["productos", "configuracion", "clientes", "ventas", "detalle_ventas", "cierres_turno", "usuarios"];
+const GET_PARAMS = ["select", "order", "limit", "offset", "id", "activo", "whatsapp", "corte_id", "venta_id", "cliente_id", "usuario", "rol", "nombre", "categoria"];
 
-const GET_PARAMS = [
-  "select", "order", "limit", "offset", "id", "activo",
-  "whatsapp", "corte_id", "venta_id", "cliente_id",
-  "usuario", "rol", "nombre", "categoria"
-];
-
+// ROLES CON PERMISO PARA ADMINISTRAR
 const ROLES_ADMIN = ["admin", "administrador", "dueno", "dueño", "superadmin"];
 
 function json(res, status, body) {
@@ -47,7 +35,6 @@ function makeToken(payload, secret) {
 
 function verifyToken(token, secret) {
   if (!token || !secret) return null;
-
   const parts = token.split(".");
   if (parts.length !== 2) return null;
 
@@ -60,14 +47,10 @@ function verifyToken(token, secret) {
     return null;
   }
 
-  if (actual.length !== expected.length ||
-      !crypto.timingSafeEqual(actual, expected)) return null;
+  if (actual.length !== expected.length || !crypto.timingSafeEqual(actual, expected)) return null;
 
   try {
-    const payload = JSON.parse(
-      Buffer.from(parts[0], "base64url").toString("utf8")
-    );
-
+    const payload = JSON.parse(Buffer.from(parts[0], "base64url").toString("utf8"));
     if (!payload.exp || payload.exp < Date.now() || !payload.sub) return null;
     return payload;
   } catch {
@@ -94,9 +77,7 @@ async function supabaseFetch(url, key, options = {}) {
   }
 
   if (!response.ok) {
-    const error = new Error(
-      data?.message || data?.error || "Error de Supabase."
-    );
+    const error = new Error(data?.message || data?.error || "Error de Supabase.");
     error.status = response.status;
     throw error;
   }
@@ -123,16 +104,11 @@ async function postAction(req, res) {
     const whatsapp = digits(body.whatsapp);
 
     if (normalizePhone(whatsapp).length !== 10) {
-      return json(res, 400, {
-        error: "Número de WhatsApp no válido."
-      });
+      return json(res, 400, { error: "Número de WhatsApp no válido." });
     }
 
     const url = new URL(`${supabaseUrl}/rest/v1/clientes`);
-    url.searchParams.set(
-      "select",
-      "nombre,whatsapp,puntos,premios_obtenidos"
-    );
+    url.searchParams.set("select", "nombre,whatsapp,puntos,premios_obtenidos");
 
     const rows = await supabaseFetch(url.toString(), serviceKey);
 
@@ -140,9 +116,7 @@ async function postAction(req, res) {
       item => normalizePhone(item.whatsapp) === normalizePhone(whatsapp)
     );
 
-    if (!cliente) {
-      return json(res, 200, { found: false });
-    }
+    if (!cliente) return json(res, 200, { found: false });
 
     return json(res, 200, {
       found: true,
@@ -164,9 +138,7 @@ async function postAction(req, res) {
     const pin = String(body.pin || "").trim();
 
     if (!usuario || !pin || pin.length > 64) {
-      return json(res, 400, {
-        error: "Usuario o PIN no válido."
-      });
+      return json(res, 400, { error: "Usuario o PIN no válido." });
     }
 
     const url = new URL(`${supabaseUrl}/rest/v1/usuarios`);
@@ -181,7 +153,7 @@ async function postAction(req, res) {
     if (
       !user ||
       String(user.pin || "") !== pin ||
-      !ROLES_ADMIN.includes(String(user.rol || "").toLowerCase())
+      !ROLES_ADMIN.includes(String(user.rol || "").trim().toLowerCase())
     ) {
       return json(res, 401, {
         error: "Credenciales incorrectas o usuario sin permisos de administrador."
@@ -217,7 +189,7 @@ async function postAction(req, res) {
 
     if (
       !session ||
-      !ROLES_ADMIN.includes(String(session.rol || "").toLowerCase())
+      !ROLES_ADMIN.includes(String(session.rol || "").trim().toLowerCase())
     ) {
       return json(res, 401, {
         error: "Inicia sesión como administrador."
@@ -227,9 +199,7 @@ async function postAction(req, res) {
     const whatsapp = digits(body.whatsapp);
 
     if (normalizePhone(whatsapp).length !== 10) {
-      return json(res, 400, {
-        error: "Número de WhatsApp no válido."
-      });
+      return json(res, 400, { error: "Número de WhatsApp no válido." });
     }
 
     const result = await supabaseFetch(
@@ -268,7 +238,7 @@ async function postAction(req, res) {
 
     if (
       !session ||
-      !ROLES_ADMIN.includes(String(session.rol || "").toLowerCase())
+      !ROLES_ADMIN.includes(String(session.rol || "").trim().toLowerCase())
     ) {
       return json(res, 401, {
         error: "Inicia sesión como administrador."
@@ -286,9 +256,7 @@ async function postAction(req, res) {
       total <= 0 ||
       total > 1000000
     ) {
-      return json(res, 400, {
-        error: "Datos de venta no válidos."
-      });
+      return json(res, 400, { error: "Datos de venta no válidos." });
     }
 
     const result = await supabaseFetch(
@@ -316,18 +284,14 @@ async function postAction(req, res) {
     });
   }
 
-  return json(res, 400, {
-    error: "Acción no reconocida."
-  });
+  return json(res, 400, { error: "Acción no reconocida." });
 }
 
 export default async function handler(req, res) {
   const supabaseUrl = process.env.SUPABASE_URL;
 
   if (!supabaseUrl) {
-    return json(res, 500, {
-      error: "Falta SUPABASE_URL en Vercel."
-    });
+    return json(res, 500, { error: "Falta SUPABASE_URL en Vercel." });
   }
 
   try {
@@ -336,32 +300,24 @@ export default async function handler(req, res) {
     }
 
     if (req.method !== "GET") {
-      return json(res, 405, {
-        error: "Método no permitido."
-      });
+      return json(res, 405, { error: "Método no permitido." });
     }
 
     // CONSULTA GET QUE UTILIZA EL MENÚ
     const supabaseKey = process.env.SUPABASE_ANON_KEY;
 
     if (!supabaseKey) {
-      return json(res, 500, {
-        error: "Falta SUPABASE_ANON_KEY en Vercel."
-      });
+      return json(res, 500, { error: "Falta SUPABASE_ANON_KEY en Vercel." });
     }
 
     const table = req.query.table;
 
     if (!table) {
-      return json(res, 400, {
-        error: "Falta indicar la tabla."
-      });
+      return json(res, 400, { error: "Falta indicar la tabla." });
     }
 
     if (!TABLES.includes(table)) {
-      return json(res, 400, {
-        error: "Tabla no permitida."
-      });
+      return json(res, 400, { error: "Tabla no permitida." });
     }
 
     const url = new URL(`${supabaseUrl}/rest/v1/${table}`);
@@ -401,4 +357,6 @@ export default async function handler(req, res) {
     });
   }
 }
+
+  
 
