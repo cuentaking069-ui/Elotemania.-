@@ -17,8 +17,18 @@ const GET_PARAMS = [
   "usuario", "rol", "nombre", "categoria"
 ];
 
+const ROLES_ADMIN = ["admin", "administrador", "dueno", "dueño", "superadmin"];
+
 function json(res, status, body) {
   return res.status(status).json(body);
+}
+
+function serviceHeaders(key) {
+  return {
+    apikey: key,
+    Authorization: `Bearer ${key}`,
+    "Content-Type": "application/json"
+  };
 }
 
 function digits(value) {
@@ -29,42 +39,10 @@ function normalizePhone(value) {
   return digits(value).slice(-10);
 }
 
-function headers(key) {
-  return {
-    apikey: key,
-    Authorization: `Bearer ${key}`,
-    "Content-Type": "application/json"
-  };
-}
-
-async function supabaseFetch(url, key, options = {}) {
-  const response = await fetch(url, {
-    ...options,
-    headers: { ...headers(key), ...(options.headers || {}) }
-  });
-
-  const raw = await response.text();
-  let data;
-
-  try {
-    data = raw ? JSON.parse(raw) : null;
-  } catch {
-    data = { message: raw };
-  }
-
-  if (!response.ok) {
-    const error = new Error(data?.message || data?.error || "Error de Supabase");
-    error.status = response.status;
-    throw error;
-  }
-
-  return data;
-}
-
 function makeToken(payload, secret) {
   const body = Buffer.from(JSON.stringify(payload)).toString("base64url");
-  const signature = crypto.createHmac("sha256", secret).update(body).digest("base64url");
-  return `${body}.${signature}`;
+  const sig = crypto.createHmac("sha256", secret).update(body).digest("base64url");
+  return `${body}.${sig}`;
 }
 
 function verifyToken(token, secret) {
@@ -82,12 +60,14 @@ function verifyToken(token, secret) {
     return null;
   }
 
-  if (actual.length !== expected.length || !crypto.timingSafeEqual(actual, expected)) {
-    return null;
-  }
+  if (actual.length !== expected.length ||
+      !crypto.timingSafeEqual(actual, expected)) return null;
 
   try {
-    const payload = JSON.parse(Buffer.from(parts[0], "base64url").toString("utf8"));
+    const payload = JSON.parse(
+      Buffer.from(parts[0], "base64url").toString("utf8")
+    );
+
     if (!payload.exp || payload.exp < Date.now() || !payload.sub) return null;
     return payload;
   } catch {
@@ -95,14 +75,43 @@ function verifyToken(token, secret) {
   }
 }
 
+async function supabaseFetch(url, key, options = {}) {
+  const response = await fetch(url, {
+    ...options,
+    headers: {
+      ...serviceHeaders(key),
+      ...(options.headers || {})
+    }
+  });
+
+  const raw = await response.text();
+  let data = null;
+
+  try {
+    data = raw ? JSON.parse(raw) : null;
+  } catch {
+    data = { message: raw };
+  }
+
+  if (!response.ok) {
+    const error = new Error(
+      data?.message || data?.error || "Error de Supabase."
+    );
+    error.status = response.status;
+    throw error;
+  }
+
+  return data;
+}
+
 async function postAction(req, res) {
   const supabaseUrl = process.env.SUPABASE_URL;
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  const secret = process.env.ADMIN_SESSION_SECRET;
+  const sessionSecret = process.env.ADMIN_SESSION_SECRET;
 
   if (!supabaseUrl || !serviceKey) {
     return json(res, 500, {
-      error: "Falta SUPABASE_URL o SUPABASE_SERVICE_ROLE_KEY en Vercel."
+      error: "Falta configurar SUPABASE_URL o SUPABASE_SERVICE_ROLE_KEY en Vercel."
     });
   }
 
@@ -114,16 +123,21 @@ async function postAction(req, res) {
     const whatsapp = digits(body.whatsapp);
 
     if (normalizePhone(whatsapp).length !== 10) {
-      return json(res, 400, { error: "Escribe un WhatsApp válido." });
+      return json(res, 400, {
+        error: "Número de WhatsApp no válido."
+      });
     }
 
     const url = new URL(`${supabaseUrl}/rest/v1/clientes`);
-    url.searchParams.set("select", "nombre,whatsapp,puntos,premios_obtenidos");
+    url.searchParams.set(
+      "select",
+      "nombre,whatsapp,puntos,premios_obtenidos"
+    );
 
-    const clientes = await supabaseFetch(url.toString(), serviceKey);
+    const rows = await supabaseFetch(url.toString(), serviceKey);
 
-    const cliente = (clientes || []).find(
-      c => normalizePhone(c.whatsapp) === normalizePhone(whatsapp)
+    const cliente = (Array.isArray(rows) ? rows : []).find(
+      item => normalizePhone(item.whatsapp) === normalizePhone(whatsapp)
     );
 
     if (!cliente) {
@@ -138,17 +152,21 @@ async function postAction(req, res) {
     });
   }
 
-  // INICIAR SESIÓN ADMIN
+  // INICIAR SESIÓN DE ADMINISTRADOR
   if (action === "admin_login") {
-    if (!secret) {
-      return json(res, 500, { error: "Falta ADMIN_SESSION_SECRET en Vercel." });
+    if (!sessionSecret) {
+      return json(res, 500, {
+        error: "Falta configurar ADMIN_SESSION_SECRET en Vercel."
+      });
     }
 
     const usuario = String(body.usuario || "").trim();
     const pin = String(body.pin || "").trim();
 
-    if (!usuario || !pin) {
-      return json(res, 400, { error: "Completa usuario y PIN." });
+    if (!usuario || !pin || pin.length > 64) {
+      return json(res, 400, {
+        error: "Usuario o PIN no válido."
+      });
     }
 
     const url = new URL(`${supabaseUrl}/rest/v1/usuarios`);
@@ -157,17 +175,17 @@ async function postAction(req, res) {
     url.searchParams.set("activo", "eq.true");
     url.searchParams.set("limit", "1");
 
-    const users = await supabaseFetch(url.toString(), serviceKey);
-    const user = users?.[0];
-
-    const roles = ["admin", "administrador", "dueno", "dueño"];
+    const rows = await supabaseFetch(url.toString(), serviceKey);
+    const user = rows?.[0];
 
     if (
       !user ||
-      user.pin !== pin ||
-      !roles.includes(String(user.rol || "").toLowerCase())
+      String(user.pin || "") !== pin ||
+      !ROLES_ADMIN.includes(String(user.rol || "").toLowerCase())
     ) {
-      return json(res, 401, { error: "Usuario o PIN incorrectos." });
+      return json(res, 401, {
+        error: "Credenciales incorrectas o usuario sin permisos de administrador."
+      });
     }
 
     const token = makeToken({
@@ -175,30 +193,102 @@ async function postAction(req, res) {
       usuario: user.usuario,
       rol: user.rol,
       exp: Date.now() + 8 * 60 * 60 * 1000
-    }, secret);
+    }, sessionSecret);
 
-    return json(res, 200, { token, usuario: user.usuario });
+    return json(res, 200, {
+      token,
+      usuario: user.usuario
+    });
+  }
+
+  // CANJEAR PREMIO
+  if (action === "admin_redeem") {
+    if (!sessionSecret) {
+      return json(res, 500, {
+        error: "Falta configurar ADMIN_SESSION_SECRET en Vercel."
+      });
+    }
+
+    const auth = String(req.headers.authorization || "");
+    const session = verifyToken(
+      auth.replace(/^Bearer\s+/i, ""),
+      sessionSecret
+    );
+
+    if (
+      !session ||
+      !ROLES_ADMIN.includes(String(session.rol || "").toLowerCase())
+    ) {
+      return json(res, 401, {
+        error: "Inicia sesión como administrador."
+      });
+    }
+
+    const whatsapp = digits(body.whatsapp);
+
+    if (normalizePhone(whatsapp).length !== 10) {
+      return json(res, 400, {
+        error: "Número de WhatsApp no válido."
+      });
+    }
+
+    const result = await supabaseFetch(
+      `${supabaseUrl}/rest/v1/rpc/canjear_premio_puntos`,
+      serviceKey,
+      {
+        method: "POST",
+        headers: { Prefer: "return=representation" },
+        body: JSON.stringify({ p_whatsapp: whatsapp })
+      }
+    );
+
+    const row = Array.isArray(result) ? result[0] : result;
+
+    return json(res, 200, {
+      ok: true,
+      nombre: row?.nombre || "Cliente",
+      puntos: row?.puntos ?? 0,
+      premios_obtenidos: row?.premios_obtenidos ?? 0
+    });
   }
 
   // REGISTRAR VENTA CONFIRMADA
   if (action === "admin_sale") {
-    if (!secret) {
-      return json(res, 500, { error: "Falta ADMIN_SESSION_SECRET en Vercel." });
+    if (!sessionSecret) {
+      return json(res, 500, {
+        error: "Falta configurar ADMIN_SESSION_SECRET en Vercel."
+      });
     }
 
     const auth = String(req.headers.authorization || "");
-    const session = verifyToken(auth.replace(/^Bearer\s+/i, ""), secret);
+    const session = verifyToken(
+      auth.replace(/^Bearer\s+/i, ""),
+      sessionSecret
+    );
 
-    if (!session || !["admin", "administrador", "dueno", "dueño"].includes(String(session.rol || "").toLowerCase())) {
-      return json(res, 401, { error: "Inicia sesión como administrador." });
+    if (
+      !session ||
+      !ROLES_ADMIN.includes(String(session.rol || "").toLowerCase())
+    ) {
+      return json(res, 401, {
+        error: "Inicia sesión como administrador."
+      });
     }
 
     const nombre = String(body.nombre || "").trim().slice(0, 120);
     const whatsapp = digits(body.whatsapp);
     const total = Number(body.total);
 
-    if (!nombre || normalizePhone(whatsapp).length !== 10 || !Number.isFinite(total) || total <= 0) {
-      return json(res, 400, { error: "Datos de venta no válidos." });
+    if (
+      !nombre ||
+      normalizePhone(whatsapp).length !== 10 ||
+      !Number.isFinite(total) ||
+      total <= 0 ||
+      total > 1000000
+    ) {
+      return json(res, 400, {
+        error: "Datos de venta no válidos."
+      });
     }
 
     const result = await supabaseFetch(
@@ -206,6 +296,7 @@ async function postAction(req, res) {
       serviceKey,
       {
         method: "POST",
+        headers: { Prefer: "return=representation" },
         body: JSON.stringify({
           p_nombre: nombre,
           p_whatsapp: whatsapp,
@@ -225,52 +316,18 @@ async function postAction(req, res) {
     });
   }
 
-  // CANJEAR PREMIO
-  if (action === "admin_redeem") {
-    if (!secret) {
-      return json(res, 500, { error: "Falta ADMIN_SESSION_SECRET en Vercel." });
-    }
-
-    const auth = String(req.headers.authorization || "");
-    const session = verifyToken(auth.replace(/^Bearer\s+/i, ""), secret);
-
-    if (!session || !["admin", "administrador", "dueno", "dueño"].includes(String(session.rol || "").toLowerCase())) {
-      return json(res, 401, { error: "Inicia sesión como administrador." });
-    }
-
-    const whatsapp = digits(body.whatsapp);
-
-    if (normalizePhone(whatsapp).length !== 10) {
-      return json(res, 400, { error: "WhatsApp no válido." });
-    }
-
-    const result = await supabaseFetch(
-      `${supabaseUrl}/rest/v1/rpc/canjear_premio_puntos`,
-      serviceKey,
-      {
-        method: "POST",
-        body: JSON.stringify({ p_whatsapp: whatsapp })
-      }
-    );
-
-    const row = Array.isArray(result) ? result[0] : result;
-
-    return json(res, 200, {
-      ok: true,
-      nombre: row?.nombre || "Cliente",
-      puntos: row?.puntos ?? 0,
-      premios_obtenidos: row?.premios_obtenidos ?? 0
-    });
-  }
-
-  return json(res, 400, { error: "Acción no reconocida." });
+  return json(res, 400, {
+    error: "Acción no reconocida."
+  });
 }
 
 export default async function handler(req, res) {
   const supabaseUrl = process.env.SUPABASE_URL;
 
   if (!supabaseUrl) {
-    return json(res, 500, { error: "Falta SUPABASE_URL en Vercel." });
+    return json(res, 500, {
+      error: "Falta SUPABASE_URL en Vercel."
+    });
   }
 
   try {
@@ -279,38 +336,47 @@ export default async function handler(req, res) {
     }
 
     if (req.method !== "GET") {
-      return json(res, 405, { error: "Método no permitido." });
+      return json(res, 405, {
+        error: "Método no permitido."
+      });
     }
 
-    // CONSULTAS DEL MENÚ
-    const key = process.env.SUPABASE_ANON_KEY;
+    // CONSULTA GET QUE UTILIZA EL MENÚ
+    const supabaseKey = process.env.SUPABASE_ANON_KEY;
 
-    if (!key) {
-      return json(res, 500, { error: "Falta SUPABASE_ANON_KEY en Vercel." });
+    if (!supabaseKey) {
+      return json(res, 500, {
+        error: "Falta SUPABASE_ANON_KEY en Vercel."
+      });
     }
 
     const table = req.query.table;
 
     if (!table) {
-      return json(res, 400, { error: "Falta indicar la tabla." });
+      return json(res, 400, {
+        error: "Falta indicar la tabla."
+      });
     }
 
     if (!TABLES.includes(table)) {
-      return json(res, 400, { error: "Tabla no permitida." });
+      return json(res, 400, {
+        error: "Tabla no permitida."
+      });
     }
 
     const url = new URL(`${supabaseUrl}/rest/v1/${table}`);
 
-    for (const param of GET_PARAMS) {
-      if (req.query[param] !== undefined) {
-        url.searchParams.set(param, req.query[param]);
+    for (const key of GET_PARAMS) {
+      if (req.query[key] !== undefined) {
+        url.searchParams.set(key, req.query[key]);
       }
     }
 
     const response = await fetch(url.toString(), {
+      method: "GET",
       headers: {
-        apikey: key,
-        Authorization: `Bearer ${key}`,
+        apikey: supabaseKey,
+        Authorization: `Bearer ${supabaseKey}`,
         "Content-Type": "application/json"
       }
     });
@@ -335,4 +401,5 @@ export default async function handler(req, res) {
     });
   }
 }
+
 
