@@ -159,7 +159,7 @@ const data = clientes.filter(
 ).slice(0, 1);
 
       return send(res, 200, {
-        encontrado: true,
+    found: true
         nombre: data[0].nombre,
         puntos: data[0].puntos,
         premios_obtenidos: data[0].premios_obtenidos
