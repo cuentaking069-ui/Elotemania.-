@@ -146,19 +146,17 @@ module.exports = async (req, res) => {
         return send(res, 400, { error: "Escribe tu WhatsApp" });
       }
 
-      const data = await supabase(
-        `clientes?select=nombre,puntos,premios_obtenidos&whatsapp=eq.${encodeURIComponent(whatsapp)}&limit=1`,
-        {},
-        true
-      );
+const clientes = await supabase(
+  "clientes?select=nombre,whatsapp,puntos,premios_obtenidos",
+  {},
+  true
+);
 
-      if (!data || !data.length) {
-        return send(res, 200, {
-          encontrado: false,
-          puntos: 0,
-          premios_obtenidos: 0
-        });
-      }
+const normalizar = numero => String(numero || "").replace(/\D/g, "").slice(-10);
+
+const data = clientes.filter(
+  cliente => normalizar(cliente.whatsapp) === normalizar(whatsapp)
+).slice(0, 1);
 
       return send(res, 200, {
         encontrado: true,
